@@ -8,7 +8,7 @@ classDiagram
         user_name: str
         passsword_salt: str
         hashed_password: str
-        playlists: List~Playlist~
+        play_lists: List~Playlist~
     }
 
     class PlayList{
