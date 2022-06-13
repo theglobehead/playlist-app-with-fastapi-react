@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Login page{% endblock %}
+
+{% block content %}
+    <div>
+        <h3>Login:</h3>
+        <form action="Login" method="post">
+            <p>username:</p>
+            <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
+            <p>password:</p>
+            <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+            <input type="submit" value="Login">
+        </form>
+        <p>Dont have an account?<a href="">Register here</a></p>
+    </div>
+{% endblock %}

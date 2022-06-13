@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Register page{% endblock %}
+
+{% block content %}
+    <div>
+        <h3>Register:</h3>
+        <form action="Register" method="post">
+            <p>username:</p>
+            <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
+            <p>password:</p>
+            <input type="password" placeholder="Password" name="password1" value="{{ request.form.password1 }}">
+            <p>retype password:</p>
+            <input type="password" placeholder="Password" name="password2" value="{{ request.form.password2 }}">
+            <input type="submit" value="Register">
+        </form>
+        <p>Already have an account?<a href="">log in</a></p>
+    </div>
+{% endblock %}

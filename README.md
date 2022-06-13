@@ -6,8 +6,8 @@ classDiagram
         id: str
         uuid: str
         user_name: str
-        passsword_salt: str
         hashed_password: str
+        passsword_salt: str
         play_lists: List~Playlist~
     }
 
