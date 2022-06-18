@@ -1,0 +1,23 @@
+.login-main{
+    height: 100vh;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login-form{
+    background-color: white;
+    padding: 15px;
+    width: fit-content;
+    margin-right: 5%;
+}
+
+.welcome-text{
+    width: 50%;
+    color: white;
+}
+
+.welcome-text h1{
+    font-size: 4rem;
+}
