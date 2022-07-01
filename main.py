@@ -1,4 +1,6 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect
+from web.login_page import login_view
+from web.register_page import register_view
 
 app = Flask(__name__)
 
@@ -6,13 +8,7 @@ app = Flask(__name__)
 def home():
     return redirect("/login")
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    return render_template("login_page.html")
-
-@app.route('/register')
-def register():
-    return render_template("register_page.html")
-
 if __name__ == "__main__":
+    app.register_blueprint(login_view, url_prefix="/login")
+    app.register_blueprint(register_view, url_prefix="/register")
     app.run(debug=True)
