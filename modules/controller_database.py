@@ -1,6 +1,6 @@
-from modules.models.play_list import PlayList
-from modules.models.song import Song
-from modules.models.user import User
+from models.play_list import PlayList
+from models.song import Song
+from models.user import User
 
 
 class ControllerDatabase:
