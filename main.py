@@ -1,3 +1,4 @@
+from os import environ
 from flask import Flask, redirect
 from web.login_page import login_view
 from web.register_page import register_view

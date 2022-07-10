@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
-{% block title %}Login page{% endblock %}
+{% block title %}Register page{% endblock %}
 
 {% block content %}
     <div class="login-main">
@@ -13,17 +13,16 @@
         </div>
         <div class="login-form">
             <h3>Register:</h3>
-            <form action="Login" method="post">
+            <form action="register" method="post">
                 <p>username:</p>
                 <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
                 <p>password:</p>
                 <input type="password" placeholder="Password" name="password1" value="{{ request.form.password1 }}" required>
-                <input type="submit" value="Login">
                 <p>retype password:</p>
                 <input type="password" placeholder="Password" name="password2" value="{{ request.form.password2 }}" required>
-                <input type="submit" value="Login">
+                <input type="submit" value="register">
             </form>
-            <p>Alredy have an account?<a href="/login">Login here</a></p>
+            <p>Alredy have an account?<a href="/register">Login here</a></p>
         </div>
     </div>
 {% endblock %}
