@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 {% endblock %}
 
 {% block title %}Login page{% endblock %}
@@ -13,14 +13,14 @@
         </div>
         <div class="login-form">
             <h3>Login:</h3>
-            <form action="/login/" method="post">
+            <form action="{{ url_for("login.login") }}" method="post">
                 <p>username:</p>
-                <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
+                <input type="text" placeholder="Username" id="username" name="username" value="{{ request.form.username }}" required>
                 <p>password:</p>
-                <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}" required>
-                <input type="submit" value="login">
+                <input type="password" placeholder="Password" id="password" name="password" value="{{ request.form.password }}" required>
+                <input class="btn" type="submit" value="login">
             </form>
-            <p>Dont have an account?<a href="/register">Register here</a></p>
+            <p>Dont have an account?<a href="{{ url_for("register.register") }}">Register here</a></p>
         </div>
     </div>
 {% endblock %}

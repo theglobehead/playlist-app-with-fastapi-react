@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import List
 from dataclasses_json import dataclass_json
-from modules.models.play_list import PlayList
+from models.play_list import PlayList
 
-from modules.models.query_object import QueryObject
+from models.query_object import QueryObject
 
 
 @dataclass_json

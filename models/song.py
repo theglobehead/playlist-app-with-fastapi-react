@@ -2,7 +2,7 @@ from typing import List
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 
-from modules.models.query_object import QueryObject
+from models.query_object import QueryObject
 
 
 @dataclass_json

@@ -21,3 +21,9 @@
 .welcome-text h1{
     font-size: 4rem;
 }
+
+.btn{
+    padding-inline: 10px;
+    border: 1px solid #9b9b9b;
+    border-radius: 10px;
+}
