@@ -6,6 +6,7 @@ from web.login_page import login_view
 from web.register_page import register_view
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "8f42a73054b1749h8f58848be5e6502c"
 
 psycopg2.extras.register_uuid()
 

@@ -8,6 +8,14 @@
     {% block stylesheets %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div style="position: absolute; top: 20px; left: 30px; padding: 10px; background-color: #ffae00;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
     <body>
         {% block content %}{% endblock %}
     </body>
