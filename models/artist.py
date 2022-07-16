@@ -2,19 +2,19 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
 from dataclasses_json import dataclass_json
-from models.playlist import PlayList, Playlist
+
+from models.song import Song
+from models.tag import Tag
 
 
 @dataclass_json
 @dataclass
-class User:
-    playlists: List[Playlist] = field(default_factory=list)
+class Artist:
+    songs: List[Song] = field(default_factory=list)
+    tags: List[Tag] = field(default_factory=list)
 
     id: int = 0
-    uuid: str = ""
-    user_name: str = ""
-    hashed_password: str = ""
-    passsword_salt: str = ""
+    name: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False
