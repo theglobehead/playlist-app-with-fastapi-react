@@ -1,6 +1,5 @@
 import psycopg2
 from psycopg2.extensions import connection
-from utils.logging_utils import LoggingUtils
 from os import environ
 
 class BaseModule:
@@ -17,3 +16,23 @@ class BaseModule:
         #except Exception as e:
         #    LoggingUtils.log(e)
         return conn
+
+#class Connection():
+#    def __enter__(self: connection) -> connection:
+#        return super().__enter__()
+#
+#    def __init__(self) -> None:
+#        self = BaseModule.connection()
+#
+#    def __exit__(self: connection):
+#        self.commit()
+#
+#class Cursor():
+#    def __enter__(self: psycopg2.cursor) -> psycopg2.cursor:
+#        return super().__enter__()
+#
+#    def __init__(self) -> None:
+#        self = BaseModule.connection()
+#
+#    def __exit__(self: psycopg2.cursor):
+#        self.close()

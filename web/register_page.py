@@ -1,5 +1,6 @@
 import flask
 from flask import Blueprint, render_template, request
+from sqlalchemy import false
 
 from modules.controller_database import ControllerDatabase
 from modules.controller_user import ControllerUser
@@ -25,16 +26,16 @@ def register():
 
 
 def validate_form(name: str, pass1: str, pass2: str):
+    result = True
+
     if not all((pass1, pass2)):
         flask.flash("Both passwords must be entered!")
-        return False
-
-    if pass1 != pass2:
+        result = False
+    elif pass1 != pass2:
         flask.flash("Passwords are not equal!")
-        return False
-
-    if ControllerUser.check_if_username_taken(name=name):
+        result = False
+    elif ControllerUser.check_if_username_taken(name=name):
         flask.flash("Username is already taken!")
-        return False
+        result = False
 
-    return True
+    return result

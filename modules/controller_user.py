@@ -1,5 +1,6 @@
-import random
 from hashlib import sha256
+
+import numpy as np
 
 from modules.base_module import BaseModule
 
@@ -12,12 +13,7 @@ class ControllerUser:
     @staticmethod
     def generate_salt() -> str:
         chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
-        result = ""
-
-        for _ in range(8):
-            result += random.choice(chars)
-
-        return result
+        return "".join(np.random.choice(list(chars), 8))
 
     @staticmethod
     def check_if_username_taken(name: str) -> bool:
@@ -26,7 +22,4 @@ class ControllerUser:
 
         cur.execute("SELECT COUNT(id) FROM USERS WHERE name = %(name)s", {"name": name})
 
-        if cur.fetchone()[0]:
-            return False
-        return True
-    
+        return not bool(cur.fetchone()[0])

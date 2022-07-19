@@ -1,12 +1,12 @@
-from datetime import datetime
-from typing import List
-from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
-from models.artist import Artist
+from pydantic.dataclasses import dataclass
+from datetime import datetime
+from dataclasses import field
+from typing import List
 
+from models.artist import Artist
 from models.song import Song
 from models.tag import Tag
-from models.user import User
 
 @dataclass_json
 @dataclass

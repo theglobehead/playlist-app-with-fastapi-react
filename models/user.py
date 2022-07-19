@@ -1,9 +1,10 @@
-from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
+from dataclasses import field
 from datetime import datetime
 from typing import List
-from dataclasses_json import dataclass_json
-from models.playlist import PlayList, Playlist
 
+from models.playlist import Playlist
 
 @dataclass_json
 @dataclass

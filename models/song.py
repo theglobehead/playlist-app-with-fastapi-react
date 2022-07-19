@@ -1,9 +1,10 @@
+from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
+from dataclasses import field
 from datetime import datetime
 from typing import List
-from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json
-from models.artist import Artist
 
+# from models.artist import Artist
 from models.tag import Tag
 
 
@@ -11,10 +12,11 @@ from models.tag import Tag
 @dataclass
 class Song:
     tags: List[Tag] = field(default_factory=list)
-    artist = Artist
+    # artist: Artist = field(default_factory=Artist)
 
     id: int = 0
     name: str = ""
+    artist = str = ""
     album: str = ""
     audio_path: str = ""
     modified: datetime = datetime.utcnow()

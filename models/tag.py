@@ -1,6 +1,6 @@
-from dataclasses import dataclass
-from datetime import datetime
 from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass_json

@@ -2,6 +2,7 @@ from os import environ
 
 import psycopg2.extras
 from flask import Flask, redirect
+from models.user import User
 from web.login_page import login_view
 from web.register_page import register_view
 
