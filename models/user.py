@@ -13,9 +13,9 @@ class User:
 
     id: int = 0
     uuid: str = ""
-    user_name: str = ""
+    name: str = ""
     hashed_password: str = ""
-    passsword_salt: str = ""
+    password_salt: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False

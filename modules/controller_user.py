@@ -20,6 +20,6 @@ class ControllerUser:
         con = BaseModule.connection()
         cur = con.cursor()
 
-        cur.execute("SELECT COUNT(id) FROM USERS WHERE name = %(name)s", {"name": name})
+        cur.execute("SELECT COUNT(id) FROM USERS WHERE name = %(name)s LIMIT 1", {"name": name})
 
-        return not bool(cur.fetchone()[0])
+        return bool(cur.fetchone()[0])
