@@ -1,4 +1,19 @@
 body{
-    background-color: rgb(26, 26, 26);
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #898989;
+
+    color: white;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+}
+
+p{
+    margin: 0;
+
+}
+
+a{
+    color: #00DFDF;
 }

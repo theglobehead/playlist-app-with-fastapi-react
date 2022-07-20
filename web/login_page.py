@@ -1,12 +1,12 @@
 import flask
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, request, session, redirect, url_for
 
-from models.user import User
 from modules.controller_user import ControllerUser
 
 login_view = Blueprint("login", __name__)
 
-@login_view.route("/", methods = ['GET', 'POST'])
+
+@login_view.route("/", methods=['GET', 'POST'])
 def login():
     result = render_template("login_page.html")
 
@@ -26,7 +26,7 @@ def login():
             if user.hashed_password == hashed_password:
                 password_matches = True
                 session["user"] = user
-                result = render_template("playlist_list.html")
+                result = redirect(url_for("your-playlists.your_playlists"))
 
         if not username_exists or not password_matches:
             flask.flash("Incorrect login details!")

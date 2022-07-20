@@ -1,15 +1,10 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 {% endblock %}
 
 {% block title %}Your playlists{% endblock %}
 
 {% block content %}
-    <div class="login-main">
-        <div class="welcome-text">
-            <h1>Placeholder</h1>
-        </div>
-    </div>
+    {% include "components/side_panel.html" %}
 {% endblock %}
