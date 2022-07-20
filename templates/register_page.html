@@ -11,18 +11,20 @@
         <div class="welcome-text">
             <h1>Music Playlists With Flask</h1>
         </div>
-        <div class="login-form">
-            <h3>Register:</h3>
-            <form action="{{ url_for("register.register") }}" method="post">
-                <p>username:</p>
-                <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
-                <p>password:</p>
-                <input type="password" placeholder="Password" name="password1" value="{{ request.form.password1 }}" required>
-                <p>retype password:</p>
-                <input type="password" placeholder="Password" name="password2" value="{{ request.form.password2 }}" required>
-                <input class="btn" type="submit" value="register">
+        <div>
+            <form class="login-form shadow" action="{{ url_for("register.register") }}" method="post">
+                 <h3 style="text-align: center">Register:</h3>
+                <div style="width: 80%;">
+                    <p>username:</p>
+                    <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
+                    <p style="margin-top: 15px;">password:</p>
+                    <input type="password" placeholder="Password" name="password1" value="{{ request.form.password1 }}" required>
+                    <p style="margin-top: 15px;">retype password:</p>
+                    <input type="password" placeholder="Password" name="password2" value="{{ request.form.password2 }}" required>
+                </div>
+                <button style="width: fit-content; padding: 15px; margin-top: 15px;" class="btn-scifi" type="submit">register</button>
             </form>
-            <p>Already have an account?<a href="{{ url_for("login.login") }}">Login here</a></p>
+            <p style="margin-top: 13px; text-align: center;">Already have an account?<a href="{{ url_for("login.login") }}">Login here</a></p>
         </div>
     </div>
 {% endblock %}

@@ -11,9 +11,16 @@ body{
 
 p{
     margin: 0;
-
 }
 
 a{
     color: #00DFDF;
+}
+
+.shadow{
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+}
+
+.pointer-on-hover:hover{
+    cursor: pointer;
 }
