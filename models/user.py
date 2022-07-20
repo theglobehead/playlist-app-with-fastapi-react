@@ -11,7 +11,7 @@ from models.playlist import Playlist
 class User:
     playlists: List[Playlist] = field(default_factory=list)
 
-    id: int = 0
+    user_id: int = 0
     uuid: str = ""
     name: str = ""
     hashed_password: str = ""

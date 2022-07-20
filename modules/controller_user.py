@@ -1,7 +1,9 @@
 from hashlib import sha256
 
+import flask
 import numpy as np
 
+from models.user import User
 from modules.base_module import BaseModule
 
 
@@ -17,9 +19,47 @@ class ControllerUser:
 
     @staticmethod
     def check_if_username_taken(name: str) -> bool:
-        con = BaseModule.connection()
-        cur = con.cursor()
+        with BaseModule.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT COUNT(user_id) FROM USERS WHERE name = %(name)s LIMIT 1", {"name": name})
+                result = cur.fetchone()[0]
+        return bool(result)
 
-        cur.execute("SELECT COUNT(id) FROM USERS WHERE name = %(name)s LIMIT 1", {"name": name})
+    @staticmethod
+    def get_user(user_id: int) -> User:
+        with BaseModule.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT user_id, uuid, name, password_hash, password_salt, modified, created, is_deleted "
+                            "FROM users "
+                            "WHERE user_id = %(user_id)s LIMIT 1",
+                            {"user_id": user_id})
+                result = cur.fetchone()
 
-        return bool(cur.fetchone()[0])
+        if result:
+            result = User(
+                user_id=result[0],
+                uuid=str(result[1]),
+                name=result[2],
+                hashed_password=result[3],
+                password_salt=result[4],
+                modified=result[5],
+                created=result[6],
+                is_deleted=result[7],
+            )
+
+        return result
+
+    @staticmethod
+    def get_id_by_name(name: str) -> int:
+        with BaseModule.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT user_id "
+                            "FROM users "
+                            "WHERE name = %(name)s LIMIT 1",
+                            {"name": name})
+                result = cur.fetchone()
+
+        if result:
+            result = result[0]
+
+        return result

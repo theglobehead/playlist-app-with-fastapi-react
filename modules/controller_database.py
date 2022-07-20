@@ -15,7 +15,7 @@ class ControllerDatabase:
         user = User(
             name=name,
             hashed_password=hashed_password,
-            password_salt = salt
+            password_salt=salt
         )
 
         with BaseModule.connection() as conn:
