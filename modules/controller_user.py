@@ -1,3 +1,4 @@
+import os.path
 from hashlib import sha256
 
 import flask
@@ -61,5 +62,19 @@ class ControllerUser:
 
         if result:
             result = result[0]
+
+        return result
+
+    @staticmethod
+    def get_profile_pic(uuid: str) -> str:
+        result = ""
+
+        path = "/static/images/profile_pictures/"
+        if os.path.exists(f"../static/images/profile_pictures/{uuid}.png"):
+            # result = f"{path}{uuid}.png"
+            result = f"{path}default.png"
+        else:
+            print("doesnt")
+            result = f"{path}default.png"
 
         return result
