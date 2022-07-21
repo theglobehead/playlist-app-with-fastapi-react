@@ -6,5 +6,10 @@
 {% block title %}Your playlists{% endblock %}
 
 {% block content %}
-    {% include "components/side_panel.html" %}
+    <div style="display: flex; flex-direction: row;">
+        {% include "components/side_panel.html" %}
+        <div style="width: 100%; box-sizing: border-box; padding: 5vh 5% 0 5%;">
+            <a style="width: fit-content;" class="btn-rounded" href="#">Create new +</a>
+        </div>
+    </div>
 {% endblock %}

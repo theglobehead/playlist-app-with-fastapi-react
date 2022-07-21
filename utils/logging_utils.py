@@ -1,4 +1,7 @@
+from loguru import logger
+
+
 class LoggingUtils:
     @staticmethod
     def log(message: str) -> None:
-        print(message)
+        logger.log("DEBUG", message, colorize=True)

@@ -1,25 +1,30 @@
 <div class="side_panel">
-    <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-        <img src="{{ url_for("site.get_profile_pic", uuid=user.uuid) }}" class="shadow" style="width: 10vw; height: 10vw; border: #00DFDF 2px solid; border-radius: 90%;">
-        <p>{{ user.name }}</p>
+    <div style="width: 100%;">
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 5vh;">
+            <img src="{{ url_for("site.get_profile_pic", uuid=user.uuid) }}" class="shadow" style="width: 10vw; height: 10vw; border: #00DFDF 2px solid; border-radius: 90%;">
+            <p style="margin-top: 15px;">{{ user.name }}</p>
+        </div>
+        <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            row-gap: 10px;
+            width: 70%;
+            margin-left: 15%;
+            margin-top: 7vh;
+        ">
+            <a class="btn-leaf" href="{{ url_for("your-playlists.your_playlists") }}">Your playlists</a>
+            <a class="btn-leaf" href="#">Settings</a>
+            <a class="btn-leaf" href="#">Discover</a>
+        </div>
     </div>
-    <div style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        row-gap: 10px;
-        width: 70%;
-    ">
-        <a class="btn-leaf" href="{{ url_for("your-playlists.your_playlists") }}">Your playlists</a>
-        <a class="btn-leaf" href="#">Settings</a>
-        <a class="btn-leaf" href="#">Discover</a>
-    </div>
-    <a href="{{ url_for("site.logout") }}">Log out</a>
+    <a href="{{ url_for("site.logout") }}" style="margin-bottom: 15px;">Log out</a>
 </div>
 
 <style>
     .side_panel{
+        max-height: 100vh;
         height: 100vh;
         width: 20%;
         background-color: #898989;

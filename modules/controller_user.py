@@ -71,10 +71,8 @@ class ControllerUser:
 
         path = "/static/images/profile_pictures/"
         if os.path.exists(f"../static/images/profile_pictures/{uuid}.png"):
-            # result = f"{path}{uuid}.png"
-            result = f"{path}default.png"
+            result = f"{path}{uuid}.png"
         else:
-            print("doesnt")
             result = f"{path}default.png"
 
         return result

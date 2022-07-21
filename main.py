@@ -1,5 +1,7 @@
 import psycopg2.extras
-from flask import Flask, redirect, session
+from flask import Flask, redirect, session, url_for
+
+from utils.logging_utils import LoggingUtils
 from web.login_page import login_view
 from web.register_page import register_view
 from web.your_playlists_page import your_playlists_view
@@ -13,9 +15,9 @@ psycopg2.extras.register_uuid()
 
 @app.route('/')
 def home():
-    result = redirect("/login")
+    result = redirect(url_for("login.login"))
     if "user" in session:
-        result = redirect("/your-playlists")
+        result = redirect(url_for("your-playlists.your_playlists"))
 
     return result
 

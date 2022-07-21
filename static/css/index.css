@@ -24,3 +24,20 @@ a{
 .pointer-on-hover:hover{
     cursor: pointer;
 }
+
+.btn-rounded{
+    background: none;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.btn-rounded:hover{
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+    color: #00DFDF;
+}
