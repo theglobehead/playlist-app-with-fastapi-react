@@ -16,3 +16,4 @@ def logout():
 def get_profile_pic(uuid: str) -> str:
     result = ControllerUser.get_profile_pic(uuid)
     return result
+
