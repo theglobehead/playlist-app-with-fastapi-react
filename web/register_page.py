@@ -1,8 +1,8 @@
 import flask
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 
-from modules.controller_database import ControllerDatabase
-from modules.controller_user import ControllerUser
+from controllers.controller_database import ControllerDatabase
+from controllers.controller_user import ControllerUser
 from utils.logging_utils import LoggingUtils
 
 register_view = Blueprint("register", __name__)
@@ -22,7 +22,7 @@ def register():
         if form_is_valid:
             try:
                 ControllerDatabase.insert_user(name=name, password=password1)
-                result = render_template("login_page.html")
+                result = redirect(url_for("login.login"))
             except Exception as e:
                 flask.flash("Something went wrong...")
                 LoggingUtils.log(e.__str__())

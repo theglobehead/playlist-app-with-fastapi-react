@@ -1,8 +1,8 @@
 from models.playlist import Playlist
 from models.song import Song
 from models.user import User
-from modules.base_module import BaseModule
-from modules.controller_user import ControllerUser
+from utils.common_utils import CommonUtils
+from controllers.controller_user import ControllerUser
 
 
 class ControllerDatabase:
@@ -18,7 +18,7 @@ class ControllerDatabase:
             password_salt=salt
         )
 
-        with BaseModule.connection() as conn:
+        with CommonUtils.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     "INSERT INTO USERS "

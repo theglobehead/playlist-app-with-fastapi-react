@@ -4,9 +4,9 @@
 
 ```mermaid
 classDiagram
-    class user{
-        id: in
-        uuid: uuid
+    class users{
+        user_id: in
+        user_uuid: uuid
         user_name: varchar<350>
         hashed_password: varchar<64>
         passsword_salt: varchar<8>
@@ -15,8 +15,9 @@ classDiagram
         is_deleted: bool
     }
 
-    class playlist{
-        id: int
+    class playlists{
+        playlist_id: int
+        playlist_uuid: uuid
         user_id: int
         name: varchar<350>
         modified: timestamp
@@ -24,8 +25,9 @@ classDiagram
         is_deleted: bool
     }
 
-    class song{
-        id: int
+    class songs{
+        song_id: int
+        song_uuid: uuid
         name: varchar<350>
         artist_id: int
         album: str
@@ -35,16 +37,18 @@ classDiagram
         is_deleted: bool
     }
 
-    class artist{
-        id: int
+    class artists{
+        artist_id: int
+        artist_uuid: uuid
         name: varchar<350>
         modified: timestamp
         created: timestamp
         is_deleted: bool
     }
 
-    class tag{
-        id: int
+    class tags{
+        tag_id: int
+        tag_uuid: uuid
         name: varchar<350>
         modified: timestamp
         created: timestamp
@@ -52,7 +56,7 @@ classDiagram
     }
 
     class tags_in_artists{
-        id: int
+        tags_in_artists_id: int
         tag_id: int
         artist_id: int
         created: timestamp
@@ -60,7 +64,7 @@ classDiagram
     }
 
     class tags_in_songs{
-        id: int
+        tags_in_songs_id: int
         tag_id: int
         songs_id: int
         created: timestamp
@@ -68,7 +72,7 @@ classDiagram
     }
 
     class tags_in_playlists{
-        id: int
+        tags_in_playlists_id: int
         tag_id: int
         playlist_id: int
         created: timestamp
@@ -76,7 +80,7 @@ classDiagram
     }
 
     class songs_in_playlists{
-        id: int
+        songs_in_playlists_id: int
         song_id: int
         playlist_id: int
         created: timestamp
@@ -106,8 +110,8 @@ classDiagram
     class User{
         playlists: ~Playlist~
 
-        id: int
-        uuid: str
+        user_id: int
+        user_uuid: str
         user_name: str
         hashed_password: str
         passsword_salt: str
@@ -121,7 +125,8 @@ classDiagram
         owner: User
         tags: ~Tags~
 
-        id: int
+        playlist_id: int
+        playlist_uuid: str
         user_id: int
         name: str
         modified: datetime
@@ -132,7 +137,8 @@ classDiagram
     class Song{
         tags: ~Tags~
 
-        id: int
+        song_id: int
+        song_uuid: str
         name: str
         artist_id: int
         album: str
@@ -146,7 +152,8 @@ classDiagram
         songs: ~Song~
         tags: ~Tags~
 
-        id: int
+        artist_id: int
+        artist_uuid: str
         name: str
         modified: datetime
         created: datetime
@@ -154,7 +161,8 @@ classDiagram
     }
 
     class Tag{
-        id: int
+        tag_id: int
+        tag_uuid: str
         name: str
         modified: datetime
         created: datetime
@@ -162,8 +170,8 @@ classDiagram
     }
 
     User *-- Playlist
-    Playlist *-- Song
-    Song *-- Artist
-    Song *-- Tag
-    Playlist *-- Tag
+    Playlist o-- Song
+    Song o-- Artist
+    Song o-- Tag
+    Playlist o-- Tag
 ```

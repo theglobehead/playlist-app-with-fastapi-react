@@ -1,7 +1,7 @@
 import flask
 from flask import Blueprint, render_template, request, session, redirect, url_for
 
-from modules.controller_user import ControllerUser
+from controllers.controller_user import ControllerUser
 
 login_view = Blueprint("login", __name__)
 

@@ -5,7 +5,7 @@ from os import environ
 from utils.logging_utils import LoggingUtils
 
 
-class BaseModule:
+class CommonUtils:
     @staticmethod
     def connection() -> connection:
         conn = None

@@ -1,6 +1,6 @@
 from flask import Blueprint, session, redirect, url_for
 
-from modules.controller_user import ControllerUser
+from controllers.controller_user import ControllerUser
 
 site = Blueprint("site", __name__)
 
