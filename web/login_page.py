@@ -16,10 +16,12 @@ def login():
         password = form.get("password").strip()
 
         user = ControllerUser.authenticate_user(name, password)
+        print("login:", user)
 
         if user:
             session["user"] = user
-            result = redirect(url_for("your-playlists.your_playlists"))
+            print("set user")
+            result = redirect(url_for("playlists.your_playlists"))
         else:
             flask.flash("Incorrect login details!")
 

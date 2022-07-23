@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.login-form{
+.rounded-form{
     background-color: #898989;
     padding: 15px 15px 0 15px;
     min-width: 23vw;
@@ -26,10 +26,30 @@
         border-bottom: white 2px solid;
         color: white;
         width: 100%;
+        margin-top: 5px;
 
         &:focus{
             outline: none !important;
             border-bottom: #00DFDF 2px solid;
+        }
+    }
+
+    &.form-toggleable{
+        padding-top: 5px;
+        min-height: 15vw;
+
+        h3{
+            margin: 0;
+        }
+
+        .toggle-x{
+            font-size: 1.5rem;
+            line-height: 1.5rem;
+            margin: 0 0 5px auto;
+
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
 }

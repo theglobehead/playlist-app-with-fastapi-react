@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/playlists.css') }}">
+{% endblock %}
+
+{% block title %}Your playlists{% endblock %}
+
+{% block content %}
+    <div style="display: flex; flex-direction: row;">
+        {% include "components/side_panel.html" %}
+        <div style="width: 100%; box-sizing: border-box; padding: 5vh 5% 0 5%;">
+            <h2>{{ _('Coming soon') }}</h2>
+        </div>
+    </div>
+{% endblock %}

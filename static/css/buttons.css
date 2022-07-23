@@ -1,4 +1,5 @@
 .btn {
+  width: fit-content;
   padding-inline: 10px;
   border: 1px solid #9b9b9b;
   border-radius: 10px;
@@ -32,16 +33,18 @@
 }
 .btn-rounded:hover {
   box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
   color: #00DFDF;
 }
 
 .btn-scifi {
   color: #00DFDF;
+  text-decoration: none;
   border-width: 2px 2px 0px 2px;
   border-style: solid;
   border-color: #00DFDF;
   background: none;
-  border-radius: 20% 20% 0 0;
+  padding: 15px;
 }
 .btn-scifi:hover {
   background: rgba(0, 223, 223, 0.1);

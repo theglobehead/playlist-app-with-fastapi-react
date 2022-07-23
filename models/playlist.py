@@ -16,6 +16,7 @@ class Playlist:
     # owner: User = field(default_factory=User)
 
     id: int = 0
+    uuid: str = ""
     name: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()

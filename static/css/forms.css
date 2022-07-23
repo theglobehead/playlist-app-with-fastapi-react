@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.login-form {
+.rounded-form {
   background-color: #898989;
   padding: 15px 15px 0 15px;
   min-width: 23vw;
@@ -17,17 +17,33 @@
   justify-content: space-between;
   align-items: center;
 }
-.login-form input {
+.rounded-form input {
   width: 100%;
   background: none;
   border: none;
   border-bottom: white 2px solid;
   color: white;
   width: 100%;
+  margin-top: 5px;
 }
-.login-form input:focus {
+.rounded-form input:focus {
   outline: none !important;
   border-bottom: #00DFDF 2px solid;
+}
+.rounded-form.form-toggleable {
+  padding-top: 5px;
+  min-height: 15vw;
+}
+.rounded-form.form-toggleable h3 {
+  margin: 0;
+}
+.rounded-form.form-toggleable .toggle-x {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin: 0 0 5px auto;
+}
+.rounded-form.form-toggleable .toggle-x:hover {
+  cursor: pointer;
 }
 
 .welcome-text {

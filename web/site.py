@@ -14,7 +14,6 @@ def logout():
 
 @site.route("/profile_picture/<uuid>", methods=['GET', 'POST'])
 def get_profile_pic(uuid: str) -> str:
-    print("called")
     result = ControllerUser.get_profile_pic(uuid)
     return result
 

@@ -24,3 +24,20 @@ a{
 .pointer-on-hover:hover{
     cursor: pointer;
 }
+
+.modal-wrapper{
+    top: 0;
+
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.49);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.modal-closed{
+        display: none;
+    }
+}

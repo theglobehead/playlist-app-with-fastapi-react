@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block stylesheets %}
+{% block extrahead %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 {% endblock %}
 
@@ -12,7 +12,7 @@
             <h1>{{ _('Music Playlists With Flask') }}</h1>
         </div>
         <div>
-           <form class="login-form shadow" action="{{ url_for("login.login") }}" method="post" style="
+           <form class="rounded-form shadow" action="{{ url_for("login.login") }}" method="post" style="
                display: flex;
                flex-direction: column;
                align-items: center;
@@ -25,7 +25,7 @@
                    <p style="margin-top: 15px;">{{ _('password') }}:</p>
                    <input type="password" placeholder="Password" name="password" value="{{ request.form.password1 }}" required>
                </div>
-               <button style="width: fit-content; padding: 15px; margin-top: 15px;" class="btn-scifi" type="submit">{{ _('Log in') }}</button>
+               <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Log in') }}</button>
            </form>
             <p style="margin-top: 13px; text-align: center;">{{ _('Dont have an account?') }} <a href="{{ url_for("register.register") }}">{{ _('Register here') }}</a></p>
         </div>

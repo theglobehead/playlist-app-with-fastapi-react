@@ -123,7 +123,7 @@ class ControllerUser:
                             created=created,
                             is_deleted=is_deleted,
                         )
-
+        print("authenticate: ", result)
         return result
 
     @staticmethod

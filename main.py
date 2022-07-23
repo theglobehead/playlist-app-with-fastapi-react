@@ -4,7 +4,7 @@ from flask_babel import Babel
 
 from web.login_page import login_view
 from web.register_page import register_view
-from web.your_playlists_page import your_playlists_view
+from web.playlists_pages import playlists_view
 from web.site import site
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ psycopg2.extras.register_uuid()
 def home():
     result = redirect(url_for("login.login"))
     if "user" in session:
-        result = redirect(url_for("your-playlists.your_playlists"))
+        result = redirect(url_for("playlists.your_playlists"))
 
     return result
 
@@ -28,5 +28,5 @@ if __name__ == "__main__":
     app.register_blueprint(site, url_prefix="/site")
     app.register_blueprint(login_view, url_prefix="/login")
     app.register_blueprint(register_view, url_prefix="/register")
-    app.register_blueprint(your_playlists_view, url_prefix="/your-playlists")
+    app.register_blueprint(playlists_view, url_prefix="/playlists")
     app.run(debug=True)
