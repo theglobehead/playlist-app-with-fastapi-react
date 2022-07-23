@@ -1,64 +1,41 @@
-.login-main{
-    height: 100vh;
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.login-main {
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.login-form{
-    background-color: #898989;
-    padding: 15px 15px 0 15px;
-    min-width: 23vw;
-    min-height: 23vw;
-    margin-right: 5%;
-    border-radius: 4%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+.login-form {
+  background-color: #898989;
+  padding: 15px 15px 0 15px;
+  min-width: 23vw;
+  min-height: 23vw;
+  margin-right: 5%;
+  border-radius: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.login-form input {
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: white 2px solid;
+  color: white;
+  width: 100%;
+}
+.login-form input:focus {
+  outline: none !important;
+  border-bottom: #00DFDF 2px solid;
 }
 
-.login-form input{
-    width: 100%;
-    background: none;
-    border: none;
-    border-bottom: white 2px solid;
-    color: white;
-    width: 100%;
+.welcome-text {
+  width: 50%;
+  color: white;
+}
+.welcome-text h1 {
+  font-size: 4rem;
 }
 
-.login-form input:focus{
-    outline: none !important;
-    border-bottom: #00DFDF 2px solid;
-}
-
-.welcome-text{
-    width: 50%;
-    color: white;
-}
-
-.welcome-text h1{
-    font-size: 4rem;
-}
-
-.btn{
-    padding-inline: 10px;
-    border: 1px solid #9b9b9b;
-    border-radius: 10px;
-}
-
-.btn-scifi{
-    color: #00DFDF;
-    border-width: 2px 2px 0px 2px;
-    border-style: solid;
-    border-color: #00DFDF;
-    background: none;
-    border-radius: 20% 20% 0 0;
-}
-.btn-scifi:hover{
-    background: rgba(0, 223, 223, 0.1);
-    cursor: pointer;
-}
-
+/*# sourceMappingURL=forms.css.map */

@@ -1,0 +1,44 @@
+.login-main{
+    height: 100vh;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login-form{
+    background-color: #898989;
+    padding: 15px 15px 0 15px;
+    min-width: 23vw;
+    min-height: 23vw;
+    margin-right: 5%;
+    border-radius: 4%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    input{
+        width: 100%;
+        background: none;
+        border: none;
+        border-bottom: white 2px solid;
+        color: white;
+        width: 100%;
+
+        &:focus{
+            outline: none !important;
+            border-bottom: #00DFDF 2px solid;
+        }
+    }
+}
+
+.welcome-text{
+    width: 50%;
+    color: white;
+
+    h1{
+        font-size: 4rem;
+    }
+}

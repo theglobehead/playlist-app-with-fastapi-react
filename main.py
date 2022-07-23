@@ -1,5 +1,6 @@
 import psycopg2.extras
-from flask import Flask, redirect, session, url_for
+from flask import Flask, redirect, session, url_for, request
+from flask_babel import Babel
 
 from web.login_page import login_view
 from web.register_page import register_view
@@ -7,7 +8,9 @@ from web.your_playlists_page import your_playlists_view
 from web.site import site
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "8f42a73054b1749h8f58848be5e6502c"
+app.config["SECRET_KEY"] = "8f42a73054b1749h8f58848be5e6502c"
+app.config["BABEL_DEFAULT_LOCALE"] = "en"
+babel = Babel(app)
 
 psycopg2.extras.register_uuid()
 

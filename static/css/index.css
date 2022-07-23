@@ -1,43 +1,27 @@
-body{
-    margin: 0;
-    padding: 0;
-    background-color: #898989;
-
-    color: white;
-    font-family: 'Helvetica';
-    font-style: normal;
-    font-weight: 500;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #898989;
+  color: white;
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 500;
 }
 
-p{
-    margin: 0;
+p {
+  margin: 0;
 }
 
-a{
-    color: #00DFDF;
+a {
+  color: #00DFDF;
 }
 
-.shadow{
-    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+.shadow {
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
 }
 
-.pointer-on-hover:hover{
-    cursor: pointer;
+.pointer-on-hover:hover {
+  cursor: pointer;
 }
 
-.btn-rounded{
-    background: none;
-    border: none;
-    border-radius: 15px;
-    padding: 10px;
-    width: 100%;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-}
-
-.btn-rounded:hover{
-    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
-    color: #00DFDF;
-}
+/*# sourceMappingURL=index.css.map */

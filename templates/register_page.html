@@ -9,22 +9,22 @@
 {% block content %}
     <div class="login-main">
         <div class="welcome-text">
-            <h1>Music Playlists With Flask</h1>
+            <h1>{{ _('Music Playlists With Flask') }}</h1>
         </div>
         <div>
             <form class="login-form shadow" action="{{ url_for("register.register") }}" method="post">
-                 <h3 style="text-align: center">Register:</h3>
+                 <h3 style="text-align: center">{{ _('Register') }}:</h3>
                 <div style="width: 80%;">
-                    <p>username:</p>
+                    <p>{{ _('username') }}:</p>
                     <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
-                    <p style="margin-top: 15px;">password:</p>
+                    <p style="margin-top: 15px;">{{ _('password') }}:</p>
                     <input type="password" placeholder="Password" name="password1" value="{{ request.form.password1 }}" required>
-                    <p style="margin-top: 15px;">retype password:</p>
+                    <p style="margin-top: 15px;">{{ _('retype password') }}:</p>
                     <input type="password" placeholder="Password" name="password2" value="{{ request.form.password2 }}" required>
                 </div>
-                <button style="width: fit-content; padding: 15px; margin-top: 15px;" class="btn-scifi" type="submit">register</button>
+                <button style="width: fit-content; padding: 15px; margin-top: 15px;" class="btn-scifi" type="submit">{{ _('register') }}</button>
             </form>
-            <p style="margin-top: 13px; text-align: center;">Already have an account? <a href="{{ url_for("login.login") }}">Login here</a></p>
+            <p style="margin-top: 13px; text-align: center;">{{ _('Already have an account?') }} <a href="{{ url_for("login.login") }}">{{ _('Login here') }}</a></p>
         </div>
     </div>
 {% endblock %}

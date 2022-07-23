@@ -15,20 +15,12 @@ def login():
         name = form.get("username").strip()
         password = form.get("password").strip()
 
-        username_exists = ControllerUser.check_if_username_taken(name)
-        password_matches = False
+        user = ControllerUser.authenticate_user(name, password)
 
-        if username_exists:
-            user_id = ControllerUser.get_id_by_name(name)
-            user = ControllerUser.get_user(user_id)
-            hashed_password = ControllerUser.hash_password(password, user.password_salt)
-
-            if user.hashed_password == hashed_password:
-                password_matches = True
-                session["user"] = user
-                result = redirect(url_for("your-playlists.your_playlists"))
-
-        if not username_exists or not password_matches:
+        if user:
+            session["user"] = user
+            result = redirect(url_for("your-playlists.your_playlists"))
+        else:
             flask.flash("Incorrect login details!")
 
     return result

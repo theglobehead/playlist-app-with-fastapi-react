@@ -19,7 +19,7 @@ classDiagram
         playlist_id: int
         playlist_uuid: uuid
         user_id: int
-        name: varchar<350>
+        playlist_name: varchar<350>
         modified: timestamp
         created: timestamp
         is_deleted: bool
@@ -40,7 +40,7 @@ classDiagram
     class artists{
         artist_id: int
         artist_uuid: uuid
-        name: varchar<350>
+        artist_name: varchar<350>
         modified: timestamp
         created: timestamp
         is_deleted: bool
@@ -49,7 +49,7 @@ classDiagram
     class tags{
         tag_id: int
         tag_uuid: uuid
-        name: varchar<350>
+        tag_name: varchar<350>
         modified: timestamp
         created: timestamp
         is_deleted: bool

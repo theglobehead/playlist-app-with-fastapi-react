@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/side_panel.css') }}">
 <div class="side_panel">
     <div style="width: 100%;">
         <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 5vh;">
@@ -14,40 +15,10 @@
             margin-left: 15%;
             margin-top: 7vh;
         ">
-            <a class="btn-leaf" href="{{ url_for("your-playlists.your_playlists") }}">Your playlists</a>
-            <a class="btn-leaf" href="#">Settings</a>
-            <a class="btn-leaf" href="#">Discover</a>
+            <a class="btn-leaf" href="{{ url_for("your-playlists.your_playlists") }}">{{ _('Your playlists') }}</a>
+            <a class="btn-leaf" href="#">Settings{{ _('') }}</a>
+            <a class="btn-leaf" href="#">Discover{{ _('') }}</a>
         </div>
     </div>
     <a href="{{ url_for("site.logout") }}" style="margin-bottom: 15px;">Log out</a>
 </div>
-
-<style>
-    .side_panel{
-        max-height: 100vh;
-        height: 100vh;
-        width: 20%;
-        background-color: #898989;
-        box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .btn-leaf{
-        background: none;
-        border: none;
-        border-radius: 15px 0 15px 0;
-        padding: 10px;
-        width: 100%;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-    }
-
-    .btn-leaf:hover{
-        box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
-        color: #00DFDF;
-    }
-</style>

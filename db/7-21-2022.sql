@@ -329,10 +329,10 @@ create unique index users_id_uindex
     on users (user_id);
 
 create unique index users_uuid_uindex
-    on users (uuid);
+    on users (user_uuid);
 
 create unique index users_name_uindex
-    on users (name);
+    on users (user_name);
 
 create table playlists
 (
