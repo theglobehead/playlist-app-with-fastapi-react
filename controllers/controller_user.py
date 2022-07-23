@@ -99,6 +99,21 @@ class ControllerUser:
         return result
 
     @staticmethod
+    def get_id_by_uuid(uuid: str) -> int:
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT user_id "
+                            "FROM users "
+                            "WHERE user_uuid = %(uuid)s LIMIT 1",
+                            {"uuid": uuid})
+                result = cur.fetchone()
+
+        if result:
+            result = result[0]
+
+        return result
+
+    @staticmethod
     def authenticate_user(name: str, password: str) -> User | None:
         result = None
 

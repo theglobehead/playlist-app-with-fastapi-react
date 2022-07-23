@@ -18,6 +18,7 @@ class Playlist:
     id: int = 0
     uuid: str = ""
     name: str = ""
+    owner_user_id: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False
