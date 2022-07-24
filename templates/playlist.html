@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 {% block extrahead %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/playlists.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 {% endblock %}
 
 {% block title %}Your playlists{% endblock %}
 
 {% block content %}
-    <div style="display: flex; flex-direction: row;">
-        {% include "components/side_panel.html" %}
-        <div style="width: 100%; box-sizing: border-box; padding: 5vh 5% 0 5%;">
-            <h2>{{ _('Coming soon') }}</h2>
-        </div>
+    {% include "components/side_panel.html" %}
+    <div style="width: 80%; margin-left: auto; box-sizing: border-box; padding: 5vh 5% 5vh 5%;">
+        {% for song in playlist.songs %}
+            <div class="playlist-box shadow" style="margin-top: 20px; display: inline-flex; justify-content: space-between; align-items: center;">
+                <div style="display: inline-flex; column-gap: 20px;">
+                    <img src="{{ url_for("site.get_profile_pic", uuid=user.uuid) }}" class="shadow" style="width: 10vw; height: 10vw;">
+                    <div style="display: inline-block;">
+                        <h3>{{ song.name }}{{ song.ar }}</h3>
+                        <audio controls>
+                            <source src="{{ song.audio_path + song.uuid + song.file_type }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi" type="submit">{{ _('Delete') }}</a>
+            </div>
+
+        {% endfor %}
     </div>
 {% endblock %}

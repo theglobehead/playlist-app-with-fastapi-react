@@ -4,7 +4,7 @@ from dataclasses import field
 from datetime import datetime
 from typing import List
 
-# from models.artist import Artist
+from controllers.constants import SONG_PATH
 from models.tag import Tag
 
 
@@ -12,13 +12,14 @@ from models.tag import Tag
 @dataclass
 class Song:
     tags: List[Tag] = field(default_factory=list)
-    # artist: Artist = field(default_factory=Artist)
 
     id: int = 0
+    uuid: str = ""
     name: str = ""
+    audio_path: str = SONG_PATH[1:]
+    file_type: str = ".mp3"
     artist = str = ""
     album: str = ""
-    audio_path: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False

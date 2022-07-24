@@ -1,5 +1,6 @@
 from typing import List
 
+from controllers.controller_song import ControllerSong
 from models.playlist import Playlist
 from utils.common_utils import CommonUtils
 
@@ -13,16 +14,18 @@ class ControllerPlaylist:
             with conn.cursor() as cur:
                 cur.execute(
                     "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
-                    "FROM playlists"
+                    "FROM playlists "
                 )
                 playlists = cur.fetchall()
 
                 if playlists:
                     for playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted in playlists:
+                        playlist_songs = ControllerSong.get_playlist_songs(playlist_id)
                         new_playlist = Playlist(
                             id=playlist_id,
                             uuid=str(playlist_uuid),
                             name=playlist_name,
+                            songs=playlist_songs,
                             modified=modified,
                             created=created,
                             is_deleted=is_deleted,
@@ -46,10 +49,12 @@ class ControllerPlaylist:
 
                 if result:
                     playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted = result
+                    playlist_songs = ControllerSong.get_playlist_songs(playlist_id)
                     result = Playlist(
                         id=playlist_id,
                         uuid=str(playlist_uuid),
                         name=playlist_name,
+                        songs=playlist_songs,
                         modified=modified,
                         created=created,
                         is_deleted=is_deleted,

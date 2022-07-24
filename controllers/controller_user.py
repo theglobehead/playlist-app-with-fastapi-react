@@ -154,6 +154,4 @@ class ControllerUser:
         with open(result, "rb") as f:
             result = BytesIO(f.read())
 
-        print(result)
-
         return send_file(result, mimetype="image/jpeg")
