@@ -7,4 +7,26 @@
   margin: 0 0 15px 0;
 }
 
+.song-box {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2vh 10px 10px 10px;
+  border-bottom: 3px solid #00DFDF;
+  font-size: 1.3rem;
+}
+.song-box.selected {
+  background: rgba(0, 223, 223, 0.1);
+}
+.song-box div {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 20px;
+}
+.song-box div .song-img {
+  width: 50px;
+  height: 50px;
+}
+
 /*# sourceMappingURL=playlists.css.map */
