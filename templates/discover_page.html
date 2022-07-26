@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/playlists.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/discover_page.css') }}">
+    <script src="{{ url_for("static", filename="js/playlist.js") }}"></script>
+{% endblock %}
+
+{% block title %}Your playlists{% endblock %}
+
+{% block content %}
+    {% include "components/side_panel.html" %}
+    <div style="width: 80%; margin-left: auto; box-sizing: border-box; padding: 5vh 5% 5vh 5%;">
+        <div class="song-grid">
+            {% for song in songs %}
+                <div class="song-box shadow">
+                    <img src="{{ url_for("site.get_profile_pic", uuid=user.uuid) }}" class="shadow" style="width: max-content;">
+                    <p>{{ song.name }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

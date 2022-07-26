@@ -16,8 +16,8 @@
             margin-top: 7vh;
         ">
             <a class="btn-leaf" href="{{ url_for("playlists.your_playlists") }}">{{ _('Your playlists') }}</a>
-            <a class="btn-leaf" href="#">Settings{{ _('') }}</a>
-            <a class="btn-leaf" href="#">Discover{{ _('') }}</a>
+            <a class="btn-leaf" href="#">{{ _('Settings') }}</a>
+            <a class="btn-leaf" href="{{ url_for("discover.discover") }}">{{ _('Discover') }}</a>
         </div>
     </div>
     <a href="{{ url_for("site.logout") }}" style="margin-bottom: 15px;">Log out</a>

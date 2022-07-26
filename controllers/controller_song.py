@@ -14,8 +14,46 @@ class ControllerSong:
                 cur.execute(
                     "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
                     "FROM songs "
-                    "INNER JOIN songs_in_playlists sip on songs.song_id = sip.song_id AND sip.playlist_id = %(playlist_id)s ",
+                    "INNER JOIN songs_in_playlists sip on songs.song_id = sip.song_id AND sip.playlist_id = %(playlist_id)s "
+                    "WHERE songs.is_deleted = false and sip.is_deleted = false",
                     {"playlist_id": playlist_id}
+                )
+                playlists = cur.fetchall()
+
+                if playlists:
+                    for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
+                        new_song = Song(
+                            id=song_id,
+                            uuid=str(song_uuid),
+                            name=song_name,
+                            album=album,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                        )
+                        result.append(new_song)
+        return result
+
+    @staticmethod
+    def get_songs(amount: int = -1, starting_from: int = 0):
+        result = []
+
+        amount_str = ""
+        if amount != -1:
+            amount_str = f"LIMIT %(amount)s "
+
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
+                    "FROM songs "
+                    "WHERE songs.is_deleted = false "
+                    f"{amount_str}"
+                    "OFFSET %(starting_from)s ",
+                    {
+                        "starting_from": starting_from,
+                        "amount": amount
+                    }
                 )
                 playlists = cur.fetchall()
 

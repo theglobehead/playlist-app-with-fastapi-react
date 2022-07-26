@@ -22,7 +22,7 @@
         </div>
         <div class="song-table" style="margin-top: 5vh;">
             {% for song in playlist.songs %}
-                <div class="song-box" id="song-box-{{ loop.index }}" onclick="toggleAudio('{{ loop.index }}')">
+                <div class="song-row" id="song-row-{{ loop.index }}" onclick="toggleAudio('{{ loop.index }}')">
                     <audio class="song-audio" onended="switchAudio('{{ 1 if loop.index == loop.length else loop.index + 1 }}')" id="audio-{{ loop.index }}">
                         <source src="{{ song.audio_path + song.uuid + song.file_type }}" type="audio/mpeg">
                         {{ _("Your browser does not support the audio element.") }}

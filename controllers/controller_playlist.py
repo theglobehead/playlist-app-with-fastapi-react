@@ -15,6 +15,8 @@ class ControllerPlaylist:
                 cur.execute(
                     "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
                     "FROM playlists "
+                    "WHERE owner_user_id = %(user_id)s and is_deleted = false ",
+                    {"user_id": user_id}
                 )
                 playlists = cur.fetchall()
 
