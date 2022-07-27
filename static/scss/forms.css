@@ -17,7 +17,8 @@
   justify-content: space-between;
   align-items: center;
 }
-.rounded-form input {
+.rounded-form input, .rounded-form select {
+  padding: 5px 0 5px 0;
   width: 100%;
   background: none;
   border: none;
@@ -26,7 +27,7 @@
   width: 100%;
   margin-top: 5px;
 }
-.rounded-form input:focus {
+.rounded-form input:focus, .rounded-form select:focus {
   outline: none !important;
   border-bottom: #00DFDF 2px solid;
 }

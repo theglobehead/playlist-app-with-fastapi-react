@@ -7,6 +7,7 @@ from io import BytesIO
 import numpy as np
 from flask import send_file
 
+from controllers.controller_playlist import ControllerPlaylist
 from models.user import User
 from controllers.constants import PROFILE_PICTURE_PATH, DEFAULT_PROFILE_PICTURE_PATH
 from utils.common_utils import CommonUtils
@@ -51,6 +52,7 @@ class ControllerUser:
             id=user_id,
             uuid=str(user_uuid),
             name=user_name,
+            playlists=ControllerPlaylist.get_user_playlists(user_id),
             hashed_password=hashed_password,
             password_salt=password_salt,
             modified=modified,
@@ -74,6 +76,7 @@ class ControllerUser:
             id=user_id,
             uuid=str(user_uuid),
             name=name,
+            playlists=ControllerPlaylist.get_user_playlists(user_id),
             hashed_password=hashed_password,
             password_salt=password_salt,
             modified=modified,
@@ -132,6 +135,7 @@ class ControllerUser:
                             id=user_id,
                             uuid=str(user_uuid),
                             name=name,
+                            playlists=ControllerPlaylist.get_user_playlists(user_id),
                             hashed_password=hashed_password,
                             password_salt=password_salt,
                             modified=modified,

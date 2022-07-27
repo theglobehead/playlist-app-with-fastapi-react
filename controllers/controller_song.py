@@ -6,7 +6,7 @@ from utils.common_utils import CommonUtils
 
 class ControllerSong:
     @staticmethod
-    def get_playlist_songs(playlist_id: id) -> List[Song]:
+    def get_playlist_songs(playlist_id: int) -> List[Song]:
         result = []
 
         with CommonUtils.connection() as conn:
@@ -69,4 +69,23 @@ class ControllerSong:
                             is_deleted=is_deleted,
                         )
                         result.append(new_song)
+        return result
+
+    @staticmethod
+    def get_song_id_by_uuid(song_uuid: str) -> int:
+        result = None
+
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT song_id "
+                    "FROM songs "
+                    "WHERE song_uuid = %(song_uuid)s AND is_deleted = false ",
+                    {"song_uuid": song_uuid}
+                )
+                song_id = cur.fetchone()
+
+                if song_id:
+                    result = song_id[0]
+
         return result

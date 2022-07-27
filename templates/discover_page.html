@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% block extrahead %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/playlists.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/discover_page.css') }}">
-    <script src="{{ url_for("static", filename="js/playlist.js") }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/discover_page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/forms.css') }}">
 {% endblock %}
 
 {% block title %}Your playlists{% endblock %}
@@ -13,11 +11,35 @@
     <div style="width: 80%; margin-left: auto; box-sizing: border-box; padding: 5vh 5% 5vh 5%;">
         <div class="song-grid">
             {% for song in songs %}
-                <div class="song-box shadow">
+                <div class="song-box shadow pointer-on-hover" onclick="openModal('add_song_modal'); $('#song_uuid_input').val('{{ song.uuid }}')">
                     <img src="{{ url_for("site.get_profile_pic", uuid=user.uuid) }}" class="shadow" style="width: max-content;">
                     <p>{{ song.name }}</p>
                 </div>
             {% endfor %}
         </div>
+    </div>
+    <div class="modal-wrapper modal-closed" id="add_song_modal">
+        <form class="rounded-form form-toggleable shadow" action="{{ url_for("discover.add_song") }}" method="post" style="
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               height: fit-content;
+               width: 20%;
+           ">
+            <input type="hidden" name="owner_user_uuid" value="{{ user.uuid }}">
+            <input type="hidden" name="song_uuid" id="song_uuid_input" value="">
+            <a class="toggle-x" onclick="closeModal('add_song_modal')">x</a>
+            <h3 style="text-align: center;">{{ _('Select Playlist') }}:</h3>
+            <div style="width: 80%">
+                <p style="margin-top: 15px;">{{ _('Add song') }}:</p>
+                <select name="playlist_uuid" required>
+                    <option selected="selected" disabled="disabled">{{ _("Select playlist") }}</option>
+                    {% for playlist in user_playlists %}
+                        <option value="{{ playlist.uuid }}">{{ playlist.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Create') }}</button>
+        </form>
     </div>
 {% endblock %}

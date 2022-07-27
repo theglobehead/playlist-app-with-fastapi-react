@@ -8,6 +8,7 @@ from models.song import Song
 from models.tag import Tag
 # from models.user import User
 
+
 @dataclass_json
 @dataclass
 class Playlist:
