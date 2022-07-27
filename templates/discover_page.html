@@ -12,7 +12,7 @@
         <div class="song-grid">
             {% for song in songs %}
                 <div class="song-box shadow pointer-on-hover" onclick="openModal('add_song_modal'); $('#song_uuid_input').val('{{ song.uuid }}')">
-                    <img src="{{ url_for("site.get_profile_pic", uuid=user.uuid) }}" class="shadow" style="width: max-content;">
+                    <img src="{{ url_for("site.get_song_pic", song_uuid=song.uuid) }}" class="shadow">
                     <p>{{ song.name }}</p>
                 </div>
             {% endfor %}

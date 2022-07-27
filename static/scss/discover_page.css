@@ -16,8 +16,12 @@
   padding: 15px;
   border-radius: 15px;
 }
+.song-box img {
+  height: 300px;
+  width: 300px;
+}
 .song-box p {
   font-weight: 510;
 }
 
-/*# sourceMappingURL=discover_page.scss.map */
+/*# sourceMappingURL=discover_page.css.map */

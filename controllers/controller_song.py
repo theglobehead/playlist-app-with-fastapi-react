@@ -1,5 +1,10 @@
+import os
+from io import BytesIO
 from typing import List
 
+from flask import send_file, Response
+
+from controllers.constants import SONG_PICTURE_PATH, DEFAULT_PROFILE_PICTURE_PATH
 from models.song import Song
 from utils.common_utils import CommonUtils
 
@@ -89,3 +94,18 @@ class ControllerSong:
                     result = song_id[0]
 
         return result
+
+    @staticmethod
+    def get_song_pic(uuid: str) -> Response:
+        result = None
+
+        song_pic_path = f"{SONG_PICTURE_PATH}{uuid}.jpg"
+        if os.path.exists(song_pic_path):
+            result = song_pic_path
+        else:
+            result = DEFAULT_PROFILE_PICTURE_PATH
+
+        with open(result, "rb") as f:
+            result = BytesIO(f.read())
+
+        return send_file(result, mimetype="image/jpeg")
