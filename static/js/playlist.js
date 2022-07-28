@@ -33,3 +33,19 @@ function toggleAudio(audioNum){
         switchAudio(audioNum)
     }
 }
+
+function remove_song(url, song_uuid, playlist_uuid){
+    let formData = new FormData();
+    formData.append('song_uuid', song_uuid)
+    formData.append('playlist_uuid', playlist_uuid)
+
+    $.ajax({
+        url:url,
+        data: formData,
+        async: false,
+        type: 'POST',
+        contentType: false,
+        processData: false
+    })
+    window.location.reload()
+}

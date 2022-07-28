@@ -46,9 +46,16 @@
   background: none;
   padding: 15px;
 }
+.btn-scifi.btn-scifi-danger {
+  color: #FF224A;
+  border-color: #FF224A;
+}
+.btn-scifi.btn-scifi-danger:hover {
+  background: rgba(255, 34, 74, 0.1);
+}
 .btn-scifi:hover {
   background: rgba(0, 223, 223, 0.1);
   cursor: pointer;
 }
 
-/*# sourceMappingURL=buttons.scss.map */
+/*# sourceMappingURL=buttons.css.map */

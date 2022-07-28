@@ -28,7 +28,7 @@ class ControllerDatabase:
                 )
 
     @staticmethod
-    def insert_play_list(playlist_name: str, owner_id: int):
+    def insert_playlist(playlist_name: str, owner_id: int):
         playlist = Playlist(
             name=playlist_name,
             owner_user_id=owner_id
@@ -44,18 +44,36 @@ class ControllerDatabase:
                 )
 
     @staticmethod
-    def insert_song(song: Song):
+    def delete_song(song: Song):
         pass
 
     # Removing functions
     @staticmethod
-    def remove_user(user: User):
+    def delete_user(user: User):
         pass
 
     @staticmethod
-    def remove_play_list(play_list: Playlist):
-        pass
+    def delete_playlist(playlist_id: int):
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "UPDATE playlists "
+                    "SET is_deleted = true "
+                    "WHERE playlist_id = %(playlist_id)s ",
+                    {"playlist_id": playlist_id}
+                )
 
     @staticmethod
-    def remove_song(song: Song):
+    def remove_song_from_playlist(playlist_id: int, song_id: int):
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "UPDATE songs_in_playlists "
+                    "SET is_deleted = true "
+                    "WHERE song_id = %(song_id)s and playlist_id = %(playlist_id)s ",
+                    {"song_id": song_id, "playlist_id": playlist_id}
+                )
+
+    @staticmethod
+    def delete_song(song: Song):
         pass
