@@ -18,6 +18,11 @@ psycopg2.extras.register_uuid()
 
 @app.route('/')
 def home():
+    """
+    The home view
+    :return: Redirects to the login view if the user isn't logged in,
+             otherwise it returns to the your_playlist view
+    """
     result = redirect(url_for("login.login"))
     if "user" in session:
         result = redirect(url_for("playlists.your_playlists"))

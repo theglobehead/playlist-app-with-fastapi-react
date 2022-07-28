@@ -8,7 +8,13 @@ from controllers.controller_user import ControllerUser
 class ControllerDatabase:
     # Adding functions
     @staticmethod
-    def insert_user(name: str, password: str):
+    def insert_user(name: str, password: str) -> None:
+        """
+        Used for creating a new user
+        :param name: the name of the user
+        :param password: the password of the user
+        :return: None
+        """
         salt = ControllerUser.generate_salt()
         hashed_password = ControllerUser.hash_password(password=password, salt=salt)
 
@@ -29,6 +35,12 @@ class ControllerDatabase:
 
     @staticmethod
     def insert_playlist(playlist_name: str, owner_id: int):
+        """
+        Used for creating a playlist
+        :param playlist_name: The name of the playlist
+        :param owner_id: the id of the playlists' owner
+        :return: 
+        """
         playlist = Playlist(
             name=playlist_name,
             owner_user_id=owner_id
@@ -44,16 +56,12 @@ class ControllerDatabase:
                 )
 
     @staticmethod
-    def delete_song(song: Song):
-        pass
-
-    # Removing functions
-    @staticmethod
-    def delete_user(user: User):
-        pass
-
-    @staticmethod
-    def delete_playlist(playlist_id: int):
+    def delete_playlist(playlist_id: int) -> None:
+        """
+        Used for deleting a playlist
+        :param playlist_id: the id of the playlist
+        :return: None
+        """
         with CommonUtils.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -64,7 +72,13 @@ class ControllerDatabase:
                 )
 
     @staticmethod
-    def remove_song_from_playlist(playlist_id: int, song_id: int):
+    def remove_song_from_playlist(playlist_id: int, song_id: int) -> None:
+        """
+        Used for removing a song from a playlist
+        :param playlist_id: the id of the playlist
+        :param song_id: the id of the song
+        :return:
+        """
         with CommonUtils.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -73,7 +87,3 @@ class ControllerDatabase:
                     "WHERE song_id = %(song_id)s and playlist_id = %(playlist_id)s ",
                     {"song_id": song_id, "playlist_id": playlist_id}
                 )
-
-    @staticmethod
-    def delete_song(song: Song):
-        pass

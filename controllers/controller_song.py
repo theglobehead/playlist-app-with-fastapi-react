@@ -12,6 +12,11 @@ from utils.common_utils import CommonUtils
 class ControllerSong:
     @staticmethod
     def get_playlist_songs(playlist_id: int) -> List[Song]:
+        """
+        Used for getting all the songs of a playlist
+        :param playlist_id: the id of the playlist
+        :return: a list of songs
+        """
         result = []
 
         with CommonUtils.connection() as conn:
@@ -40,7 +45,13 @@ class ControllerSong:
         return result
 
     @staticmethod
-    def get_songs(amount: int = -1, starting_from: int = 0):
+    def get_songs(amount: int = -1, starting_from: int = 0) -> List[Song]:
+        """
+        Used for getting all song in a certain range
+        :param amount: the amount of songs to get
+        :param starting_from: the starting point from where to start fetching the songs
+        :return: a list of songs
+        """
         result = []
 
         amount_str = ""
@@ -78,6 +89,11 @@ class ControllerSong:
 
     @staticmethod
     def get_song_id_by_uuid(song_uuid: str) -> int:
+        """
+        Used for getting the id of a song from its uuid
+        :param song_uuid: the uuid of the song
+        :return: the id as an integer
+        """
         result = None
 
         with CommonUtils.connection() as conn:
@@ -96,10 +112,15 @@ class ControllerSong:
         return result
 
     @staticmethod
-    def get_song_pic(uuid: str) -> Response:
+    def get_song_pic(song_uuid: str) -> Response:
+        """
+        Returns the songs picture
+        :param song_uuid: the uuid of the song
+        :return: returns the image as a flask response
+        """
         result = None
 
-        song_pic_path = f"{SONG_PICTURE_PATH}{uuid}.jpg"
+        song_pic_path = f"{SONG_PICTURE_PATH}{song_uuid}.jpg"
         if os.path.exists(song_pic_path):
             result = song_pic_path
         else:

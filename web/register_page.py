@@ -9,6 +9,11 @@ register_view = Blueprint("register", __name__)
 
 @register_view.route("/", methods = ['GET', 'POST'])
 def register():
+    """
+    View for the register page.
+    If the method is POST and the form data is correct. It registers a new user
+    :return: Renders the register view or redirects to the login view
+    """
     result = render_template("register_page.html")
 
     if request.method == "POST":
@@ -31,6 +36,14 @@ def register():
 
 
 def validate_form(name: str, pass1: str, pass2: str):
+    """
+    Used for validating a register form.
+    If the form is invalid, it flashes a message.
+    :param name: the username entered
+    :param pass1: the first password entered
+    :param pass2: the second password entered
+    :return: boolean of weather or not the form is valid
+    """
     result = True
 
     if not all((pass1, pass2)):

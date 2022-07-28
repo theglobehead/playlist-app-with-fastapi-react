@@ -8,6 +8,10 @@ discover_view = Blueprint("discover", __name__)
 
 @discover_view.route("/", methods = ['GET', 'POST'])
 def discover():
+    """
+    View for the discover page
+    :return: renders the discover view
+    """
     user = session.get("user")
 
     page_song_amount = 6

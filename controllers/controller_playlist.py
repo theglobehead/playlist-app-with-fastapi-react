@@ -8,6 +8,11 @@ from utils.common_utils import CommonUtils
 class ControllerPlaylist:
     @staticmethod
     def get_user_playlists(user_id: id) -> List[Playlist]:
+        """
+        Used for getting all the users' playlists
+        :param user_id: the id of the user
+        :return: a list of playlists
+        """
         result = []
 
         with CommonUtils.connection() as conn:
@@ -37,6 +42,11 @@ class ControllerPlaylist:
 
     @staticmethod
     def get_playlist_by_uuid(playlist_uuid: str) -> Playlist:
+        """
+        Used for getting a playlist using its uuid
+        :param playlist_uuid: the uuid of the playlist
+        :return: a playlist model
+        """
         result = None
 
         with CommonUtils.connection() as conn:
@@ -65,6 +75,12 @@ class ControllerPlaylist:
 
     @staticmethod
     def add_song(playlist_id: int, song_id: int) -> None:
+        """
+        Used for adding a song to a playlist
+        :param playlist_id: the id of the playlist that will contain the song
+        :param song_id: id of the song to be added
+        :return: None
+        """
         with CommonUtils.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -75,6 +91,11 @@ class ControllerPlaylist:
 
     @staticmethod
     def get_playlist_id_by_uuid(playlist_uuid: str) -> int:
+        """
+        Used for getting the id of a playlist from the uuid
+        :param playlist_uuid: the uuid of the palylist
+        :return: returns the id as an integer
+        """
         result = None
 
         with CommonUtils.connection() as conn:

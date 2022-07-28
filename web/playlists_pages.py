@@ -14,9 +14,13 @@ playlists_view = Blueprint("playlists", __name__)
 @playlists_view.route("/your-playlists", methods=['GET'])
 @login_required
 def your_playlists():
+    """
+    View for user playlists
+    :return: renders the view for your_playlists.html
+    """
     user = session.get("user")
     playlists = ControllerPlaylist.get_user_playlists(user["id"])
-    result = render_template("playlist_list.html", user=user, playlists=playlists)
+    result = render_template("your_playlists.html", user=user, playlists=playlists)
 
     return result
 
@@ -24,6 +28,11 @@ def your_playlists():
 @playlists_view.route("/<playlist_uuid>", methods=['GET'])
 @login_required
 def playlist_page(playlist_uuid):
+    """
+    View for a playlist
+    :param playlist_uuid: uuid of the playlist that needs to be displayed
+    :return: renders the view for playlist.html
+    """
     user = session.get("user")
     playlist = ControllerPlaylist.get_playlist_by_uuid(playlist_uuid)
 
@@ -34,6 +43,11 @@ def playlist_page(playlist_uuid):
 @playlists_view.route("/save-playlist", methods=['POST'])
 @login_required
 def save_playlist():
+    """
+    Used for saving a playlist
+    Gets the uuid of the user and the name of the playlist from a from
+    :return: Redirects to the playlist_list view
+    """
     user_uuid = request.form.get("owner_user_uuid")
     user_id = ControllerUser.get_id_by_uuid(user_uuid)
     playlist_name = request.form.get("playlist_name")
