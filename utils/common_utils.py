@@ -17,5 +17,5 @@ class CommonUtils:
                 password=environ["DB_PASSWORD"],
             )
         except Exception as e:
-            LoggingUtils.log(e.__str__())
+            LoggingUtils.exception(str(e))
         return conn

@@ -30,7 +30,7 @@ def register():
                 result = redirect(url_for("login.login"))
             except Exception as e:
                 flask.flash("Something went wrong...")
-                LoggingUtils.log(e.__str__())
+                LoggingUtils.exception(str(e))
 
     return result
 
@@ -61,7 +61,7 @@ def validate_form(name: str, pass1: str, pass2: str):
     elif len(pass1) < 8:
         flask.flash("Password must be at least 8 characters long!")
         result = False
-    elif ControllerUser.check_if_username_taken(name=name):
+    elif ControllerDatabase.check_if_username_taken(name=name):
         flask.flash("Username is already taken!")
         result = False
 

@@ -19,7 +19,7 @@ def your_playlists():
     :return: renders the view for your_playlists.html
     """
     user = session.get("user")
-    playlists = ControllerPlaylist.get_user_playlists(user["id"])
+    playlists = ControllerDatabase.get_user_playlists(user)
     result = render_template("your_playlists.html", user=user, playlists=playlists)
 
     return result
@@ -34,7 +34,7 @@ def playlist_page(playlist_uuid):
     :return: renders the view for playlist.html
     """
     user = session.get("user")
-    playlist = ControllerPlaylist.get_playlist_by_uuid(playlist_uuid)
+    playlist = ControllerDatabase.get_playlist_by_uuid(playlist_uuid)
 
     result = render_template("playlist.html", user=user, playlist=playlist)
     return result
@@ -49,7 +49,7 @@ def save_playlist():
     :return: Redirects to the playlist_list view
     """
     user_uuid = request.form.get("owner_user_uuid")
-    user_id = ControllerUser.get_id_by_uuid(user_uuid)
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
     playlist_name = request.form.get("playlist_name")
     ControllerDatabase.insert_playlist(playlist_name, user_id)
     return redirect(url_for("playlists.your_playlists"))
@@ -62,7 +62,7 @@ def delete_playlist(playlist_uuid: str):
     :param playlist_uuid: The uuid of the playlist that should be deleted
     :return: Redirects to the playlist_list view
     """
-    playlist_id = ControllerPlaylist.get_playlist_id_by_uuid(playlist_uuid)
+    playlist_id = ControllerDatabase.get_playlist_id_by_uuid(playlist_uuid)
     ControllerDatabase.delete_playlist(playlist_id)
     return redirect(url_for("playlists.your_playlists"))
 
@@ -76,8 +76,8 @@ def remove_song():
     playlist_uuid = request.form.get("playlist_uuid")
     song_uuid = request.form.get("song_uuid")
 
-    song_id = ControllerSong.get_song_id_by_uuid(song_uuid)
-    playlist_id = ControllerPlaylist.get_playlist_id_by_uuid(playlist_uuid)
+    song_id = ControllerDatabase.get_song_id_by_uuid(song_uuid)
+    playlist_id = ControllerDatabase.get_playlist_id_by_uuid(playlist_uuid)
 
     ControllerDatabase.remove_song_from_playlist(playlist_id, song_id)
 

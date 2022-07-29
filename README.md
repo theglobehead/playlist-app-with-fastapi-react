@@ -87,20 +87,20 @@ classDiagram
         is_deleted: bool
     }
 
-    tags_in_playlists o-- playlist
-    tags_in_playlists o-- tag
+    tags_in_playlists o-- playlists
+    tags_in_playlists o-- tags
 
-    tags_in_songs o-- tag
-    tags_in_songs o-- song
+    tags_in_songs o-- tags
+    tags_in_songs o-- songs
 
-    tags_in_artists o-- tag
-    tags_in_artists o-- artist
+    tags_in_artists o-- tags
+    tags_in_artists o-- artists
 
-    songs_in_playlists o-- song
-    songs_in_playlists o-- playlist
+    songs_in_playlists o-- songs
+    songs_in_playlists o-- playlists
 
-    playlist --* user
-    song --* artist
+    playlists --* users
+    songs --* artists
 ```
 
 ## Models diagram
