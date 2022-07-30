@@ -16,9 +16,9 @@ class Playlist:
     tags: List[Tag] = field(default_factory=list)
     # owner: User = field(default_factory=User)
 
-    id: int = 0
-    uuid: str = ""
-    name: str = ""
+    playlist_id: int = 0
+    playlist_uuid: str = ""
+    playlist_name: str = ""
     owner_user_id: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()

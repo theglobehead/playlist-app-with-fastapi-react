@@ -18,7 +18,10 @@ def your_playlists():
     View for user playlists
     :return: renders the view for your_playlists.html
     """
-    user = session.get("user")
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    user_uuid = session.get("user_uuid")
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    print("user:", user)
     playlists = ControllerDatabase.get_user_playlists(user)
     result = render_template("your_playlists.html", user=user, playlists=playlists)
 
@@ -33,7 +36,9 @@ def playlist_page(playlist_uuid):
     :param playlist_uuid: uuid of the playlist that needs to be displayed
     :return: renders the view for playlist.html
     """
-    user = session.get("user")
+    user_uuid = session.get("user_uuid")
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+
     playlist = ControllerDatabase.get_playlist_by_uuid(playlist_uuid)
 
     result = render_template("playlist.html", user=user, playlist=playlist)
@@ -49,7 +54,7 @@ def save_playlist():
     :return: Redirects to the playlist_list view
     """
     user_uuid = request.form.get("owner_user_uuid")
-    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    user_id = ControllerDatabase.get_user_by_uuid(user_uuid)
     playlist_name = request.form.get("playlist_name")
     ControllerDatabase.insert_playlist(playlist_name, user_id)
     return redirect(url_for("playlists.your_playlists"))

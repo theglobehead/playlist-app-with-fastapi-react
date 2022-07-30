@@ -28,7 +28,7 @@ def home():
              otherwise it returns to the your_playlist view
     """
     result = redirect(url_for("login.login"))
-    if "user" in session:
+    if "user_uuid" in session:
         result = redirect(url_for("playlists.your_playlists"))
 
     return result

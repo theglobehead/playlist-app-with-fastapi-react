@@ -13,12 +13,14 @@ def discover():
     View for the discover page
     :return: renders the discover view
     """
-    user = session.get("user")
+    user_uuid = session.get("user_uuid")
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
 
     page_song_amount = 6
     songs = ControllerDatabase.get_songs(amount=page_song_amount)
-    user_playlists = ControllerDatabase.get_user_playlists(user["id"])
+    user_playlists = ControllerDatabase.get_user_playlists(user.id)
     return render_template("discover_page.html", user=user, songs=songs, user_playlists=user_playlists)
+
 
 @discover_view.route("/add-song", methods = ['GET', 'POST'])
 def add_song():

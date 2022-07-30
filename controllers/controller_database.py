@@ -16,10 +16,10 @@ from controllers.controller_user import ControllerUser
 
 class ControllerDatabase:
     @staticmethod
-    def get_user_playlists(user_id: id) -> List[Playlist]:
+    def get_user_playlists(user: User) -> List[Playlist]:
         """
         Used for getting all the users' playlists
-        :param user_id: the id of the user
+        :param user: the user, whose playlists to fetch
         :return: a list of playlists
         """
         result = []
@@ -30,17 +30,17 @@ class ControllerDatabase:
                     "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
                     "FROM playlists "
                     "WHERE owner_user_id = %(user_id)s and is_deleted = false ",
-                    {"user_id": user_id}
+                    user.to_dict()
                 )
                 playlists = cur.fetchall()
 
                 if playlists:
                     for playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted in playlists:
-                        playlist_songs = ControllerDatabase.get_playlist_songs(playlist_id)
+                        playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
                         new_playlist = Playlist(
-                            id=playlist_id,
-                            uuid=str(playlist_uuid),
-                            name=playlist_name,
+                            user_id=playlist_id,
+                            user_uuid=str(playlist_uuid),
+                            user_name=playlist_name,
                             songs=playlist_songs,
                             modified=modified,
                             created=created,
@@ -72,9 +72,9 @@ class ControllerDatabase:
                     playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted = result
                     playlist_songs = ControllerDatabase.get_playlist_songs(playlist_id)
                     result = Playlist(
-                        id=playlist_id,
-                        uuid=str(playlist_uuid),
-                        name=playlist_name,
+                        user_id=playlist_id,
+                        user_uuid=str(playlist_uuid),
+                        user_name=playlist_name,
                         songs=playlist_songs,
                         modified=modified,
                         created=created,
@@ -134,7 +134,7 @@ class ControllerDatabase:
         hashed_password = ControllerUser.hash_password(password=password, salt=salt)
 
         user = User(
-            name=name,
+            user_name=name,
             hashed_password=hashed_password,
             password_salt=salt
         )
@@ -354,9 +354,9 @@ class ControllerDatabase:
                 user_id, user_uuid, user_name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
 
         result = User(
-            id=user_id,
-            uuid=str(user_uuid),
-            name=user_name,
+            user_id=user_id,
+            user_uuid=str(user_uuid),
+            user_name=user_name,
             playlists=ControllerDatabase.get_user_playlists(user_id),
             hashed_password=hashed_password,
             password_salt=password_salt,
@@ -384,9 +384,39 @@ class ControllerDatabase:
                 user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
 
         result = User(
-            id=user_id,
-            uuid=str(user_uuid),
-            name=name,
+            user_id=user_id,
+            user_uuid=str(user_uuid),
+            user_name=name,
+            playlists=ControllerDatabase.get_user_playlists(user_id),
+            hashed_password=hashed_password,
+            password_salt=password_salt,
+            modified=modified,
+            created=created,
+            is_deleted=is_deleted,
+        )
+
+        return result
+
+    @staticmethod
+    def get_user_by_uuid(user_uuid: str) -> User:
+        """
+        Used for getting the user with a certain name
+        :param user_uuid: the uuid of the user
+        :return: a User model
+        """
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
+                    "FROM users "
+                    "WHERE user_uuid = %(user_uuid)s LIMIT 1",
+                    {"user_uuid": user_uuid})
+                user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+
+        result = User(
+            user_id=user_id,
+            user_uuid=str(user_uuid),
+            user_name=name,
             playlists=ControllerDatabase.get_user_playlists(user_id),
             hashed_password=hashed_password,
             password_salt=password_salt,
@@ -459,10 +489,10 @@ class ControllerDatabase:
 
                     if hashed_password == ControllerUser.hash_password(password, password_salt):
                         result = User(
-                            id=user_id,
-                            uuid=str(user_uuid),
-                            name=name,
-                            playlists=ControllerDatabase.get_user_playlists(user_id),
+                            user_id=user_id,
+                            user_uuid=str(user_uuid),
+                            user_name=name,
+                            playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
                             hashed_password=hashed_password,
                             password_salt=password_salt,
                             modified=modified,
@@ -480,13 +510,17 @@ class ControllerDatabase:
         """
         result = ""
 
+        print("user_uuid:", user_uuid)
         user_pic_path = f"{PROFILE_PICTURE_PATH}{user_uuid}.png"
         if os.path.exists(user_pic_path):
+            print("path exists")
             result = user_pic_path
         else:
+            print("it doesnt")
             result = DEFAULT_PROFILE_PICTURE_PATH
 
         with open(result, "rb") as f:
+            print("open")
             result = BytesIO(f.read())
 
         return send_file(result, mimetype="image/jpeg")

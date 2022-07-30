@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
+from models.user import User
 
 login_view = Blueprint("login", __name__)
 
@@ -24,7 +25,7 @@ def login():
         user = ControllerDatabase.authenticate_user(name, password)
 
         if user:
-            session["user"] = user
+            session["user_uuid"] = user.uuid
             result = redirect(url_for("playlists.your_playlists"))
         else:
             flask.flash("Incorrect login details!")

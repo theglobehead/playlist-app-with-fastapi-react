@@ -13,9 +13,9 @@ from models.tag import Tag
 class Song:
     tags: List[Tag] = field(default_factory=list)
 
-    id: int = 0
-    uuid: str = ""
-    name: str = ""
+    song_id: int = 0
+    song_uuid: str = ""
+    song_name: str = ""
     audio_path: str = SONG_PATH[1:]
     file_type: str = ".mp3"
     artist = str = ""

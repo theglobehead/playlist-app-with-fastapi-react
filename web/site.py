@@ -15,6 +15,7 @@ def logout():
     :return: Redirects to the login view
     """
     session["user"] = None
+    session["user_uuid"] = None
     session.clear()
     return redirect(url_for("login.login"))
 

@@ -12,8 +12,8 @@ from models.song import Song
 class Artist:
     songs: List[Song] = field(default_factory=list)
 
-    id: int = 0
-    name: str = ""
+    artist_id: int = 0
+    artist_name: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False

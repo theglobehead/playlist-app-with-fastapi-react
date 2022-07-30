@@ -15,8 +15,8 @@ class Album:
     tags: List[Tag] = field(default_factory=list)
     artist: Artist = field(default_factory=Artist)
 
-    id: int = 0
-    name: str = ""
+    album_id: int = 0
+    album_name: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False
