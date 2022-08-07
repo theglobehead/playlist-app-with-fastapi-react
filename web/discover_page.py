@@ -32,3 +32,12 @@ def add_song():
     ControllerDatabase.add_song_to_playlist(playlist_id, song_id)
 
     return redirect(url_for("discover.discover"))
+
+
+@discover_view.route("/upload-song", methods=['GET', 'POST'])
+def upload_song():
+    song_name = request.form.get("song_name")
+    song_image = request.form.get("song_image")
+    song_audio = request.form.get("song_audio")
+
+    return redirect(url_for("discover.discover"))

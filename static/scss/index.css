@@ -38,4 +38,8 @@ a {
   display: none;
 }
 
-/*# sourceMappingURL=index.scss.map */
+select option {
+  color: black;
+}
+
+/*# sourceMappingURL=index.css.map */
