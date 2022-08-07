@@ -38,9 +38,9 @@ class ControllerDatabase:
                     for playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted in playlists:
                         playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
                         new_playlist = Playlist(
-                            user_id=playlist_id,
-                            user_uuid=str(playlist_uuid),
-                            user_name=playlist_name,
+                            playlist_id=playlist_id,
+                            playlist_uuid=str(playlist_uuid),
+                            playlist_name=playlist_name,
                             songs=playlist_songs,
                             modified=modified,
                             created=created,
@@ -70,11 +70,11 @@ class ControllerDatabase:
 
                 if result:
                     playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted = result
-                    playlist_songs = ControllerDatabase.get_playlist_songs(playlist_id)
+                    playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
                     result = Playlist(
-                        user_id=playlist_id,
-                        user_uuid=str(playlist_uuid),
-                        user_name=playlist_name,
+                        playlist_id=playlist_id,
+                        playlist_uuid=str(playlist_uuid),
+                        playlist_name=playlist_name,
                         songs=playlist_songs,
                         modified=modified,
                         created=created,
@@ -102,7 +102,7 @@ class ControllerDatabase:
     def get_playlist_id_by_uuid(playlist_uuid: str) -> int:
         """
         Used for getting the id of a playlist from the uuid
-        :param playlist_uuid: the uuid of the palylist
+        :param playlist_uuid: the uuid of the playlist
         :return: returns the id as an integer
         """
         result = None
@@ -156,8 +156,11 @@ class ControllerDatabase:
         :param owner_id: the id of the playlists' owner
         :return: 
         """
+        print(playlist_name)
+        print(type(playlist_name))
+        print(owner_id)
         playlist = Playlist(
-            name=playlist_name,
+            playlist_name=playlist_name,
             owner_user_id=owner_id
         )
 
@@ -166,7 +169,7 @@ class ControllerDatabase:
                 cur.execute(
                     "INSERT INTO playlists "
                     "(playlist_name, owner_user_id) "
-                    "values (%(name)s, %(owner_user_id)s) ",
+                    "values (%(playlist_name)s, %(owner_user_id)s) ",
                     playlist.to_dict()
                 )
 
@@ -204,10 +207,10 @@ class ControllerDatabase:
                 )
 
     @staticmethod
-    def get_playlist_songs(playlist_id: int) -> List[Song]:
+    def get_playlist_songs(playlist: Playlist) -> List[Song]:
         """
         Used for getting all the songs of a playlist
-        :param playlist_id: the id of the playlist
+        :param playlist: the playlist
         :return: a list of songs
         """
         result = []
@@ -219,16 +222,16 @@ class ControllerDatabase:
                     "FROM songs "
                     "INNER JOIN songs_in_playlists sip on songs.song_id = sip.song_id AND sip.playlist_id = %(playlist_id)s "
                     "WHERE songs.is_deleted = false and sip.is_deleted = false",
-                    {"playlist_id": playlist_id}
+                    playlist.to_dict()
                 )
                 playlists = cur.fetchall()
 
                 if playlists:
                     for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
                         new_song = Song(
-                            id=song_id,
-                            uuid=str(song_uuid),
-                            name=song_name,
+                            song_id=song_id,
+                            song_uuid=str(song_uuid),
+                            song_name=song_name,
                             album=album,
                             modified=modified,
                             created=created,
@@ -269,9 +272,9 @@ class ControllerDatabase:
                 if playlists:
                     for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
                         new_song = Song(
-                            id=song_id,
-                            uuid=str(song_uuid),
-                            name=song_name,
+                            song_id=song_id,
+                            song_uuid=str(song_uuid),
+                            song_name=song_name,
                             album=album,
                             modified=modified,
                             created=created,
@@ -417,7 +420,7 @@ class ControllerDatabase:
             user_id=user_id,
             user_uuid=str(user_uuid),
             user_name=name,
-            playlists=ControllerDatabase.get_user_playlists(user_id),
+            playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
             hashed_password=hashed_password,
             password_salt=password_salt,
             modified=modified,
@@ -511,6 +514,7 @@ class ControllerDatabase:
         result = ""
 
         print("user_uuid:", user_uuid)
+        print("test")
         user_pic_path = f"{PROFILE_PICTURE_PATH}{user_uuid}.png"
         if os.path.exists(user_pic_path):
             print("path exists")
@@ -523,4 +527,4 @@ class ControllerDatabase:
             print("open")
             result = BytesIO(f.read())
 
-        return send_file(result, mimetype="image/jpeg")
+        return send_file(result, mimetype="image/png")

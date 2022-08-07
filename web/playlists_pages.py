@@ -18,10 +18,8 @@ def your_playlists():
     View for user playlists
     :return: renders the view for your_playlists.html
     """
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     user_uuid = session.get("user_uuid")
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
-    print("user:", user)
     playlists = ControllerDatabase.get_user_playlists(user)
     result = render_template("your_playlists.html", user=user, playlists=playlists)
 
@@ -54,9 +52,9 @@ def save_playlist():
     :return: Redirects to the playlist_list view
     """
     user_uuid = request.form.get("owner_user_uuid")
-    user_id = ControllerDatabase.get_user_by_uuid(user_uuid)
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
     playlist_name = request.form.get("playlist_name")
-    ControllerDatabase.insert_playlist(playlist_name, user_id)
+    ControllerDatabase.insert_playlist(playlist_name, user.user_id)
     return redirect(url_for("playlists.your_playlists"))
 
 @playlists_view.route("/delete-playlist/<playlist_uuid>", methods=['GET'])

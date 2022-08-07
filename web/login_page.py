@@ -25,7 +25,7 @@ def login():
         user = ControllerDatabase.authenticate_user(name, password)
 
         if user:
-            session["user_uuid"] = user.uuid
+            session["user_uuid"] = user.user_uuid
             result = redirect(url_for("playlists.your_playlists"))
         else:
             flask.flash("Incorrect login details!")

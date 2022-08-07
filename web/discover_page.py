@@ -18,11 +18,10 @@ def discover():
 
     page_song_amount = 6
     songs = ControllerDatabase.get_songs(amount=page_song_amount)
-    user_playlists = ControllerDatabase.get_user_playlists(user.id)
-    return render_template("discover_page.html", user=user, songs=songs, user_playlists=user_playlists)
+    return render_template("discover_page.html", user=user, songs=songs, user_playlists=user.playlists)
 
 
-@discover_view.route("/add-song", methods = ['GET', 'POST'])
+@discover_view.route("/add-song", methods=['GET', 'POST'])
 def add_song():
     playlist_uuid = request.form.get("playlist_uuid")
     song_uuid = request.form.get("song_uuid")
