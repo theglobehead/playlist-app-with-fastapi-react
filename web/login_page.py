@@ -22,7 +22,7 @@ def login():
         name = form.get("username").strip()
         password = form.get("password").strip()
 
-        user = ControllerDatabase.authenticate_user(name, password)
+        user = ControllerUser.authenticate_user(name, password)
 
         if user:
             session["user_uuid"] = user.user_uuid

@@ -26,7 +26,7 @@ def register():
 
         if form_is_valid:
             try:
-                ControllerDatabase.insert_user(name=name, password=password1)
+                ControllerUser.create_user(name=name, password=password1)
                 result = redirect(url_for("login.login"))
             except Exception as e:
                 flask.flash("Something went wrong...")

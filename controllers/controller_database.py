@@ -11,7 +11,6 @@ from models.playlist import Playlist
 from models.song import Song
 from models.user import User
 from utils.common_utils import CommonUtils
-from controllers.controller_user import ControllerUser
 
 
 class ControllerDatabase:
@@ -123,21 +122,12 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def insert_user(name: str, password: str) -> None:
+    def insert_user(user: User) -> None:
         """
         Used for creating a new user
-        :param name: the name of the user
-        :param password: the password of the user
+        :param user: the user to insert
         :return: None
         """
-        salt = ControllerUser.generate_salt()
-        hashed_password = ControllerUser.hash_password(password=password, salt=salt)
-
-        user = User(
-            user_name=name,
-            hashed_password=hashed_password,
-            password_salt=salt
-        )
 
         with CommonUtils.connection() as conn:
             with conn.cursor() as cur:
@@ -206,9 +196,6 @@ class ControllerDatabase:
         :param owner_id: the id of the playlists' owner
         :return: 
         """
-        print(playlist_name)
-        print(type(playlist_name))
-        print(owner_id)
         playlist = Playlist(
             playlist_name=playlist_name,
             owner_user_id=owner_id
@@ -440,7 +427,7 @@ class ControllerDatabase:
             user_id=user_id,
             user_uuid=str(user_uuid),
             user_name=name,
-            playlists=ControllerDatabase.get_user_playlists(user_id),
+            playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
             hashed_password=hashed_password,
             password_salt=password_salt,
             modified=modified,
@@ -521,40 +508,6 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def authenticate_user(name: str, password: str) -> User | None:
-        """
-        Used for checking if the user entered valid data, when logging in
-        :param name: the name entered
-        :param password: the password entered
-        :return: Returns the User, if the form is valid, else it returns false
-        """
-        result = None
-
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                if ControllerDatabase.check_if_username_taken(name):
-                    cur.execute(
-                        "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
-                        "FROM users "
-                        "WHERE user_name = %(name)s LIMIT 1",
-                        {"name": name})
-                    user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
-
-                    if hashed_password == ControllerUser.hash_password(password, password_salt):
-                        result = User(
-                            user_id=user_id,
-                            user_uuid=str(user_uuid),
-                            user_name=name,
-                            playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
-                            hashed_password=hashed_password,
-                            password_salt=password_salt,
-                            modified=modified,
-                            created=created,
-                            is_deleted=is_deleted,
-                        )
-        return result
-
-    @staticmethod
     def get_user_profile_pic(user_uuid: str) -> Response:
         """
         Used for getting a users profile pic
@@ -563,18 +516,13 @@ class ControllerDatabase:
         """
         result = ""
 
-        print("user_uuid:", user_uuid)
-        print("test")
         user_pic_path = f"{PROFILE_PICTURE_PATH}{user_uuid}.png"
         if os.path.exists(user_pic_path):
-            print("path exists")
             result = user_pic_path
         else:
-            print("it doesnt")
             result = DEFAULT_PROFILE_PICTURE_PATH
 
         with open(result, "rb") as f:
-            print("open")
             result = BytesIO(f.read())
 
         return send_file(result, mimetype="image/png")

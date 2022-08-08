@@ -7,6 +7,7 @@ from io import BytesIO
 import numpy as np
 from flask import send_file, Response
 
+from controllers.controller_database import ControllerDatabase
 from controllers.controller_playlist import ControllerPlaylist
 from models.user import User
 from controllers.constants import PROFILE_PICTURE_PATH, DEFAULT_PROFILE_PICTURE_PATH
@@ -38,5 +39,37 @@ class ControllerUser:
         chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
         random_chars = np.random.choice(list(chars), 8)
         result = "".join(random_chars)
+
+        return result
+
+    @staticmethod
+    def create_user(name: str, password: str):
+        salt = ControllerUser.generate_salt()
+        hashed_password = ControllerUser.hash_password(password, salt)
+
+        user = User(
+            name=name,
+            password_salt=salt,
+            password=hashed_password,
+        )
+
+        return ControllerDatabase.insert_user(user)
+
+    @staticmethod
+    def authenticate_user(name: str, password: str) -> User | None:
+        """
+        Used for checking if the user entered valid data, when logging in
+        :param name: the name entered
+        :param password: the password entered
+        :return: Returns the User, if the form is valid, else it returns false
+        """
+        result = None
+
+        user = ControllerDatabase.get_user_by_name(name)
+
+        if user:
+            hashed_password = ControllerUser.hash_password(password, user.password_salt)
+            if user.hashed_password == hashed_password:
+                result = user
 
         return result
