@@ -144,9 +144,59 @@ class ControllerDatabase:
                 cur.execute(
                     "INSERT INTO USERS "
                     "(user_name, password_hash, password_salt) "
-                    "values (%(name)s, %(hashed_password)s, %(password_salt)s) ",
+                    "values (%(user_name)s, %(hashed_password)s, %(password_salt)s) ",
                     user.to_dict()
                 )
+
+    @staticmethod
+    def insert_song(song: Song) -> Song:
+        """
+        Used for creating a new user
+        :param song: the song that needs to be inserted
+        :return: Song
+        """
+
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "INSERT INTO songs "
+                    "(song_name, album) "
+                    "values (%(song_name)s, %(album)s) "
+                    "RETURNING song_id ",
+                    song.to_dict()
+                )
+
+                song_id = cur.fetchone()[0]
+
+        return ControllerDatabase.get_song(song_id)
+
+    @staticmethod
+    def get_song(song_id: int) -> Song:
+        """
+        Used for getting a user with a certain id
+        :param song_id: the id of the song
+        :return: a User model
+        """
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
+                    "FROM songs "
+                    "WHERE song_id = %(song_id)s LIMIT 1",
+                    {"song_id": song_id})
+                song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
+
+        result = Song(
+            song_id=song_id,
+            song_uuid=str(song_uuid),
+            song_name=song_name,
+            album=album,
+            modified=modified,
+            created=created,
+            is_deleted=is_deleted,
+        )
+
+        return result
 
     @staticmethod
     def insert_playlist(playlist_name: str, owner_id: int):

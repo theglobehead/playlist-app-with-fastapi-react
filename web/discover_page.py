@@ -16,7 +16,7 @@ def discover():
     user_uuid = session.get("user_uuid")
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
 
-    page_song_amount = 6
+    page_song_amount = 10
     songs = ControllerDatabase.get_songs(amount=page_song_amount)
     return render_template("discover_page.html", user=user, songs=songs, user_playlists=user.playlists)
 
@@ -37,7 +37,10 @@ def add_song():
 @discover_view.route("/upload-song", methods=['GET', 'POST'])
 def upload_song():
     song_name = request.form.get("song_name")
-    song_image = request.form.get("song_image")
-    song_audio = request.form.get("song_audio")
+    album_name = request.form.get("album_name")
+    song_image = request.files.get("song_image")
+    song_audio = request.files.get("song_audio")
+
+    ControllerSong.upload_song(name=song_name, album=album_name, audio=song_audio, image=song_image)
 
     return redirect(url_for("discover.discover"))

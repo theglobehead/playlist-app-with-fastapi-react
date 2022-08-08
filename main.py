@@ -14,6 +14,8 @@ app.config["SECRET_KEY"] = "8f42a73054b1749h8f58848be5e6502c"
 app.config["BABEL_DEFAULT_LOCALE"] = "en"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["UPLOAD_FOLDER"] = "/static/uploads/"
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 babel = Babel(app)
 

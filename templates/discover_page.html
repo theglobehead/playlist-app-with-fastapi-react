@@ -44,7 +44,7 @@
         </form>
     </div>
     <div class="modal-wrapper modal-closed" id="upload_song_modal">
-        <form class="rounded-form form-toggleable shadow" action="{{ url_for("discover.upload_song") }}" method="post" style="
+        <form class="rounded-form form-toggleable shadow" enctype="multipart/form-data" action="{{ url_for("discover.upload_song") }}" method="post" style="
                display: flex;
                flex-direction: column;
                align-items: center;
@@ -58,10 +58,12 @@
             <div style="width: 80%">
                 <p style="margin-top: 15px;">{{ _('Song name') }}:</p>
                 <input placeholder="{{ _("Name") }}" name="song_name" required autocomplete="off">
+                <p style="margin-top: 15px;">{{ _('Album name') }}:</p>
+                <input placeholder="{{ _("Name") }}" name="album_name" required autocomplete="off">
                 <p style="margin-top: 15px;">{{ _('Song image(.png)') }}:</p>
-                <input type="file" name="song_image" id="song_image" required>
+                <input type="file" name="song_image" id="song_image" accept=".jpg" required>
                 <p style="margin-top: 15px;">{{ _('Song audio(.mp3)') }}:</p>
-                <input type="file" name="song_audio" id="song_audio" required>
+                <input type="file" name="song_audio" id="song_audio" accept=".mp3" required>
             </div>
             <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Upload') }}</button>
         </form>
