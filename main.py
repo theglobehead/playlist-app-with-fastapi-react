@@ -1,8 +1,11 @@
+from uuid import uuid4
+
 import psycopg2.extras
 from flask import Flask, redirect, session, url_for, request
 from flask_babel import Babel
 from requests import Session
 
+from controllers.controller_database import ControllerDatabase
 from web.login_page import login_view
 from web.register_page import register_view
 from web.playlists_pages import playlists_view
@@ -32,6 +35,7 @@ def home():
     result = redirect(url_for("login.login"))
     if "user_uuid" in session:
         result = redirect(url_for("playlists.your_playlists"))
+        ControllerDatabase.get_playlist_id_by_uuid(uuid4())
 
     return result
 

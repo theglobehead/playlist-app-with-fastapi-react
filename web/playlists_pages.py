@@ -6,6 +6,7 @@ from controllers.controller_database import ControllerDatabase
 from controllers.controller_playlist import ControllerPlaylist
 from controllers.controller_song import ControllerSong
 from controllers.controller_user import ControllerUser
+from models.playlist import Playlist
 from utils.flask_utils import login_required
 
 playlists_view = Blueprint("playlists", __name__)
@@ -54,7 +55,7 @@ def save_playlist():
     user_uuid = request.form.get("owner_user_uuid")
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
     playlist_name = request.form.get("playlist_name")
-    ControllerDatabase.insert_playlist(playlist_name, user.user_id)
+    ControllerDatabase.insert_playlist(Playlist(playlist_name=playlist_name, owner_user_id=user.user_id))
     return redirect(url_for("playlists.your_playlists"))
 
 @playlists_view.route("/delete-playlist/<playlist_uuid>", methods=['GET'])

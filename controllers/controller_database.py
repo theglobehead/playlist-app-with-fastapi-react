@@ -11,6 +11,7 @@ from models.playlist import Playlist
 from models.song import Song
 from models.user import User
 from utils.common_utils import CommonUtils
+from utils.logging_utils import LoggingUtils
 
 
 class ControllerDatabase:
@@ -82,20 +83,27 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def add_song_to_playlist(playlist_id: int, song_id: int) -> None:
+    def add_song_to_playlist(playlist_id: int, song_id: int) -> bool:
         """
         Used for adding a song to a playlist
         :param playlist_id: the id of the playlist that will contain the song
         :param song_id: id of the song to be added
-        :return: None
+        :return: bool of weather or not the insertion was successful
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO songs_in_playlists (song_id, playlist_id) "
-                    "VALUES (%(song_id)s, %(playlist_id)s) ",
-                    {"playlist_id": playlist_id, "song_id": song_id}
-                )
+        result = False
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO songs_in_playlists (song_id, playlist_id) "
+                        "VALUES (%(song_id)s, %(playlist_id)s) ",
+                        {"playlist_id": playlist_id, "song_id": song_id}
+                    )
+                    result = True
+        except Exception as e:
+            LoggingUtils.log(str(e))
+
+        return result
 
     @staticmethod
     def get_playlist_id_by_uuid(playlist_uuid: str) -> int:
@@ -122,21 +130,27 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def insert_user(user: User) -> None:
+    def insert_user(user: User) -> bool:
         """
         Used for creating a new user
         :param user: the user to insert
-        :return: None
+        :return: bool of weather or not the insert was successful
         """
+        result = False
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO USERS "
+                        "(user_name, password_hash, password_salt) "
+                        "values (%(user_name)s, %(hashed_password)s, %(password_salt)s) ",
+                        user.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            LoggingUtils.log(str(e))
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO USERS "
-                    "(user_name, password_hash, password_salt) "
-                    "values (%(user_name)s, %(hashed_password)s, %(password_salt)s) ",
-                    user.to_dict()
-                )
+        return result
 
     @staticmethod
     def insert_song(song: Song) -> Song:
@@ -189,59 +203,76 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def insert_playlist(playlist_name: str, owner_id: int):
+    def insert_playlist(playlist: Playlist) -> bool:
         """
         Used for creating a playlist
-        :param playlist_name: The name of the playlist
-        :param owner_id: the id of the playlists' owner
-        :return: 
+        :param playlist: the playlist to insert
+        :return: bool of weather or not the insertion was successful
         """
-        playlist = Playlist(
-            playlist_name=playlist_name,
-            owner_user_id=owner_id
-        )
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO playlists "
-                    "(playlist_name, owner_user_id) "
-                    "values (%(playlist_name)s, %(owner_user_id)s) ",
-                    playlist.to_dict()
-                )
+        result = False
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO playlists "
+                        "(playlist_name, owner_user_id) "
+                        "values (%(playlist_name)s, %(owner_user_id)s) ",
+                        playlist.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            LoggingUtils.log(str(e))
+
+        return result
 
     @staticmethod
-    def delete_playlist(playlist_id: int) -> None:
+    def delete_playlist(playlist_id: int) -> bool:
         """
         Used for deleting a playlist
         :param playlist_id: the id of the playlist
-        :return: None
+        :return: bool of weather or not the deletion was successful
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "UPDATE playlists "
-                    "SET is_deleted = true "
-                    "WHERE playlist_id = %(playlist_id)s ",
-                    {"playlist_id": playlist_id}
-                )
+        result = False
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE playlists "
+                        "SET is_deleted = true "
+                        "WHERE playlist_id = %(playlist_id)s ",
+                        {"playlist_id": playlist_id}
+                    )
+                    result = True
+        except Exception as e:
+            LoggingUtils.log(str(e))
+
+        return result
 
     @staticmethod
-    def remove_song_from_playlist(playlist_id: int, song_id: int) -> None:
+    def remove_song_from_playlist(playlist_id: int, song_id: int) -> bool:
         """
         Used for removing a song from a playlist
         :param playlist_id: the id of the playlist
         :param song_id: the id of the song
         :return:
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "UPDATE songs_in_playlists "
-                    "SET is_deleted = true "
-                    "WHERE song_id = %(song_id)s and playlist_id = %(playlist_id)s ",
-                    {"song_id": song_id, "playlist_id": playlist_id}
-                )
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE songs_in_playlists "
+                        "SET is_deleted = true "
+                        "WHERE song_id = %(song_id)s and playlist_id = %(playlist_id)s ",
+                        {"song_id": song_id, "playlist_id": playlist_id}
+                    )
+                result = True
+        except Exception as e:
+            LoggingUtils.log(str(e))
+
+        return result
 
     @staticmethod
     def get_playlist_songs(playlist: Playlist) -> List[Song]:
@@ -278,17 +309,17 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def get_songs(amount: int = -1, starting_from: int = 0) -> List[Song]:
+    def get_songs(page_size: int = -1, page_offset: int = 0) -> List[Song]:
         """
         Used for getting all song in a certain range
-        :param amount: the amount of songs to get
-        :param starting_from: the starting point from where to start fetching the songs
+        :param page_size: the amount of songs to get
+        :param page_offset: the starting point from where to start fetching the songs
         :return: a list of songs
         """
         result = []
 
         amount_str = ""
-        if amount != -1:
+        if page_size != -1:
             amount_str = f"LIMIT %(amount)s "
 
         with CommonUtils.connection() as conn:
@@ -298,10 +329,10 @@ class ControllerDatabase:
                     "FROM songs "
                     "WHERE songs.is_deleted = false "
                     f"{amount_str}"
-                    "OFFSET %(starting_from)s ",
+                    "OFFSET %(page_offset)s ",
                     {
-                        "starting_from": starting_from,
-                        "amount": amount
+                        "page_offset": page_offset,
+                        "amount": page_size
                     }
                 )
                 playlists = cur.fetchall()
