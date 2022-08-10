@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for
 
 from controllers.controller_database import ControllerDatabase
-from controllers.controller_playlist import ControllerPlaylist
 from controllers.controller_song import ControllerSong
 
 discover_view = Blueprint("discover", __name__)
@@ -16,8 +15,8 @@ def discover():
     user_uuid = session.get("user_uuid")
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
 
-    page_song_amount = 10
-    songs = ControllerDatabase.get_songs(amount=page_song_amount)
+    page_size = 10
+    songs = ControllerDatabase.get_songs(page_size)
     return render_template("discover_page.html", user=user, songs=songs, user_playlists=user.playlists)
 
 

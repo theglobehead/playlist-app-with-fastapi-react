@@ -15,7 +15,7 @@
                 <img src="{{ url_for("site.get_profile_pic", user_uuid=user.user_uuid) }}" class="shadow" style="width: 10vw; height: 10vw;">
                 <div style="display: inline-block;">
                     <h3>{{ playlist.playlist_name }}</h3>
-                    <p>{{ _('Songs: ') }}{{ playlist.songs|length }}</p>
+                    <p>{{ _('Songs') }}: {{ playlist.songs|length }}</p>
                 </div>
             </div>
             <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi btn-scifi-danger" type="submit" href="{{ url_for("playlists.delete_playlist", playlist_uuid=playlist.playlist_uuid) }}">{{ _('Delete') }}</a>

@@ -1,9 +1,10 @@
 from uuid import uuid4
 
 import psycopg2.extras
-from flask import Flask, redirect, session, url_for, request
+from flask import Flask, redirect, session, url_for, request, render_template
 from flask_babel import Babel
 from requests import Session
+from werkzeug.exceptions import HTTPException
 
 from controllers.controller_database import ControllerDatabase
 from web.login_page import login_view
@@ -14,7 +15,7 @@ from web.site import site
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8f42a73054b1749h8f58848be5e6502c"
-app.config["BABEL_DEFAULT_LOCALE"] = "en"
+app.config["BABEL_DEFAULT_LOCALE"] = "lv"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = "/static/uploads/"
@@ -38,6 +39,16 @@ def home():
         ControllerDatabase.get_playlist_id_by_uuid(uuid4())
 
     return result
+
+
+@app.errorhandler(Exception)
+def error_page(error):
+    error_code = 500
+
+    if isinstance(error, HTTPException):
+        error_code = error.code
+
+    return render_template("error_page.html", error_message=f"Error: { error_code }")
 
 
 if __name__ == "__main__":
