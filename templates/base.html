@@ -18,8 +18,11 @@
             </div>
         {% endfor %}
     {% endwith %}
-
     <body>
+        <div class="lang_buttons">
+            <a class="lang_button" href="{{ url_for("site.change_locale", locale="lv") }}">LV</a>
+            <a class="lang_button" href="{{ url_for("site.change_locale", locale="en") }}">EN</a>
+        </div>
         {% block content %}{% endblock %}
     </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Blueprint, session, redirect, url_for, Response
+from flask import Blueprint, session, redirect, url_for, Response, request
 
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_song import ControllerSong
@@ -18,6 +18,16 @@ def logout():
     session["user_uuid"] = None
     session.clear()
     return redirect(url_for("login.login"))
+
+
+@site.route("/change_locale/<locale>", methods=['GET', 'POST'])
+def change_locale(locale: str):
+    """
+    Used for changing a users' locale
+    :return: Redirects to the page from which this function was called
+    """
+    session["locale"] = locale
+    return redirect(request.referrer)
 
 
 @site.route("/profile_picture/<user_uuid>", methods=['GET', 'POST'])

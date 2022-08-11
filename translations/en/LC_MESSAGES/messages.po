@@ -91,8 +91,8 @@ msgid "strings.register_here"
 msgstr "Register here"
 
 #: templates/playlist.html:18 templates/your_playlists.html:19
-msgid "Songs"
-msgstr ""
+msgid "strings.songs"
+msgstr "Songs"
 
 #: templates/playlist.html:21
 msgid "Delete"
@@ -154,3 +154,6 @@ msgstr ""
 msgid "Discover"
 msgstr ""
 
+#: templates/components/side_panel.html:23
+msgid "strings.log_out"
+msgstr "Log out"

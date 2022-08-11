@@ -58,4 +58,29 @@
   cursor: pointer;
 }
 
+.lang_buttons {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  column-gap: 10px;
+  display: inline-flex;
+}
+.lang_buttons .lang_button {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 90%;
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+}
+.lang_buttons .lang_button:hover {
+  cursor: pointer;
+  color: #00DFDF;
+}
+
 /*# sourceMappingURL=buttons.css.map */

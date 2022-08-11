@@ -92,7 +92,7 @@ msgid "strings.register_here"
 msgstr "Reģistrējieties šeit"
 
 #: templates/playlist.html:18 templates/your_playlists.html:19
-msgid "Songs"
+msgid "strings.songs"
 msgstr "Dziesmas"
 
 #: templates/playlist.html:21
@@ -154,4 +154,8 @@ msgstr "Iestatījumi"
 #: templates/components/side_panel.html:20
 msgid "Discover"
 msgstr "Atklāt"
+
+#: templates/components/side_panel.html:23
+msgid "strings.log_out"
+msgstr "Izrakstīties"
 

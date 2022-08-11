@@ -27,7 +27,13 @@ psycopg2.extras.register_uuid()
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
+    """
+    Used for determining the language of the website
+    If the locale is in the session it returns the local
+    If the locale is not in the session it returns the best local according to the users browser
+    :return: the locale as "lv" or "en"
+    """
     locale = request.accept_languages.best_match(["lv", "en"])
     if "locale" in session:
         locale = session.get("locale")
@@ -46,7 +52,6 @@ def home():
     result = redirect(url_for("login.login"))
     if "user_uuid" in session:
         result = redirect(url_for("playlists.your_playlists"))
-        ControllerDatabase.get_playlist_id_by_uuid(uuid4())
 
     return result
 
