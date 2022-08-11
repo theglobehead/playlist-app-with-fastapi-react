@@ -9,7 +9,7 @@
 {% block content %}
     <div class="login-main">
         <div class="welcome-text">
-            <h1>{{ _('Music Playlists With Flask') }}</h1>
+            <h1>{{ _('strings.home_page_heading') }}</h1>
         </div>
         <div>
            <form class="rounded-form shadow" action="{{ url_for("login.login") }}" method="post" style="
@@ -18,16 +18,16 @@
                align-items: center;
                height: 100%;
            ">
-               <h3 style="text-align: center; margin: 20px 0 0 0;">{{ _('Login') }}:</h3>
+               <h3 style="text-align: center; margin: 20px 0 0 0;">{{ _('strings.login') }}:</h3>
                <div style="width: 80%">
-                   <p>{{ _('username') }}</p>
+                   <p>{{ _('strings.username') }}</p>
                    <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
-                   <p style="margin-top: 15px;">{{ _('password') }}:</p>
+                   <p style="margin-top: 15px;">{{ _('strings.password') }}:</p>
                    <input type="password" placeholder="Password" name="password" value="{{ request.form.password1 }}" required>
                </div>
-               <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Log in') }}</button>
+               <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('strings.log_in') }}</button>
            </form>
-            <p style="margin-top: 13px; text-align: center;">{{ _('Dont have an account?') }} <a href="{{ url_for("register.register") }}">{{ _('Register here') }}</a></p>
+            <p style="margin-top: 13px; text-align: center;">{{ _('strings.no_account') }}? <a href="{{ url_for("register.register") }}">{{ _('strings.register_here') }}</a></p>
         </div>
     </div>
 {% endblock %}
