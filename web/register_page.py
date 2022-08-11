@@ -1,5 +1,6 @@
 import flask
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask_babel import gettext
 
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
@@ -29,7 +30,7 @@ def register():
                 ControllerUser.create_user(name=name, password=password1)
                 result = redirect(url_for("login.login"))
             except Exception as e:
-                flask.flash("Something went wrong...")
+                flask.flash(gettext("error_msg.something_went_wrong"))
                 LoggingUtils.exception(str(e))
 
     return result
@@ -47,22 +48,22 @@ def validate_form(name: str, pass1: str, pass2: str):
     result = True
 
     if not all((pass1, pass2)):
-        flask.flash("Both passwords must be entered!")
+        flask.flash(gettext("error_msg.enter_both_passwords"))
         result = False
     elif not name:
-        flask.flash("Username must be entered!")
+        flask.flash(gettext("error_msg.no_username_entered"))
         result = False
     elif len(name) > 64:
-        flask.flash("Username is too long!")
+        flask.flash(gettext("error_msg.username_too_long"))
         result = False
     elif pass1 != pass2:
-        flask.flash("Passwords are not equal!")
+        flask.flash(gettext("error_msg.password_too_short"))
         result = False
     elif len(pass1) < 8:
-        flask.flash("Password must be at least 8 characters long!")
+        flask.flash(gettext("error_msg.passwords_must_be_equal"))
         result = False
     elif ControllerDatabase.check_if_username_taken(name=name):
-        flask.flash("Username is already taken!")
+        flask.flash(gettext("error_msg.username_taken"))
         result = False
 
     return result

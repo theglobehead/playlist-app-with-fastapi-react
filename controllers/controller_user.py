@@ -65,9 +65,10 @@ class ControllerUser:
         """
         result = None
 
-        user = ControllerDatabase.get_user_by_name(name)
+        username_taken = ControllerDatabase.check_if_username_taken(name)
 
-        if user:
+        if username_taken:
+            user = ControllerDatabase.get_user_by_name(name)
             hashed_password = ControllerUser.hash_password(password, user.password_salt)
             if user.hashed_password == hashed_password:
                 result = user

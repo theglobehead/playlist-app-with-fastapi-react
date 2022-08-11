@@ -159,3 +159,36 @@ msgstr "Atklāt"
 msgid "strings.log_out"
 msgstr "Izrakstīties"
 
+#: web/login_page.py:31
+msgid "error_msg.login_failed"
+msgstr "Ieiešana neizdevās"
+
+#: web/register_page.py:32
+msgid "error_msg.something_went_wrong"
+msgstr "Kaut kas nogāja greizi..."
+
+#: web/register_page.py:50
+msgid "error_msg.enter_both_passwords"
+msgstr "Ievadied abas paroles!"
+
+#: web/register_page.py:53
+msgid "error_msg.no_username_entered"
+msgstr "Ievadied lietotājvārdu!"
+
+#: web/register_page.py:56
+msgid "error_msg.username_too_long"
+msgstr "Pārāk garš lietotājvārds"
+
+#: web/register_page.py:62
+msgid "error_msg.password_too_short"
+msgstr "Pārāk īsa parole"
+
+#: web/register_page.py:59
+msgid "error_msg.passwords_must_be_equal"
+msgstr "Abām parolēm jābūt vienādām"
+
+#: web/register_page.py:65
+msgid "error_msg.username_taken"
+msgstr "Lietotājvārds jau aizņemts"
+
+

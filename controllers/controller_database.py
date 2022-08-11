@@ -101,7 +101,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.log(str(e))
+            LoggingUtils.exception(str(e))
 
         return result
 
@@ -148,7 +148,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.log(str(e))
+            LoggingUtils.exception(str(e))
 
         return result
 
@@ -222,7 +222,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.log(str(e))
+            LoggingUtils.exception(str(e))
 
         return result
 
@@ -245,7 +245,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.log(str(e))
+            LoggingUtils.exception(str(e))
 
         return result
 
@@ -270,7 +270,7 @@ class ControllerDatabase:
                     )
                 result = True
         except Exception as e:
-            LoggingUtils.log(str(e))
+            LoggingUtils.exception(str(e))
 
         return result
 
@@ -451,7 +451,9 @@ class ControllerDatabase:
                     "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
                     "FROM users "
                     "WHERE user_name = %(name)s LIMIT 1",
-                    {"name": name})
+                    {"name": name}
+                )
+
                 user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
 
         result = User(

@@ -1,5 +1,6 @@
 import flask
 from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask_babel import gettext
 
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
@@ -28,6 +29,6 @@ def login():
             session["user_uuid"] = user.user_uuid
             result = redirect(url_for("playlists.your_playlists"))
         else:
-            flask.flash("Incorrect login details!")
+            flask.flash(gettext("Incorrect login details!"))
 
     return result

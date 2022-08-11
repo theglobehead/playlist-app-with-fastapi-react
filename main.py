@@ -7,6 +7,7 @@ from requests import Session
 from werkzeug.exceptions import HTTPException
 
 from controllers.controller_database import ControllerDatabase
+from utils.logging_utils import LoggingUtils
 from web.login_page import login_view
 from web.register_page import register_view
 from web.playlists_pages import playlists_view
@@ -58,6 +59,7 @@ def home():
 
 @app.errorhandler(Exception)
 def error_page(error):
+    LoggingUtils.exception(str(error))
     error_code = 500
 
     if isinstance(error, HTTPException):
