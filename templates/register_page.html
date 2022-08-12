@@ -4,27 +4,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='scss/forms.css') }}">
 {% endblock %}
 
-{% block title %}Register page{% endblock %}
+{% block title %}{{ _("strings.register_page") }}{% endblock %}
 
 {% block content %}
     <div class="login-main">
         <div class="welcome-text">
-            <h1>{{ _('Music Playlists With Flask') }}</h1>
+            <h1>{{ _('strings.login_page') }}</h1>
         </div>
         <div>
             <form class="rounded-form shadow" action="{{ url_for("register.register") }}" method="post">
-                 <h3 style="text-align: center">{{ _('Register') }}:</h3>
+                 <h3 style="text-align: center">{{ _('strings.register') }}:</h3>
                 <div style="width: 80%;">
-                    <p>{{ _('username') }}:</p>
+                    <p>{{ _('strings.username') }}:</p>
                     <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
-                    <p style="margin-top: 15px;">{{ _('password') }}:</p>
+                    <p style="margin-top: 15px;">{{ _('strings.password') }}:</p>
                     <input type="password" placeholder="Password" name="password1" value="{{ request.form.password1 }}" required>
-                    <p style="margin-top: 15px;">{{ _('retype password') }}:</p>
+                    <p style="margin-top: 15px;">{{ _('strings.retype_password') }}:</p>
                     <input type="password" placeholder="Password" name="password2" value="{{ request.form.password2 }}" required>
                 </div>
-                <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('register') }}</button>
+                <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('strings.register') }}</button>
             </form>
-            <p style="margin-top: 13px; text-align: center;">{{ _('Already have an account?') }} <a href="{{ url_for("login.login") }}">{{ _('Login here') }}</a></p>
+            <p style="margin-top: 13px; text-align: center;">{{ _('strings.account_already_created') }} <a href="{{ url_for("login.login") }}">{{ _('strings.login_here') }}</a></p>
         </div>
     </div>
 {% endblock %}

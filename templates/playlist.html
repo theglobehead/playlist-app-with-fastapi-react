@@ -5,7 +5,7 @@
     <script src="{{ url_for("static", filename="js/playlist.js") }}"></script>
 {% endblock %}
 
-{% block title %}Your playlists{% endblock %}
+{% block title %}{{ _("strings.playlists_page") }}{% endblock %}
 
 {% block content %}
     {% include "components/side_panel.html" %}
@@ -15,25 +15,29 @@
                 <img src="{{ url_for("site.get_profile_pic", user_uuid=user.user_uuid) }}" class="shadow" style="width: 10vw; height: 10vw;">
                 <div style="display: inline-block;">
                     <h3>{{ playlist.playlist_name }}</h3>
-                    <p>{{ _('Songs') }}: {{ playlist.songs|length }}</p>
+                    <p>{{ _('strings.songs') }}: {{ playlist.songs|length }}</p>
                 </div>
             </div>
-            <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi btn-scifi-danger" type="submit" href="{{ url_for("playlists.delete_playlist", playlist_uuid=playlist.playlist_uuid) }}">{{ _('Delete') }}</a>
+            <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi btn-scifi-danger" type="submit" href="{{ url_for("playlists.delete_playlist", playlist_uuid=playlist.playlist_uuid) }}">{{ _('strings.delete') }}</a>
         </div>
         <div class="song-table" style="margin-top: 5vh;">
             {% for song in playlist.songs %}
-                <div class="song-row" id="song-row-{{ loop.index }}" song-uuid="{{ song.song_uuid }}">
+                <form class="song-row" id="song-row-{{ loop.index }}" song-uuid="{{ song.song_uuid }}"
+                    enctype="multipart/form-data" action="{{ url_for("playlists.remove_song") }}" method="post"
+                >
                     <audio class="song-audio" onended="switchAudio('{{ 1 if loop.index == loop.length else loop.index + 1 }}')" id="audio-{{ loop.index }}">
                         <source src="{{ song.audio_path + song.song_uuid + song.file_type }}" type="audio/mpeg">
-                        {{ _("Your browser does not support the audio element.") }}
+                        {{ _("strings.audio_element_not_supported") }}
                     </audio>
                     <div onclick="toggleAudio('{{ loop.index }}')">
                         <p>{{ loop.index }}</p>
                         <img src="{{ url_for("site.get_song_pic", song_uuid=song.song_uuid) }}" class="song-img">
                         <p>{{ song.song_name }}</p>
                     </div>
-                    <a onclick="remove_song('{{ url_for("playlists.remove_song") }}', '{{ song.song_uuid }}', '{{ playlist.playlist_uuid }}')" style="text-decoration: none; cursor: pointer;">X</a>
-                </div>
+                    <input name="song_uuid" value="{{ song.song_uuid }}" hidden>
+                    <input name="playlist_uuid" value="{{ playlist.playlist_uuid }}" hidden>
+                    <button type="submit" style="text-decoration: none; cursor: pointer; color: #00DFDF; background: none; border: none; font-size: 1.2rem;">X</button>
+                </form>
             {% endfor %}
         </div>
     </div>

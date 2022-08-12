@@ -29,6 +29,6 @@ def login():
             session["user_uuid"] = user.user_uuid
             result = redirect(url_for("playlists.your_playlists"))
         else:
-            flask.flash(gettext("Incorrect login details!"))
+            flask.flash(gettext("error_msg.incorrect_login_details"))
 
     return result

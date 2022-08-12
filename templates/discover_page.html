@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='scss/forms.css') }}">
 {% endblock %}
 
-{% block title %}Your playlists{% endblock %}
+{% block title %}{{ _("strings.discover_page") }}{% endblock %}
 
 {% block content %}
     {% include "components/side_panel.html" %}
     <div style="width: 80%; margin-left: auto; box-sizing: border-box; padding: 5vh 5% 5vh 5%;">
-        <button style="width: fit-content; margin-bottom: 20px;" class="btn-rounded" onclick="openModal('upload_song_modal')">{{ _('Upload song') }} +</button>
+        <button style="width: fit-content; margin-bottom: 20px;" class="btn-rounded" onclick="openModal('upload_song_modal')">{{ _('strings.upload_song') }} +</button>
         <div class="song-grid">
             {% for song in songs %}
                 <div class="song-box shadow pointer-on-hover" onclick="openModal('add_song_modal'); $('#song_uuid_input').val('{{ song.song_uuid }}')">
@@ -30,17 +30,17 @@
             <input type="hidden" name="owner_user_uuid" value="{{ user.user_uuid }}">
             <input type="hidden" name="song_uuid" id="song_uuid_input" value="">
             <a class="toggle-x" onclick="closeModal('add_song_modal')">x</a>
-            <h3 style="text-align: center;">{{ _('Select Playlist') }}:</h3>
+            <h3 style="text-align: center;">{{ _('strings.select_playlist') }}:</h3>
             <div style="width: 80%">
-                <p style="margin-top: 15px;">{{ _('Add song') }}:</p>
+                <p style="margin-top: 15px;">{{ _('strings.add_song') }}:</p>
                 <select name="playlist_uuid" id="playlist_uuid" required>
-                    <option selected="selected" disabled="disabled">{{ _("Select playlist") }}</option>
+                    <option selected="selected" disabled="disabled">{{ _("strings.select_playlist") }}</option>
                     {% for playlist in user_playlists %}
                         <option value="{{ playlist.playlist_uuid }}">{{ playlist.playlist_name }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Add') }}</button>
+            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('strings.add') }}</button>
         </form>
     </div>
     <div class="modal-wrapper modal-closed" id="upload_song_modal">
@@ -54,18 +54,18 @@
             <input type="hidden" name="owner_user_uuid" value="{{ user.user_uuid }}">
             <input type="hidden" name="song_uuid" id="song_uuid_input" value="">
             <a class="toggle-x" onclick="closeModal('upload_song_modal')">x</a>
-            <h3 style="text-align: center;">{{ _('Upload song') }}:</h3>
+            <h3 style="text-align: center;">{{ _('strings.upload_song') }}:</h3>
             <div style="width: 80%">
-                <p style="margin-top: 15px;">{{ _('Song name') }}:</p>
-                <input placeholder="{{ _("Name") }}" name="song_name" required autocomplete="off">
-                <p style="margin-top: 15px;">{{ _('Album name') }}:</p>
-                <input placeholder="{{ _("Name") }}" name="album_name" required autocomplete="off">
-                <p style="margin-top: 15px;">{{ _('Song image') }}(.png):</p>
+                <p style="margin-top: 15px;">{{ _('strings.song_name') }}:</p>
+                <input placeholder="{{ _("strings.name") }}" name="song_name" required autocomplete="off">
+                <p style="margin-top: 15px;">{{ _('strings.album_name') }}:</p>
+                <input placeholder="{{ _("strings.name") }}" name="album_name" required autocomplete="off">
+                <p style="margin-top: 15px;">{{ _('strings.song_image') }}(.png):</p>
                 <input type="file" name="song_image" id="song_image" accept=".jpg" required>
-                <p style="margin-top: 15px;">{{ _('Song audio') }}(.mp3):</p>
+                <p style="margin-top: 15px;">{{ _('strings.song_audio') }}(.mp3):</p>
                 <input type="file" name="song_audio" id="song_audio" accept=".mp3" required>
             </div>
-            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Upload') }}</button>
+            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('strings.upload') }}</button>
         </form>
     </div>
 {% endblock %}

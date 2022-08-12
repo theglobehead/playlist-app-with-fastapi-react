@@ -15,9 +15,9 @@
             margin-left: 15%;
             margin-top: 7vh;
         ">
-            <a class="btn-leaf" href="{{ url_for("playlists.your_playlists") }}">{{ _('Your playlists') }}</a>
-            <a class="btn-leaf" href="#">{{ _('Settings') }}</a>
-            <a class="btn-leaf" href="{{ url_for("discover.discover") }}">{{ _('Discover') }}</a>
+            <a class="btn-leaf" href="{{ url_for("playlists.your_playlists") }}">{{ _('strings.playlists_page') }}</a>
+            <a class="btn-leaf" href="#">{{ _('strings.settings') }}</a>
+            <a class="btn-leaf" href="{{ url_for("discover.discover") }}">{{ _('strings.discover_page') }}</a>
         </div>
     </div>
     <a href="{{ url_for("site.logout") }}" style="margin-bottom: 15px;">{{ _('strings.log_out') }}</a>

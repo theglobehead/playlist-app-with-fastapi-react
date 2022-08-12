@@ -6,7 +6,7 @@ from controllers.controller_song import ControllerSong
 discover_view = Blueprint("discover", __name__)
 
 
-@discover_view.route("/", methods = ['GET', 'POST'])
+@discover_view.route("/", methods=['GET'])
 def discover():
     """
     View for the discover page
@@ -20,7 +20,7 @@ def discover():
     return render_template("discover_page.html", user=user, songs=songs, user_playlists=user.playlists)
 
 
-@discover_view.route("/add-song", methods=['GET', 'POST'])
+@discover_view.route("/add-song", methods=['POST'])
 def add_song():
     playlist_uuid = request.form.get("playlist_uuid")
     song_uuid = request.form.get("song_uuid")
@@ -33,7 +33,7 @@ def add_song():
     return redirect(url_for("discover.discover"))
 
 
-@discover_view.route("/upload-song", methods=['GET', 'POST'])
+@discover_view.route("/upload-song", methods=['POST'])
 def upload_song():
     song_name = request.form.get("song_name")
     album_name = request.form.get("album_name")

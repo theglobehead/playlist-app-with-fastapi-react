@@ -9,7 +9,7 @@
 {% block content %}
     {% include "components/side_panel.html" %}
     <div style="width: 80%; margin-left: auto; box-sizing: border-box; padding: 5vh 5% 5vh 5%;">
-        <button style="width: fit-content;" class="btn-rounded" onclick="openModal('create_playlist_modal')">{{ _('Create new') }} +</button>
+        <button style="width: fit-content;" class="btn-rounded" onclick="openModal('create_playlist_modal')">{{ _('strings.create_new') }} +</button>
         {% for playlist in playlists %}
             <div class="playlist-box shadow" style="margin-top: 20px; display: inline-flex; justify-content: space-between; align-items: center;">
                 <div style="display: inline-flex; column-gap: 20px;">
@@ -19,7 +19,7 @@
                         <p>{{ _('strings.songs') }}: {{ playlist.songs|length }}</p>
                     </div>
                 </div>
-                <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi" type="submit" href="{{ url_for("playlists.playlist_page", playlist_uuid=playlist.playlist_uuid) }}">{{ _('Open') }}</a>
+                <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi" type="submit" href="{{ url_for("playlists.playlist_page", playlist_uuid=playlist.playlist_uuid) }}">{{ _('strings.open') }}</a>
             </div>
         {% endfor %}
     </div>
@@ -33,12 +33,12 @@
            ">
             <input type="hidden" name="owner_user_uuid" value="{{ user.user_uuid }}">
             <a class="toggle-x" onclick="closeModal('create_playlist_modal')">x</a>
-            <h3 style="text-align: center;">{{ _('New Playlist') }}:</h3>
+            <h3 style="text-align: center;">{{ _('strings.new_playlist') }}:</h3>
             <div style="width: 80%">
-                <p style="margin-top: 15px;">{{ _('Name your playlist') }}:</p>
+                <p style="margin-top: 15px;">{{ _('strings.name_playlist') }}:</p>
                 <input placeholder="Name" name="playlist_name" required autocomplete="off">
             </div>
-            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('Create') }}</button>
+            <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('strings.create') }}</button>
         </form>
     </div>
 {% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-10 11:32+0300\n"
+"POT-Creation-Date: 2022-08-12 11:27+0300\n"
 "PO-Revision-Date: 2022-08-10 11:35+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lv\n"
@@ -19,51 +19,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
+#: templates/components/side_panel.html:20 templates/discover_page.html:7
+msgid "strings.discover_page"
+msgstr "Atklāt"
+
 #: templates/discover_page.html:12 templates/discover_page.html:57
-msgid "Upload song"
-msgstr "Augšupielādēt dziesmu"
+msgid "strings.upload_song"
+msgstr "Augšupielādēt dziesmau"
 
-#: templates/discover_page.html:33
-msgid "Select Playlist"
-msgstr "Izvēlēties Playlistu"
-
-#: templates/discover_page.html:35
-msgid "Add song"
-msgstr "Pievienot dziesmu"
-
-#: templates/discover_page.html:37
-msgid "Select playlist"
+#: templates/discover_page.html:33 templates/discover_page.html:37
+msgid "strings.select_playlist"
 msgstr "Izvēlēties playlistu"
 
+#: templates/discover_page.html:35
+msgid "strings.add_song"
+msgstr "Pievienot dziesmu"
+
 #: templates/discover_page.html:43
-msgid "Add"
+msgid "strings.add"
 msgstr "Pievienot"
 
 #: templates/discover_page.html:59
-msgid "Song name"
+msgid "strings.song_name"
 msgstr "Dziesmas nosaukums"
 
 #: templates/discover_page.html:60 templates/discover_page.html:62
-msgid "Name"
-msgstr "Nosaukums"
+msgid "strings.name"
+msgstr "Vārds"
 
 #: templates/discover_page.html:61
-msgid "Album name"
+msgid "strings.album_name"
 msgstr "Albūma nosaukums"
 
 #: templates/discover_page.html:63
-msgid "Song image"
-msgstr "Dziesmas attels"
+msgid "strings.song_image"
+msgstr "Dziesmas attēls"
 
 #: templates/discover_page.html:65
-msgid "Song audio"
+msgid "strings.song_audio"
 msgstr "Dziesmas audio"
 
 #: templates/discover_page.html:68
-msgid "Upload"
+msgid "strings.upload"
 msgstr "Augšupielādēt"
 
-#: templates/login_page.html:12 templates/register_page.html:12
+#: templates/error_page.html:6
+msgid "strings.error"
+msgstr "Errors"
+
+#: templates/login_page.html:7 templates/register_page.html:12
+msgid "strings.login_page"
+msgstr "Ieiet"
+
+#: templates/login_page.html:12
 msgid "strings.home_page_heading"
 msgstr "Mūzikas Playlisti Ar Flask"
 
@@ -91,104 +99,99 @@ msgstr "Nav izveidots konts"
 msgid "strings.register_here"
 msgstr "Reģistrējieties šeit"
 
+#: templates/components/side_panel.html:18 templates/playlist.html:8
+msgid "strings.playlists_page"
+msgstr "Playlisti"
+
 #: templates/playlist.html:18 templates/your_playlists.html:19
 msgid "strings.songs"
 msgstr "Dziesmas"
 
 #: templates/playlist.html:21
-msgid "Delete"
+msgid "strings.delete"
 msgstr "Dzēst"
 
-#: templates/playlist.html:28
-msgid "Your browser does not support the audio element."
-msgstr "Jūsu pārlūkprogramma neatbalsta šo audio elementu"
+#: templates/playlist.html:30
+msgid "strings.audio_element_not_supported"
+msgstr "Jūsu pārlūkprogramma neatbalsta audio element"
 
-#: templates/register_page.html:16
-msgid "Register"
-msgstr "Rešidtrēties"
+#: templates/register_page.html:7
+msgid "strings.register_page"
+msgstr "Reģistrēties"
+
+#: templates/register_page.html:16 templates/register_page.html:25
+msgid "strings.register"
+msgstr "Reģistrējieties"
 
 #: templates/register_page.html:22
-msgid "retype password"
+msgid "strings.retype_password"
 msgstr "Ievadiet paroli vēlreiz"
 
-#: templates/register_page.html:25
-msgid "register"
-msgstr "reģistrēties"
+#: templates/register_page.html:27
+msgid "strings.account_already_created"
+msgstr "Jau izveidots konts"
 
 #: templates/register_page.html:27
-msgid "Already have an account?"
-msgstr "Jau izveidots konts?"
-
-#: templates/register_page.html:27
-msgid "Login here"
-msgstr "Ieejiet šeit"
+msgid "strings.login_here"
+msgstr "Ieiet šeit"
 
 #: templates/your_playlists.html:12
-msgid "Create new"
-msgstr "Izveidot jaunu"
+msgid "strings.create_new"
+msgstr "Radīt jaunu"
 
 #: templates/your_playlists.html:22
-msgid "Open"
+msgid "strings.open"
 msgstr "Atvērt"
 
 #: templates/your_playlists.html:36
-msgid "New Playlist"
+msgid "strings.new_playlist"
 msgstr "Jauns playlists"
 
 #: templates/your_playlists.html:38
-msgid "Name your playlist"
-msgstr "Nosauciet savu playlistu"
+msgid "strings.name_playlist"
+msgstr "Nosauciet playlistu"
 
 #: templates/your_playlists.html:41
-msgid "Create"
-msgstr "Izveidot"
-
-#: templates/components/side_panel.html:18
-msgid "Your playlists"
-msgstr "Jūsu playlisti"
+msgid "strings.create"
+msgstr "Radīt"
 
 #: templates/components/side_panel.html:19
-msgid "Settings"
+msgid "strings.settings"
 msgstr "Iestatījumi"
-
-#: templates/components/side_panel.html:20
-msgid "Discover"
-msgstr "Atklāt"
 
 #: templates/components/side_panel.html:23
 msgid "strings.log_out"
 msgstr "Izrakstīties"
 
-#: web/login_page.py:31
-msgid "error_msg.login_failed"
-msgstr "Ieiešana neizdevās"
+#: web/login_page.py:32
+msgid "error_msg.incorrect_login_details"
+msgstr "Nepareiza informācija!"
 
-#: web/register_page.py:32
+#: web/register_page.py:33
 msgid "error_msg.something_went_wrong"
 msgstr "Kaut kas nogāja greizi..."
 
-#: web/register_page.py:50
+#: web/register_page.py:51
 msgid "error_msg.enter_both_passwords"
-msgstr "Ievadied abas paroles!"
+msgstr "Ievadiet abas paroles!"
 
-#: web/register_page.py:53
+#: web/register_page.py:54
 msgid "error_msg.no_username_entered"
-msgstr "Ievadied lietotājvārdu!"
+msgstr "Ievadiet lietotājvārdu!"
 
-#: web/register_page.py:56
+#: web/register_page.py:57
 msgid "error_msg.username_too_long"
 msgstr "Pārāk garš lietotājvārds"
 
-#: web/register_page.py:62
+#: web/register_page.py:60
 msgid "error_msg.password_too_short"
 msgstr "Pārāk īsa parole"
 
-#: web/register_page.py:59
+#: web/register_page.py:63
 msgid "error_msg.passwords_must_be_equal"
 msgstr "Abām parolēm jābūt vienādām"
 
-#: web/register_page.py:65
+#: web/register_page.py:66
 msgid "error_msg.username_taken"
 msgstr "Lietotājvārds jau aizņemts"
-
 

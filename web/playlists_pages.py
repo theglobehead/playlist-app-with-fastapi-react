@@ -70,12 +70,12 @@ def delete_playlist(playlist_uuid: str):
     ControllerDatabase.delete_playlist(playlist_id)
     return redirect(url_for("playlists.your_playlists"))
 
-@playlists_view.route("/remove-song", methods=['GET', 'POST'])
+@playlists_view.route("/remove-song", methods=['POST'])
 @login_required
 def remove_song():
     """
-    Ajax endpoint for deleting a song from a playlist
-    :return: http status no content
+    Used for deleting a song from a playlist
+    :return: redirects to the playlist page
     """
     playlist_uuid = request.form.get("playlist_uuid")
     song_uuid = request.form.get("song_uuid")
@@ -85,4 +85,4 @@ def remove_song():
 
     ControllerDatabase.remove_song_from_playlist(playlist_id, song_id)
 
-    return "", http.HTTPStatus.NO_CONTENT
+    return redirect(url_for("playlists.playlist_page", playlist_uuid=playlist_uuid))

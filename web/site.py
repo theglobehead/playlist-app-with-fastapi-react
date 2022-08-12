@@ -7,7 +7,7 @@ from controllers.controller_user import ControllerUser
 site = Blueprint("site", __name__)
 
 
-@site.route("/logout", methods=['GET', 'POST'])
+@site.route("/logout", methods=['GET'])
 def logout():
     """
     Used for logging a user out.
@@ -20,7 +20,7 @@ def logout():
     return redirect(url_for("login.login"))
 
 
-@site.route("/change_locale/<locale>", methods=['GET', 'POST'])
+@site.route("/change_locale/<locale>", methods=['GET'])
 def change_locale(locale: str):
     """
     Used for changing a users' locale
@@ -30,7 +30,7 @@ def change_locale(locale: str):
     return redirect(request.referrer)
 
 
-@site.route("/profile_picture/<user_uuid>", methods=['GET', 'POST'])
+@site.route("/profile_picture/<user_uuid>", methods=['GET'])
 def get_profile_pic(user_uuid: str) -> Response:
     """
     Used for getting the profile picture of a user
@@ -41,7 +41,7 @@ def get_profile_pic(user_uuid: str) -> Response:
     return result
 
 
-@site.route("/songe_picture/<song_uuid>", methods=['GET', 'POST'])
+@site.route("/songe_picture/<song_uuid>", methods=['GET'])
 def get_song_pic(song_uuid: str) -> Response:
     """
     Used for getting the image for a song
