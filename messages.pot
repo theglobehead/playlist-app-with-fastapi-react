@@ -1,0 +1,190 @@
+# Translations template for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-08-10 11:32+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: templates/discover_page.html:12 templates/discover_page.html:57
+msgid "Upload song"
+msgstr ""
+
+#: templates/discover_page.html:33
+msgid "Select Playlist"
+msgstr ""
+
+#: templates/discover_page.html:35
+msgid "Add song"
+msgstr ""
+
+#: templates/discover_page.html:37
+msgid "Select playlist"
+msgstr ""
+
+#: templates/discover_page.html:43
+msgid "Add"
+msgstr ""
+
+#: templates/discover_page.html:59
+msgid "Song name"
+msgstr ""
+
+#: templates/discover_page.html:60 templates/discover_page.html:62
+msgid "Name"
+msgstr ""
+
+#: templates/discover_page.html:61
+msgid "Album name"
+msgstr ""
+
+#: templates/discover_page.html:63
+msgid "Song image(.png)"
+msgstr ""
+
+#: templates/discover_page.html:65
+msgid "Song audio(.mp3)"
+msgstr ""
+
+#: templates/discover_page.html:68
+msgid "Upload"
+msgstr ""
+
+#: templates/login_page.html:12 templates/register_page.html:12
+msgid "strings.home_page_heading"
+msgstr "Music Playlists With Flask"
+
+#: templates/login_page.html:21
+msgid "strings.login"
+msgstr "Login"
+
+#: templates/login_page.html:23 templates/register_page.html:18
+msgid "strings.username"
+msgstr "username"
+
+#: templates/login_page.html:25 templates/register_page.html:20
+msgid "strings.password"
+msgstr "password"
+
+#: templates/login_page.html:28
+msgid "strings.log_in"
+msgstr "Log in"
+
+#: templates/login_page.html:30
+msgid "strings.no_account"
+msgstr "Dont have an account"
+
+#: templates/login_page.html:30
+msgid "Register here"
+msgstr ""
+
+#: templates/playlist.html:18 templates/your_playlists.html:19
+msgid ""
+msgstr ""
+
+#: templates/playlist.html:21
+msgid "Delete"
+msgstr ""
+
+#: templates/playlist.html:28
+msgid "Your browser does not support the audio element."
+msgstr ""
+
+#: templates/register_page.html:16
+msgid "Register"
+msgstr ""
+
+#: templates/register_page.html:22
+msgid "retype password"
+msgstr ""
+
+#: templates/register_page.html:25
+msgid "register"
+msgstr ""
+
+#: templates/register_page.html:27
+msgid "Already have an account?"
+msgstr ""
+
+#: templates/register_page.html:27
+msgid "Login here"
+msgstr ""
+
+#: templates/your_playlists.html:12
+msgid "Create new"
+msgstr ""
+
+#: templates/your_playlists.html:22
+msgid "Open"
+msgstr ""
+
+#: templates/your_playlists.html:36
+msgid "New Playlist"
+msgstr ""
+
+#: templates/your_playlists.html:38
+msgid "Name your playlist"
+msgstr ""
+
+#: templates/your_playlists.html:41
+msgid "Create"
+msgstr ""
+
+#: templates/components/side_panel.html:18
+msgid "Your playlists"
+msgstr ""
+
+#: templates/components/side_panel.html:19
+msgid "Settings"
+msgstr ""
+
+#: templates/components/side_panel.html:20
+msgid "Discover"
+msgstr ""
+
+#: templates/components/side_panel.html:23
+msgid "strings.log_out"
+msgstr ""
+
+#: web/login_page.py:31
+msgid "error_msg.login_failed"
+msgstr ""
+
+#: web/register_page.py:32
+msgid "error_msg.something_went_wrong"
+msgstr ""
+
+#: web/register_page.py:50
+msgid "error_msg.enter_both_passwords"
+msgstr ""
+
+#: web/register_page.py:53
+msgid "error_msg.no_username_entered"
+msgstr ""
+
+#: web/register_page.py:56
+msgid "error_msg.username_too_long"
+msgstr ""
+
+#: web/register_page.py:62
+msgid "error_msg.password_too_short"
+msgstr ""
+
+#: web/register_page.py:59
+msgid "error_msg.passwords_must_be_equal"
+msgstr ""
+
+#: web/register_page.py:65
+msgid "error_msg.username_taken"
+msgstr ""
