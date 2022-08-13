@@ -59,13 +59,13 @@ def home():
 
 @app.errorhandler(Exception)
 def error_page(error):
-    LoggingUtils.exception(str(error))
+    LoggingUtils.exception(error)
     error_code = 500
 
     if isinstance(error, HTTPException):
         error_code = error.code
 
-    return render_template("error_page.html", error_message=f"Error: { error_code }")
+    return render_template("error_page.html", error_message=f"Error: { error_code }"), error_code
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
-from flask import Blueprint, session, redirect, url_for, Response, request
+import os
 
-from controllers.controller_database import ControllerDatabase
-from controllers.controller_song import ControllerSong
-from controllers.controller_user import ControllerUser
+from flask import Blueprint, session, redirect, url_for, Response, request, send_from_directory, send_file
+
+from controllers.constants import DEFAULT_PROFILE_PICTURE_PATH, PROFILE_PICTURE_PATH, SONG_PICTURE_PATH
 
 site = Blueprint("site", __name__)
 
@@ -37,8 +37,15 @@ def get_profile_pic(user_uuid: str) -> Response:
     :param user_uuid: uuid od the song
     :return: returns the image as a response
     """
-    result = ControllerDatabase.get_user_profile_pic(user_uuid)
-    return result
+    result = ""
+
+    user_pic_path = f"{PROFILE_PICTURE_PATH}{user_uuid}.png"
+    if os.path.exists(user_pic_path):
+        result = user_pic_path
+    else:
+        result = DEFAULT_PROFILE_PICTURE_PATH
+
+    return send_from_directory("", result)
 
 
 @site.route("/songe_picture/<song_uuid>", methods=['GET'])
@@ -48,5 +55,12 @@ def get_song_pic(song_uuid: str) -> Response:
     :param song_uuid: uuid od the song
     :return: returns the image as a response
     """
-    result = ControllerDatabase.get_song_pic(song_uuid)
-    return result
+    result = ""
+
+    song_pic_path = f"{SONG_PICTURE_PATH}{song_uuid}.jpg"
+    if os.path.exists(song_pic_path):
+        result = song_pic_path
+    else:
+        result = DEFAULT_PROFILE_PICTURE_PATH
+
+    return send_from_directory("", result)

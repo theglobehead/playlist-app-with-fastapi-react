@@ -1,12 +1,7 @@
 from __future__ import annotations
 
-import os
 from typing import List
 
-from flask import Response, send_file
-from six import BytesIO
-
-from controllers.constants import PROFILE_PICTURE_PATH, DEFAULT_PROFILE_PICTURE_PATH, SONG_PICTURE_PATH
 from models.playlist import Playlist
 from models.song import Song
 from models.user import User
@@ -101,7 +96,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(str(e))
+            LoggingUtils.exception(e)
 
         return result
 
@@ -148,7 +143,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(str(e))
+            LoggingUtils.exception(e)
 
         return result
 
@@ -222,7 +217,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(str(e))
+            LoggingUtils.exception(e)
 
         return result
 
@@ -245,7 +240,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(str(e))
+            LoggingUtils.exception(e)
 
         return result
 
@@ -270,7 +265,7 @@ class ControllerDatabase:
                     )
                 result = True
         except Exception as e:
-            LoggingUtils.exception(str(e))
+            LoggingUtils.exception(e)
 
         return result
 
@@ -318,9 +313,9 @@ class ControllerDatabase:
         """
         result = []
 
-        amount_str = ""
+        page_size_str = ""
         if page_size != -1:
-            amount_str = f"LIMIT %(amount)s "
+            page_size_str = f"LIMIT %(page_size)s "
 
         with CommonUtils.connection() as conn:
             with conn.cursor() as cur:
@@ -328,11 +323,11 @@ class ControllerDatabase:
                     "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
                     "FROM songs "
                     "WHERE songs.is_deleted = false "
-                    f"{amount_str}"
+                    f"{page_size_str}"
                     "OFFSET %(page_offset)s ",
                     {
                         "page_offset": page_offset,
-                        "amount": page_size
+                        "page_size": page_size
                     }
                 )
                 playlists = cur.fetchall()
@@ -374,26 +369,6 @@ class ControllerDatabase:
                     result = song_id[0]
 
         return result
-
-    @staticmethod
-    def get_song_pic(song_uuid: str) -> Response:
-        """
-        Returns the songs picture
-        :param song_uuid: the uuid of the song
-        :return: returns the image as a flask response
-        """
-        result = None
-
-        song_pic_path = f"{SONG_PICTURE_PATH}{song_uuid}.jpg"
-        if os.path.exists(song_pic_path):
-            result = song_pic_path
-        else:
-            result = DEFAULT_PROFILE_PICTURE_PATH
-
-        with open(result, "rb") as f:
-            result = BytesIO(f.read())
-
-        return send_file(result, mimetype="image/jpeg")
 
     @staticmethod
     def check_if_username_taken(name: str) -> bool:
@@ -539,23 +514,3 @@ class ControllerDatabase:
             result = result[0]
 
         return result
-
-    @staticmethod
-    def get_user_profile_pic(user_uuid: str) -> Response:
-        """
-        Used for getting a users profile pic
-        :param user_uuid: uuid of the user
-        :return: returns the file as a response
-        """
-        result = ""
-
-        user_pic_path = f"{PROFILE_PICTURE_PATH}{user_uuid}.png"
-        if os.path.exists(user_pic_path):
-            result = user_pic_path
-        else:
-            result = DEFAULT_PROFILE_PICTURE_PATH
-
-        with open(result, "rb") as f:
-            result = BytesIO(f.read())
-
-        return send_file(result, mimetype="image/png")
