@@ -5,3 +5,5 @@ SONG_AUDIO_FILE_TYPE = ".mp3"
 SONG_IMAGE_FILE_TYPE = ".jpg"
 SONG_PATH = "./static/audio/songs/"
 SONG_PICTURE_PATH = "./static/images/song_pictures/"
+
+LOGS_PATH = "./logs/"
