@@ -54,6 +54,8 @@ def home():
     if "user_uuid" in session:
         result = redirect(url_for("playlists.your_playlists"))
 
+    a = 5/0
+
     return result
 
 
