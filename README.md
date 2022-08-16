@@ -87,6 +87,15 @@ classDiagram
         is_deleted: bool
     }
 
+    class tokens{
+        token_id: int
+        token_uuid: uuid
+        user_id: int
+        modified: timestamp
+        created: timestamp
+        is_deleted: bool
+    }
+
     tags_in_playlists o-- playlists
     tags_in_playlists o-- tags
 
@@ -101,6 +110,7 @@ classDiagram
 
     playlists --* users
     songs --* artists
+    tokens --* users
 ```
 
 ## Models diagram
@@ -169,7 +179,17 @@ classDiagram
         is_deleted: bool
     }
 
+    class Token{
+        token_id: int
+        token_uuid: str
+        user_id: int
+        modified: datetime
+        created: datetime
+        is_deleted: bool
+    }
+
     User *-- Playlist
+    User *-- Token
     Playlist o-- Song
     Song o-- Artist
     Song o-- Tag
