@@ -5,11 +5,14 @@ from datetime import datetime
 from typing import List
 
 from models.playlist import Playlist
+from models.token import Token
+
 
 @dataclass_json
 @dataclass
 class User:
     playlists: List[Playlist] = field(default_factory=list)
+    token: Token = field(default_factory=Token)
 
     user_id: int = 0
     user_uuid: str = ""

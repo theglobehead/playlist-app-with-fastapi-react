@@ -1,3 +1,5 @@
+import datetime
+
 import flask
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from flask_babel import gettext
@@ -22,12 +24,14 @@ def login():
         form = request.form
         name = form.get("username").strip()
         password = form.get("password").strip()
+        remember_me = form.get("remember_me")
 
-        user = ControllerUser.authenticate_user(name, password)
+        user = ControllerUser.authenticate_user(name, password, remember_me)
 
         if user:
             session["user_uuid"] = user.user_uuid
             result = redirect(url_for("playlists.your_playlists"))
+            result.set_cookie("token", user.token.token_uuid, expires=datetime.datetime.now() + datetime.timedelta(days=30))
         else:
             flask.flash(gettext("error_msg.incorrect_login_details"))
 

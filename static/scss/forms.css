@@ -17,6 +17,14 @@
   justify-content: space-between;
   align-items: center;
 }
+.rounded-form .checkbox-row {
+  display: inline-flex;
+  align-items: center;
+}
+.rounded-form .checkbox-row input {
+  width: 18px;
+  height: 18px;
+}
 .rounded-form input, .rounded-form select {
   padding: 5px 0 5px 0;
   width: 100%;

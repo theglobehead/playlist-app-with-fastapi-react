@@ -19,6 +19,16 @@
     justify-content: space-between;
     align-items: center;
 
+    .checkbox-row{
+        display: inline-flex;
+        align-items: center;
+
+        input{
+            width: 18px;
+            height: 18px;
+        }
+    }
+
     input, select{
         padding: 5px 0 5px 0;
         width: 100%;

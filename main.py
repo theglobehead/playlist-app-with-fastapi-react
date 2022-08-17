@@ -50,11 +50,11 @@ def home():
     :return: Redirects to the login view if the user isn't logged in,
              otherwise it returns to the your_playlist view
     """
+    print(request.cookies.get("token"))
+
     result = redirect(url_for("login.login"))
     if "user_uuid" in session:
         result = redirect(url_for("playlists.your_playlists"))
-
-    a = 5/0
 
     return result
 

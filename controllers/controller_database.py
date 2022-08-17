@@ -4,6 +4,7 @@ from typing import List
 
 from models.playlist import Playlist
 from models.song import Song
+from models.token import Token
 from models.user import User
 from utils.common_utils import CommonUtils
 from utils.logging_utils import LoggingUtils
@@ -222,6 +223,32 @@ class ControllerDatabase:
         return result
 
     @staticmethod
+    def insert_token(token: Token) -> Token:
+        """
+        Used for creating a playlist
+        :param token: the token to insert
+        :return: bool of weather or not the insertion was successful
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO tokens "
+                        "(user_user_id) "
+                        "values (%(user_user_id)s) "
+                        "RETURNING token_id",
+                        token.to_dict()
+                    )
+                    token_id = cur.fetchone()[0]
+            result = ControllerDatabase.get_token(token_id)
+        except Exception as e:
+            LoggingUtils.exception(e)
+
+        return result
+
+    @staticmethod
     def delete_playlist(playlist_id: int) -> bool:
         """
         Used for deleting a playlist
@@ -406,11 +433,128 @@ class ControllerDatabase:
             playlists=ControllerDatabase.get_user_playlists(user_id),
             hashed_password=hashed_password,
             password_salt=password_salt,
+            token=ControllerDatabase.get_user_token(User(user_id=user_id)),
             modified=modified,
             created=created,
             is_deleted=is_deleted,
         )
 
+        return result
+
+    @staticmethod
+    def get_song(song_id: int) -> Song:
+        """
+        Used for getting a user with a certain id
+        :param song_id: the id of the song
+        :return: a User model
+        """
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
+                    "FROM songs "
+                    "WHERE song_id = %(song_id)s LIMIT 1",
+                    {"song_id": song_id})
+                song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
+
+        result = Song(
+            song_id=song_id,
+            song_uuid=str(song_uuid),
+            song_name=song_name,
+            album=album,
+            modified=modified,
+            created=created,
+            is_deleted=is_deleted,
+        )
+
+        return result
+
+    @staticmethod
+    def get_user_token(user: User) -> Song:
+        """
+        Used for getting a user with a certain id
+        :param user: the user whose token need to be retrieved
+        :return: a User model
+        """
+        result = Token()
+
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
+                    "FROM tokens "
+                    "WHERE user_user_id = %(user_id)s AND is_deleted = false LIMIT 1",
+                    {"user_id": user.user_id})
+                if cur.rowcount:
+                    token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
+
+                    result = Token(
+                        token_id=token_id,
+                        token_uuid=str(token_uuid),
+                        user_user_id=user_user_id,
+                        modified=modified,
+                        created=created,
+                        is_deleted=is_deleted,
+                    )
+
+        return result
+
+    @staticmethod
+    def get_token(token_id: int) -> Token:
+        """
+        Used for getting a user with a certain id
+        :param token_id: the id of the token
+        :return: a User model
+        """
+        result = Token()
+
+        with CommonUtils.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
+                    "FROM tokens "
+                    "WHERE (token_id = %(token_id)s AND is_deleted = false) LIMIT 1",
+                    {"token_id": token_id}
+                )
+
+                if cur.rowcount:
+                    token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
+
+                    result = Token(
+                        token_id=token_id,
+                        token_uuid=str(token_uuid),
+                        user_user_id=user_user_id,
+                        modified=modified,
+                        created=created,
+                        is_deleted=is_deleted,
+                    )
+
+        return result
+
+    @staticmethod
+    def delete_token(token: Token) -> bool:
+        """
+        Used for deleting a playlist
+        :param token: the token to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE tokens "
+                        "SET is_deleted = true "
+                        "WHERE (token_id = %(token_id)s AND is_deleted = false) ",
+                        token.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            LoggingUtils.exception(e)
+
+        print(token.token_id)
+        print("deleted:", result)
         return result
 
     @staticmethod
@@ -438,6 +582,7 @@ class ControllerDatabase:
             playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
             hashed_password=hashed_password,
             password_salt=password_salt,
+            token=ControllerDatabase.get_user_token(User(user_id=user_id)),
             modified=modified,
             created=created,
             is_deleted=is_deleted,
@@ -468,6 +613,7 @@ class ControllerDatabase:
             playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
             hashed_password=hashed_password,
             password_salt=password_salt,
+            token=ControllerDatabase.get_user_token(User(user_id=user_id)),
             modified=modified,
             created=created,
             is_deleted=is_deleted,

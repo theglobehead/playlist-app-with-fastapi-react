@@ -24,6 +24,9 @@
                    <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}" required>
                    <p style="margin-top: 15px;">{{ _('strings.password') }}:</p>
                    <input type="password" placeholder="Password" name="password" value="{{ request.form.password1 }}" required>
+                    <div class="checkbox-row" style="margin-top: 15px;">
+                        <input type="checkbox" id="remember_me" name="remember_me"> {{ _("strings.remember_me") }}
+                    </div>
                </div>
                <button style="margin-top: 15px; border-radius: 20% 20% 0 0;" class="btn-scifi" type="submit">{{ _('strings.log_in') }}</button>
            </form>
