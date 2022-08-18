@@ -470,7 +470,7 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def get_user_token(user: User) -> Song:
+    def get_user_token(user: User) -> Token:
         """
         Used for getting a user with a certain id
         :param user: the user whose token need to be retrieved
@@ -478,24 +478,27 @@ class ControllerDatabase:
         """
         result = Token()
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
-                    "FROM tokens "
-                    "WHERE user_user_id = %(user_id)s AND is_deleted = false LIMIT 1",
-                    {"user_id": user.user_id})
-                if cur.rowcount:
-                    token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
+                        "FROM tokens "
+                        "WHERE user_user_id = %(user_id)s AND is_deleted = false LIMIT 1",
+                        {"user_id": user.user_id})
+                    if cur.rowcount:
+                        token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
 
-                    result = Token(
-                        token_id=token_id,
-                        token_uuid=str(token_uuid),
-                        user_user_id=user_user_id,
-                        modified=modified,
-                        created=created,
-                        is_deleted=is_deleted,
-                    )
+                        result = Token(
+                            token_id=token_id,
+                            token_uuid=str(token_uuid),
+                            user_user_id=user_user_id,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                        )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -508,26 +511,29 @@ class ControllerDatabase:
         """
         result = Token()
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
-                    "FROM tokens "
-                    "WHERE (token_id = %(token_id)s AND is_deleted = false) LIMIT 1",
-                    {"token_id": token_id}
-                )
-
-                if cur.rowcount:
-                    token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
-
-                    result = Token(
-                        token_id=token_id,
-                        token_uuid=str(token_uuid),
-                        user_user_id=user_user_id,
-                        modified=modified,
-                        created=created,
-                        is_deleted=is_deleted,
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
+                        "FROM tokens "
+                        "WHERE (token_id = %(token_id)s AND is_deleted = false) LIMIT 1",
+                        {"token_id": token_id}
                     )
+
+                    if cur.rowcount:
+                        token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
+
+                        result = Token(
+                            token_id=token_id,
+                            token_uuid=str(token_uuid),
+                            user_user_id=user_user_id,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                        )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -553,8 +559,6 @@ class ControllerDatabase:
         except Exception as e:
             LoggingUtils.exception(e)
 
-        print(token.token_id)
-        print("deleted:", result)
         return result
 
     @staticmethod
@@ -564,29 +568,34 @@ class ControllerDatabase:
         :param name: the name of the user
         :return: a User model
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
-                    "FROM users "
-                    "WHERE user_name = %(name)s LIMIT 1",
-                    {"name": name}
-                )
+        result = None
 
-                user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
+                        "FROM users "
+                        "WHERE user_name = %(name)s LIMIT 1",
+                        {"name": name}
+                    )
 
-        result = User(
-            user_id=user_id,
-            user_uuid=str(user_uuid),
-            user_name=name,
-            playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
-            hashed_password=hashed_password,
-            password_salt=password_salt,
-            token=ControllerDatabase.get_user_token(User(user_id=user_id)),
-            modified=modified,
-            created=created,
-            is_deleted=is_deleted,
-        )
+                    user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+
+            result = User(
+                user_id=user_id,
+                user_uuid=str(user_uuid),
+                user_name=name,
+                playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
+                hashed_password=hashed_password,
+                password_salt=password_salt,
+                token=ControllerDatabase.get_user_token(User(user_id=user_id)),
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -597,27 +606,31 @@ class ControllerDatabase:
         :param user_uuid: the uuid of the user
         :return: a User model
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
-                    "FROM users "
-                    "WHERE user_uuid = %(user_uuid)s LIMIT 1",
-                    {"user_uuid": user_uuid})
-                user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
 
-        result = User(
-            user_id=user_id,
-            user_uuid=str(user_uuid),
-            user_name=name,
-            playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
-            hashed_password=hashed_password,
-            password_salt=password_salt,
-            token=ControllerDatabase.get_user_token(User(user_id=user_id)),
-            modified=modified,
-            created=created,
-            is_deleted=is_deleted,
-        )
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
+                        "FROM users "
+                        "WHERE user_uuid = %(user_uuid)s LIMIT 1",
+                        {"user_uuid": user_uuid})
+                    user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+
+            result = User(
+                user_id=user_id,
+                user_uuid=str(user_uuid),
+                user_name=name,
+                playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
+                hashed_password=hashed_password,
+                password_salt=password_salt,
+                token=ControllerDatabase.get_user_token(User(user_id=user_id)),
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -628,16 +641,20 @@ class ControllerDatabase:
         :param name: the users name
         :return: the users id
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute("SELECT user_id "
-                            "FROM users "
-                            "WHERE user_name = %(name)s LIMIT 1",
-                            {"name": name})
-                result = cur.fetchone()
+        result = None
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT user_id "
+                                "FROM users "
+                                "WHERE user_name = %(name)s LIMIT 1",
+                                {"name": name})
+                    fetch_result = cur.fetchone()
 
-        if result:
-            result = result[0]
+            if fetch_result:
+                result = result[0]
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -648,15 +665,19 @@ class ControllerDatabase:
         :param user_uuid: the users uuid
         :return: the users id
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute("SELECT user_id "
-                            "FROM users "
-                            "WHERE user_uuid = %(user_uuid)s LIMIT 1",
-                            {"user_uuid": user_uuid})
-                result = cur.fetchone()
+        result = None
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT user_id "
+                                "FROM users "
+                                "WHERE user_uuid = %(user_uuid)s LIMIT 1",
+                                {"user_uuid": user_uuid})
+                    fetch_result = cur.fetchone()
 
-        if result:
-            result = result[0]
+            if fetch_result:
+                result = result[0]
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
