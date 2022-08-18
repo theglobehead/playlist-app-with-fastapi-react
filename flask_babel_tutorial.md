@@ -1,6 +1,4 @@
-# Flask-babel walktrough
-
-## Setup
+# Flask-babel walk-trough
 
 ### 1. Install the requirements
 
@@ -15,7 +13,7 @@ or
 conda install -c conda-forge flask-babel
 ```
 
-### 2. Write the text in the tamplates or the code
+### 2. Write the text in the templates or the code
 
 python:
 
@@ -38,11 +36,11 @@ jinja:
 ```
 
 Currently, this code will return "strings.hello_world" or any other string, that it is given.  
-Now we will setup the translations
+Now we will set up the translations
 
 ### 3. Setup a .cfg file
 
-Create a ./bebel/babel.cfg file with the folowing information
+Create a ./babel/babel.cfg file with the following information
 
 ``` .cfg
 [python: webapp/**.py]
@@ -99,7 +97,7 @@ msgid "strings.upload_song"
 msgstr "Upload song"
 ```
 
-If the files is very big, it might me more handy to use a .po file editor. Some editors like [the localise poeditor](https://localise.biz/free/poeditor).
+If the files is very big, it might be more handy to use a .po file editor. Some editors like [the localise poeditor](https://localise.biz/free/poeditor).
 
 ### 6. Compile the .po files to binary
 

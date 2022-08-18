@@ -3,6 +3,7 @@ import os
 from flask import Blueprint, session, redirect, url_for, Response, request, send_from_directory, send_file
 
 from controllers.constants import DEFAULT_PROFILE_PICTURE_PATH, PROFILE_PICTURE_PATH, SONG_PICTURE_PATH
+from controllers.controller_database import ControllerDatabase
 
 site = Blueprint("site", __name__)
 
@@ -14,10 +15,19 @@ def logout():
     Clears the session
     :return: Redirects to the login view
     """
+    user = ControllerDatabase.get_user_by_uuid(user_uuid=session["user_uuid"])
+
     session["user"] = None
     session["user_uuid"] = None
     session.clear()
-    return redirect(url_for("login.login"))
+
+    if user.token.token_uuid:
+        ControllerDatabase.delete_token(user.token)
+
+    result = redirect(url_for("login.login"))
+    result.delete_cookie("token")
+
+    return result
 
 
 @site.route("/change_locale/<locale>", methods=['GET'])

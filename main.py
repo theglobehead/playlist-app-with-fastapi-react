@@ -61,6 +61,11 @@ def home():
 
 @app.errorhandler(Exception)
 def error_page(error):
+    """
+    This function is called any time a fatal error occurs
+    :param error: The Exception that caused the error
+    :return: Renders the error page with the appropriate error code
+    """
     LoggingUtils.exception(error)
     error_code = 500
 
@@ -68,6 +73,25 @@ def error_page(error):
         error_code = error.code
 
     return render_template("error_page.html", error_message=f"Error: { error_code }"), error_code
+
+
+@app.before_request
+def check_user_in():
+    """
+    Before each request, it checks if the user is logged in.
+    If it isn't and the user has a session token, the user gets logged in.
+    :return: None
+    """
+    if "user_uuid" in session:
+        return  # I know that this is bad practice, but is it maybe acceptable in this situation, to avoid indentation?
+
+    token_uuid = request.cookies.get("token")
+    if token_uuid:
+        token = ControllerDatabase.get_token_by_uuid(token_uuid)
+        user = ControllerDatabase.get_user(token.user_user_id)
+
+        if user:
+            session["user_uuid"] = user.user_uuid
 
 
 if __name__ == "__main__":

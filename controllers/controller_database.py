@@ -463,7 +463,7 @@ class ControllerDatabase:
                 user_id=user_id,
                 user_uuid=str(user_uuid),
                 user_name=user_name,
-                playlists=ControllerDatabase.get_user_playlists(user_id),
+                playlists=ControllerDatabase.get_user_playlists(User(user_id=user_id)),
                 hashed_password=hashed_password,
                 password_salt=password_salt,
                 token=ControllerDatabase.get_user_token(User(user_id=user_id)),
