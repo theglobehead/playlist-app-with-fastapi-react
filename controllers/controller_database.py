@@ -20,29 +20,33 @@ class ControllerDatabase:
         """
         result = []
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
-                    "FROM playlists "
-                    "WHERE owner_user_id = %(user_id)s and is_deleted = false ",
-                    user.to_dict()
-                )
-                playlists = cur.fetchall()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
+                        "FROM playlists "
+                        "WHERE owner_user_id = %(user_id)s and is_deleted = false ",
+                        user.to_dict()
+                    )
+                    playlists = cur.fetchall()
 
-                if playlists:
-                    for playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted in playlists:
-                        playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
-                        new_playlist = Playlist(
-                            playlist_id=playlist_id,
-                            playlist_uuid=str(playlist_uuid),
-                            playlist_name=playlist_name,
-                            songs=playlist_songs,
-                            modified=modified,
-                            created=created,
-                            is_deleted=is_deleted,
-                        )
-                        result.append(new_playlist)
+                    if playlists:
+                        for playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted in playlists:
+                            playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
+                            new_playlist = Playlist(
+                                playlist_id=playlist_id,
+                                playlist_uuid=str(playlist_uuid),
+                                playlist_name=playlist_name,
+                                songs=playlist_songs,
+                                modified=modified,
+                                created=created,
+                                is_deleted=is_deleted,
+                            )
+                            result.append(new_playlist)
+        except Exception as e:
+            LoggingUtils.exception(e)
+
         return result
 
     @staticmethod
@@ -54,28 +58,32 @@ class ControllerDatabase:
         """
         result = None
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
-                    "FROM playlists "
-                    "WHERE playlist_uuid = %(playlist_uuid)s",
-                    {"playlist_uuid": playlist_uuid}
-                )
-                result = cur.fetchone()
-
-                if result:
-                    playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted = result
-                    playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
-                    result = Playlist(
-                        playlist_id=playlist_id,
-                        playlist_uuid=str(playlist_uuid),
-                        playlist_name=playlist_name,
-                        songs=playlist_songs,
-                        modified=modified,
-                        created=created,
-                        is_deleted=is_deleted,
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted "
+                        "FROM playlists "
+                        "WHERE playlist_uuid = %(playlist_uuid)s",
+                        {"playlist_uuid": playlist_uuid}
                     )
+                    result = cur.fetchone()
+
+                    if result:
+                        playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted = result
+                        playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
+                        result = Playlist(
+                            playlist_id=playlist_id,
+                            playlist_uuid=str(playlist_uuid),
+                            playlist_name=playlist_name,
+                            songs=playlist_songs,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                        )
+        except Exception as e:
+            LoggingUtils.exception(e)
+
         return result
 
     @staticmethod
@@ -110,18 +118,21 @@ class ControllerDatabase:
         """
         result = None
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT playlist_id "
-                    "FROM playlists "
-                    "WHERE playlist_uuid = %(playlist_uuid)s ",
-                    {"playlist_uuid": playlist_uuid}
-                )
-                playlist_id = cur.fetchone()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT playlist_id "
+                        "FROM playlists "
+                        "WHERE playlist_uuid = %(playlist_uuid)s ",
+                        {"playlist_uuid": playlist_uuid}
+                    )
+                    playlist_id = cur.fetchone()
 
-                if playlist_id:
-                    result = playlist_id[0]
+                    if playlist_id:
+                        result = playlist_id[0]
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -156,17 +167,20 @@ class ControllerDatabase:
         :return: Song
         """
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO songs "
-                    "(song_name, album) "
-                    "values (%(song_name)s, %(album)s) "
-                    "RETURNING song_id ",
-                    song.to_dict()
-                )
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO songs "
+                        "(song_name, album) "
+                        "values (%(song_name)s, %(album)s) "
+                        "RETURNING song_id ",
+                        song.to_dict()
+                    )
 
-                song_id = cur.fetchone()[0]
+                    song_id = cur.fetchone()[0]
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return ControllerDatabase.get_song(song_id)
 
@@ -177,24 +191,27 @@ class ControllerDatabase:
         :param song_id: the id of the song
         :return: a User model
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
-                    "FROM songs "
-                    "WHERE song_id = %(song_id)s LIMIT 1",
-                    {"song_id": song_id})
-                song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
+                        "FROM songs "
+                        "WHERE song_id = %(song_id)s LIMIT 1",
+                        {"song_id": song_id})
+                    song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
 
-        result = Song(
-            song_id=song_id,
-            song_uuid=str(song_uuid),
-            song_name=song_name,
-            album=album,
-            modified=modified,
-            created=created,
-            is_deleted=is_deleted,
-        )
+            result = Song(
+                song_id=song_id,
+                song_uuid=str(song_uuid),
+                song_name=song_name,
+                album=album,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -305,29 +322,33 @@ class ControllerDatabase:
         """
         result = []
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
-                    "FROM songs "
-                    "INNER JOIN songs_in_playlists sip on songs.song_id = sip.song_id AND sip.playlist_id = %(playlist_id)s "
-                    "WHERE songs.is_deleted = false and sip.is_deleted = false",
-                    playlist.to_dict()
-                )
-                playlists = cur.fetchall()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
+                        "FROM songs "
+                        "INNER JOIN songs_in_playlists sip on songs.song_id = sip.song_id AND sip.playlist_id = %(playlist_id)s "
+                        "WHERE songs.is_deleted = false and sip.is_deleted = false",
+                        playlist.to_dict()
+                    )
+                    playlists = cur.fetchall()
 
-                if playlists:
-                    for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
-                        new_song = Song(
-                            song_id=song_id,
-                            song_uuid=str(song_uuid),
-                            song_name=song_name,
-                            album=album,
-                            modified=modified,
-                            created=created,
-                            is_deleted=is_deleted,
-                        )
-                        result.append(new_song)
+                    if playlists:
+                        for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
+                            new_song = Song(
+                                song_id=song_id,
+                                song_uuid=str(song_uuid),
+                                song_name=song_name,
+                                album=album,
+                                modified=modified,
+                                created=created,
+                                is_deleted=is_deleted,
+                            )
+                            result.append(new_song)
+        except Exception as e:
+            LoggingUtils.exception(e)
+
         return result
 
     @staticmethod
@@ -344,33 +365,36 @@ class ControllerDatabase:
         if page_size != -1:
             page_size_str = f"LIMIT %(page_size)s "
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
-                    "FROM songs "
-                    "WHERE songs.is_deleted = false "
-                    f"{page_size_str}"
-                    "OFFSET %(page_offset)s ",
-                    {
-                        "page_offset": page_offset,
-                        "page_size": page_size
-                    }
-                )
-                playlists = cur.fetchall()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
+                        "FROM songs "
+                        "WHERE songs.is_deleted = false "
+                        f"{page_size_str}"
+                        "OFFSET %(page_offset)s ",
+                        {
+                            "page_offset": page_offset,
+                            "page_size": page_size
+                        }
+                    )
+                    playlists = cur.fetchall()
 
-                if playlists:
-                    for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
-                        new_song = Song(
-                            song_id=song_id,
-                            song_uuid=str(song_uuid),
-                            song_name=song_name,
-                            album=album,
-                            modified=modified,
-                            created=created,
-                            is_deleted=is_deleted,
-                        )
-                        result.append(new_song)
+                    if playlists:
+                        for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
+                            new_song = Song(
+                                song_id=song_id,
+                                song_uuid=str(song_uuid),
+                                song_name=song_name,
+                                album=album,
+                                modified=modified,
+                                created=created,
+                                is_deleted=is_deleted,
+                            )
+                            result.append(new_song)
+        except Exception as e:
+            LoggingUtils.exception(e)
         return result
 
     @staticmethod
@@ -382,18 +406,21 @@ class ControllerDatabase:
         """
         result = None
 
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT song_id "
-                    "FROM songs "
-                    "WHERE song_uuid = %(song_uuid)s AND is_deleted = false ",
-                    {"song_uuid": song_uuid}
-                )
-                song_id = cur.fetchone()
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT song_id "
+                        "FROM songs "
+                        "WHERE song_uuid = %(song_uuid)s AND is_deleted = false ",
+                        {"song_uuid": song_uuid}
+                    )
+                    song_id = cur.fetchone()
 
-                if song_id:
-                    result = song_id[0]
+                    if song_id:
+                        result = song_id[0]
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -404,10 +431,14 @@ class ControllerDatabase:
         :param name: the username
         :return: True if the username is taken else False
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute("SELECT user_id FROM USERS WHERE user_name = %(name)s LIMIT 1", {"name": name})
-                result = bool(cur.fetchone())
+        result = True
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT user_id FROM USERS WHERE user_name = %(name)s LIMIT 1", {"name": name})
+                    result = bool(cur.fetchone())
+        except Exception as e:
+            LoggingUtils.exception(e)
         return result
 
     @staticmethod
@@ -417,27 +448,31 @@ class ControllerDatabase:
         :param user_id: the id of the user
         :return: a User model
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
-                    "FROM users "
-                    "WHERE user_id = %(user_id)s LIMIT 1",
-                    {"user_id": user_id})
-                user_id, user_uuid, user_name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+        result = None
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT user_id, user_uuid, user_name, password_hash, password_salt, modified, created, is_deleted "
+                        "FROM users "
+                        "WHERE user_id = %(user_id)s LIMIT 1",
+                        {"user_id": user_id})
+                    user_id, user_uuid, user_name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
 
-        result = User(
-            user_id=user_id,
-            user_uuid=str(user_uuid),
-            user_name=user_name,
-            playlists=ControllerDatabase.get_user_playlists(user_id),
-            hashed_password=hashed_password,
-            password_salt=password_salt,
-            token=ControllerDatabase.get_user_token(User(user_id=user_id)),
-            modified=modified,
-            created=created,
-            is_deleted=is_deleted,
-        )
+            result = User(
+                user_id=user_id,
+                user_uuid=str(user_uuid),
+                user_name=user_name,
+                playlists=ControllerDatabase.get_user_playlists(user_id),
+                hashed_password=hashed_password,
+                password_salt=password_salt,
+                token=ControllerDatabase.get_user_token(User(user_id=user_id)),
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -448,24 +483,28 @@ class ControllerDatabase:
         :param song_id: the id of the song
         :return: a User model
         """
-        with CommonUtils.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
-                    "FROM songs "
-                    "WHERE song_id = %(song_id)s LIMIT 1",
-                    {"song_id": song_id})
-                song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
+        result =None
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
+                        "FROM songs "
+                        "WHERE song_id = %(song_id)s LIMIT 1",
+                        {"song_id": song_id})
+                    song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
 
-        result = Song(
-            song_id=song_id,
-            song_uuid=str(song_uuid),
-            song_name=song_name,
-            album=album,
-            modified=modified,
-            created=created,
-            is_deleted=is_deleted,
-        )
+            result = Song(
+                song_id=song_id,
+                song_uuid=str(song_uuid),
+                song_name=song_name,
+                album=album,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            LoggingUtils.exception(e)
 
         return result
 
@@ -507,7 +546,7 @@ class ControllerDatabase:
         """
         Used for getting a user with a certain id
         :param token_id: the id of the token
-        :return: a User model
+        :return: a Token model
         """
         result = Token()
 
@@ -519,6 +558,41 @@ class ControllerDatabase:
                         "FROM tokens "
                         "WHERE (token_id = %(token_id)s AND is_deleted = false) LIMIT 1",
                         {"token_id": token_id}
+                    )
+
+                    if cur.rowcount:
+                        token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
+
+                        result = Token(
+                            token_id=token_id,
+                            token_uuid=str(token_uuid),
+                            user_user_id=user_user_id,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                        )
+        except Exception as e:
+            LoggingUtils.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_token_by_uuid(token_uuid: str) -> Token:
+        """
+        Used for getting a user with a certain id
+        :param token_uuid: the uuid of the token
+        :return: a Token model
+        """
+        result = Token()
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT token_id, token_uuid, user_user_id, created, modified, is_deleted "
+                        "FROM tokens "
+                        "WHERE (token_uuid = %(token_uuid)s AND is_deleted = false) LIMIT 1",
+                        {"token_uuid": token_uuid}
                     )
 
                     if cur.rowcount:
