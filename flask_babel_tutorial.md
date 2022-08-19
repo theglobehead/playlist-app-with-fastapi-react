@@ -2,14 +2,14 @@
 
 ### 1. Install the requirements
 
-```
+``` properties
 pip install flask-babel
 pip install pybabel
 ```
 
 or
 
-```
+``` properties
 conda install -c conda-forge flask-babel
 ```
 
@@ -17,7 +17,7 @@ conda install -c conda-forge flask-babel
 
 python:
 
-``` .py
+``` python
 from flask import Flask, redirect, session, request, render_template
 from flask_babel import gettext
 
@@ -31,7 +31,7 @@ text = gettext("strings.hello_world")
 
 jinja:
 
-``` .html
+``` html
 <p>{{ _("strings.hello_world") }}</p>
 ```
 
@@ -42,7 +42,7 @@ Now we will set up the translations
 
 Create a ./babel/babel.cfg file with the following information
 
-``` .cfg
+``` editorconfig
 [python: webapp/**.py]
 [jinja2: webapp/templates/**.html]
 encoding = utf-8
@@ -53,13 +53,13 @@ extensions=jinja.2.ext.autoescape,jinja2.ext.with_
 
 This file will contain all the strings in your app
 
-```
+``` properties
 pybabel extract -F ./babel/babel.cfg -o ./babel/messages.pot . 
 ```
 
 To update this file with new strings from the files, run this command
 
-```
+``` properties
 pybabel update -F ./babel/babel.cfg -o ./babel/messages.pot . 
 ```
 
@@ -67,14 +67,14 @@ pybabel update -F ./babel/babel.cfg -o ./babel/messages.pot .
 
 Run this command:  
 
-```
+``` properties
 pybabel init -i ./babel/messages.pot -d translations -l en
 ```
 
 This will create a new file at ./translations/en/LC_MESSAGES/messages.po  
 The file will look somewhat like this
 
-``` .po
+``` properties
 # English translations for PROJECT.
 # Copyright (C) 2022 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
@@ -91,7 +91,7 @@ msgstr ""
 
 Write the translations in the msgstr, like this
 
-``` .po
+``` properties
 #: templates/discover_page.html:12 templates/discover_page.html:57
 msgid "strings.upload_song"
 msgstr "Upload song"
@@ -103,7 +103,7 @@ If the files is very big, it might be more handy to use a .po file editor. Some 
 
 Run this command:  
 
-```
+``` properties
 pybabel compile -d translations
 ```
 
@@ -113,7 +113,7 @@ This will create a new .mo file next to each .po file in the translations direct
 
 If your app contains multiple languages, select the language with the babel.localeselector
 
-``` .py
+``` python
 @babel.localeselector
 def get_locale() -> str:
     """
