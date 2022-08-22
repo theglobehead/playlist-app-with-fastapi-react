@@ -15,10 +15,10 @@ def logout():
     Clears the session
     :return: Redirects to the login view
     """
-    user = ControllerDatabase.get_user_by_uuid(user_uuid=session["user_uuid"])
+    user = ControllerDatabase.get_user(user_id=session["user_id"])
 
     session["user"] = None
-    session["user_uuid"] = None
+    session["user_id"] = None
     session.clear()
 
     if user.token.token_uuid:

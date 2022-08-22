@@ -12,8 +12,8 @@ def discover():
     View for the discover page
     :return: renders the discover view
     """
-    user_uuid = session.get("user_uuid")
-    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    user_id = session.get("user_id")
+    user = ControllerDatabase.get_user(user_id)
 
     page_size = 10
     songs = ControllerDatabase.get_songs(page_size)

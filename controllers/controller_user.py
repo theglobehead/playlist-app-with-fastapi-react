@@ -57,7 +57,7 @@ class ControllerUser:
         return ControllerDatabase.insert_user(user)
 
     @staticmethod
-    def authenticate_user(name: str, password: str, remember_me: bool) -> User | None:
+    def log_user_in(name: str, password: str, remember_me: bool) -> User | None:
         """
         Used for checking if the user entered valid data, when logging in
         :param name: the name entered

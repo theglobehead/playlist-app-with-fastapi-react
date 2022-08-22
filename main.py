@@ -53,7 +53,7 @@ def home():
     print(request.cookies.get("token"))
 
     result = redirect(url_for("login.login"))
-    if "user_uuid" in session:
+    if "user_id" in session:
         result = redirect(url_for("playlists.your_playlists"))
 
     return result
@@ -82,7 +82,7 @@ def check_user_in():
     If it isn't and the user has a session token, the user gets logged in.
     :return: None
     """
-    if "user_uuid" in session:
+    if "user_id" in session:
         return  # I know that this is bad practice, but is it maybe acceptable in this situation, to avoid indentation?
 
     token_uuid = request.cookies.get("token")
@@ -91,7 +91,7 @@ def check_user_in():
         user = ControllerDatabase.get_user(token.user_user_id)
 
         if user:
-            session["user_uuid"] = user.user_uuid
+            session["user_id"] = user.user_id
 
 
 if __name__ == "__main__":

@@ -20,22 +20,20 @@ def login():
     """
     result = render_template("login_page.html")
 
-    if "user_uuid" in session:
-        result = redirect(url_for("playlists.your_playlists"))
-    else:
-        if request.method == "POST":
-            form = request.form
-            name = form.get("username").strip()
-            password = form.get("password").strip()
-            remember_me = bool(form.get("remember_me"))
+    if request.method == "POST":
+        form = request.form
+        name = form.get("username").strip()
+        password = form.get("password").strip()
+        remember_me = bool(form.get("remember_me"))
 
-            user = ControllerUser.authenticate_user(name, password, remember_me)
+        user = ControllerUser.log_user_in(name, password, remember_me)
 
-            if user:
-                session["user_uuid"] = user.user_uuid
-                result = redirect(url_for("playlists.your_playlists"))
+        if user:
+            session["user_id"] = user.user_id
+            result = redirect(url_for("playlists.your_playlists"))
+            if user.token.token_uuid:
                 result.set_cookie("token", user.token.token_uuid, expires=datetime.datetime.now() + datetime.timedelta(days=3))
-            else:
-                flask.flash(gettext("error_msg.incorrect_login_details"))
+        else:
+            flask.flash(gettext("error_msg.incorrect_login_details"))
 
     return result

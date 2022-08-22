@@ -12,8 +12,8 @@ def login_required(f: Callable) -> Callable:
     @wraps(f)
     def decorated_function(*args: list, **kwargs: dict) -> Response | dict:
         result = None
-        user_uuid = session.get("user_uuid", None)
-        if user_uuid:
+        user_id = session.get("user_id", None)
+        if user_id:
             result = f(*args, **kwargs)
         else:
             result = redirect(url_for("login.login"))
