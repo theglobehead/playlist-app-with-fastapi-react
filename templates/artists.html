@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/discover_page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/forms.css') }}">
+{% endblock %}
+
+{% block title %}{{ _("strings.discover_page") }}{% endblock %}
+
+{% block content %}
+    {% include "components/side_panel.html" %}
+    <div style="width: 80%; margin-left: auto; box-sizing: border-box; padding: 5vh 5% 5vh 5%;">
+        <button
+            style="width: fit-content; margin-bottom: 20px;"
+            class="btn-rounded"
+            onclick="openModal('create_artist_modal')"
+        >
+            {{ _('strings.create_artist') }} +
+        </button>
+        <div class="song-grid">
+            {% for artist in artists %}
+                <div class="song-box shadow pointer-on-hover">
+                    <p>{{ song.artist_name }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal-wrapper modal-closed" id="create_artist_modal">
+        <form
+            class="rounded-form form-toggleable shadow"
+            action="{{ url_for("discover.add_song") }}"
+            method="post"
+            style="
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               height: fit-content;
+               width: 20%;
+           "
+        >
+            <input
+                type="hidden"
+                name="owner_user_uuid"
+                value="{{ user.user_uuid }}"
+            >
+            <input
+                type="hidden"
+                name="song_uuid"
+                id="song_uuid_input"
+                value=""
+            >
+            <a
+                class="toggle-x"
+                onclick="closeModal('create_artist_modal')"
+            >x</a>
+            <h3 style="text-align: center;">{{ _('strings.create_artist') }}:</h3>
+            <div style="width: 80%;">
+                <p style="margin-top: 15px;">{{ _('strings.artist_name') }}:</p>
+                <input name="artist_name" autocomplete="off">
+                <p style="margin-top: 15px;">{{ _('strings.parent_artist_name') }}:</p>
+                    <input name="parent_artist_name">
+            </div>
+            <button
+                style="margin-top: 15px; border-radius: 20% 20% 0 0;"
+                class="btn-scifi"
+                type="submit"
+            >{{ _('strings.create') }}</button>
+        </form>
+    </div>
+{% endblock %}

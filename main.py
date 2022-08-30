@@ -14,6 +14,7 @@ from web.login_page import login_view
 from web.register_page import register_view
 from web.playlists_pages import playlists_view
 from web.discover_page import discover_view
+from web.artists_page import artists_view
 from web.site import site
 
 app = Flask(__name__)
@@ -110,4 +111,5 @@ if __name__ == "__main__":
     app.register_blueprint(register_view, url_prefix="/register")
     app.register_blueprint(playlists_view, url_prefix="/playlists")
     app.register_blueprint(discover_view, url_prefix="/discover")
+    app.register_blueprint(artists_view, url_prefix="/artists")
     app.run(debug=True)

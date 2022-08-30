@@ -18,7 +18,7 @@
                     <p>{{ _('strings.songs') }}: {{ playlist.songs|length }}</p>
                 </div>
             </div>
-            <a style="margin-top: 15px; border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi btn-scifi-danger" type="submit" href="{{ url_for("playlists.delete_playlist", playlist_uuid=playlist.playlist_uuid) }}">{{ _('strings.delete') }}</a>
+            <a style="border-radius: 20% 0 0 20%; border-width: 2px 0px 2px 2px;" class="btn-scifi btn-scifi-danger" type="submit" href="{{ url_for("playlists.delete_playlist", playlist_uuid=playlist.playlist_uuid) }}">{{ _('strings.delete') }}</a>
         </div>
         <div class="song-table" style="margin-top: 5vh;">
             {% for song in playlist.songs %}

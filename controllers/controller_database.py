@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from typing import List
 
+from models.artist import Artist
 from models.playlist import Playlist
 from models.song import Song
 from models.token import Token
@@ -755,4 +756,104 @@ class ControllerDatabase:
         except Exception as e:
             logging.exception(e)
 
+        return result
+
+    @staticmethod
+    def add_subartist(parent_artist_id: int, child_artist_id: int) -> bool:
+        """
+        Used for getting a users' id from the uuid
+        :param parent_artist_id: the id of the parent artist
+        :param child_artist_id: the id of the child artist
+        :return: the users id
+        """
+        result = False
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO subartists_in_artists "
+                        "(parent_artist_id, child_artist_id) "
+                        "VALUES (%(parent_artist_id)s, %(child_artist_id)s) ",
+                        {
+                            "parent_artist_id": parent_artist_id,
+                            "child_artist_id": child_artist_id
+                        }
+                    )
+                    result = True
+        except Exception as e:
+            logging.exception(e)
+
+        return result
+
+    @staticmethod
+    def remove_subartist(parent_artist_id: int, child_artist_id: int) -> bool:
+        """
+        Used for getting a users' id from the uuid
+        :param parent_artist_id: the id of the parent artist
+        :param child_artist_id: the id of the child artist
+        :return: the users id
+        """
+        result = False
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE subartists_in_artists "
+                        "set is_deleted = true "
+                        "WHERE  parent_artist_id = %(parent_artist_id)s "
+                        "AND child_artist_id = %(child_artist_id)s) ",
+                        {
+                            "parent_artist_id": parent_artist_id,
+                            "child_artist_id": child_artist_id
+                        }
+                    )
+                    result = True
+        except Exception as e:
+            logging.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_artists(page_size: int = -1, page_offset: int = 0) -> List[Song]:
+        """
+        Used for getting all song in a certain range
+        :param page_size: the amount of songs to get
+        :param page_offset: the starting point from where to start fetching the songs
+        :return: a list of songs
+        """
+        result = []
+
+        page_size_str = ""
+        if page_size != -1:
+            page_size_str = f"LIMIT %(page_size)s "
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT artist_id, artist_uuid, artist_name, created, modified, is_deleted "
+                        "FROM artists "
+                        "WHERE is_deleted = false "
+                        f"{page_size_str}"
+                        "OFFSET %(page_offset)s ",
+                        {
+                            "page_offset": page_offset,
+                            "page_size": page_size
+                        }
+                    )
+                    artists = cur.fetchall()
+
+                    if artists:
+                        for artist_id, artist_uuid, artist_name, created, modified, is_deleted in artists:
+                            new_artist = Artist(
+                                artist_id=artist_id,
+                                artist_uuid=str(artist_uuid),
+                                artist_name=artist_name,
+                                modified=modified,
+                                created=created,
+                                is_deleted=is_deleted,
+                            )
+                            result.append(new_artist)
+        except Exception as e:
+            logging.exception(e)
         return result
