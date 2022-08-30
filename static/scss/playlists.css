@@ -1,5 +1,4 @@
 .playlist-box {
-  padding: 20px 0 20px 20px;
   border-radius: 15px;
   width: 100%;
 }
@@ -29,4 +28,34 @@
   height: 50px;
 }
 
-/*# sourceMappingURL=playlists.scss.map */
+.playlist-rows {
+  width: 100%;
+}
+.playlist-rows tbody .playlist-row-tr {
+  width: 100%;
+}
+.playlist-rows tbody .playlist-row-tr > td {
+  width: 100%;
+}
+.playlist-rows tbody .playlist-row-tr .playlist-box {
+  border-collapse: collapse;
+  overflow: hidden;
+}
+.playlist-rows tbody .playlist-row-tr .playlist-box > tbody tr {
+  width: 100%;
+  padding-block: 20px;
+  display: block;
+}
+.playlist-rows tbody .playlist-row-tr .playlist-box .image-td {
+  width: fit-content;
+  padding-left: 20px;
+}
+.playlist-rows tbody .playlist-row-tr .playlist-box .info-td {
+  padding-left: 10px;
+  width: 100%;
+}
+.playlist-rows tbody .playlist-row-tr:not(:last-child) .playlist-box {
+  margin-bottom: 20px;
+}
+
+/*# sourceMappingURL=playlists.css.map */

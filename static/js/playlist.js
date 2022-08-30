@@ -2,27 +2,30 @@ let curAudioNum = null
 let curAudioPaused = false
 
 function switchAudio(audioNum){
+    let $audio_row = $(`#audio-${ audioNum }:first`)
     if(curAudioNum){
         pauseAudio(curAudioNum)
         $(`#audio-${ curAudioNum }:first`)[0].currentTime = 0
     }
-    $(`#audio-${ audioNum }:first`)[0].play()
-    $(`#audio-${ audioNum }:first`).parent().addClass("selected")
+    $audio_row[0].play()
+    $audio_row.parent().addClass("selected")
     curAudioNum = audioNum
 }
 
 function pauseAudio(audioNum){
-    $(`#audio-${ audioNum }:first`)[0].pause()
-    $(`#audio-${ audioNum }:first`).parent().removeClass("selected")
+    let $audio_row = $(`#audio-${ audioNum }:first`)
+    $audio_row[0].pause()
+    $audio_row.parent().removeClass("selected")
 }
 
 function playAudio(audioNum){
-    $(`#audio-${ audioNum }:first`)[0].play()
-    $(`#audio-${ audioNum }:first`).parent().addClass("selected")
+    let $audio_row = $(`#audio-${ audioNum }:first`)
+    $audio_row[0].play()
+    $audio_row.parent().addClass("selected")
 }
 
 function toggleAudio(audioNum){
-    if(curAudioNum == audioNum){
+    if(curAudioNum === audioNum){
         if(curAudioPaused){
             playAudio(audioNum)
         }else{

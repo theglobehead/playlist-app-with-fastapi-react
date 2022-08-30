@@ -1,5 +1,4 @@
 .playlist-box{
-    padding: 20px 0 20px 20px;
     border-radius: 15px;
     width: 100%;
 
@@ -31,6 +30,45 @@
         .song-img{
             width: 50px;
             height: 50px;
+        }
+    }
+}
+
+.playlist-rows{
+    width: 100%;
+    tbody .playlist-row-tr{
+        width: 100%;
+
+        > td{
+            width: 100%;
+        }
+
+        .playlist-box{
+            border-collapse: collapse;
+            overflow: hidden;
+
+            > tbody tr{
+                width: 100%;
+                padding-block: 20px;
+                display: block;
+            }
+
+            .image-td{
+                width: fit-content;
+                padding-left: 20px;
+            }
+
+            .info-td{
+                padding-left: 10px;
+                width: 100%;
+            }
+
+        }
+
+        &:not(:last-child){
+            .playlist-box{
+                margin-bottom: 20px;
+            }
         }
     }
 }
