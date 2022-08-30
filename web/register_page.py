@@ -4,7 +4,7 @@ from flask_babel import gettext
 
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
-from utils.logging_utils import LoggingUtils
+
 
 register_view = Blueprint("register", __name__)
 
@@ -31,7 +31,7 @@ def register():
                 result = redirect(url_for("login.login"))
             except Exception as e:
                 flask.flash(gettext("error_msg.something_went_wrong"))
-                LoggingUtils.exception(str(e))
+                logging.exception(str(e))
 
     return result
 

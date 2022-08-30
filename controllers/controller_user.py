@@ -3,7 +3,6 @@ from __future__ import annotations
 import os.path
 from hashlib import sha256
 from io import BytesIO
-
 import numpy as np
 from flask import send_file, Response
 

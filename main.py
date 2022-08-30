@@ -1,13 +1,15 @@
+import logging
+from datetime import datetime
 from uuid import uuid4
-
 import psycopg2.extras
 from flask import Flask, redirect, session, url_for, request, render_template
 from flask_babel import Babel
 from requests import Session
 from werkzeug.exceptions import HTTPException
 
+from controllers.constants import LOGS_PATH
 from controllers.controller_database import ControllerDatabase
-from utils.logging_utils import LoggingUtils
+
 from web.login_page import login_view
 from web.register_page import register_view
 from web.playlists_pages import playlists_view
@@ -66,7 +68,7 @@ def error_page(error):
     :param error: The Exception that caused the error
     :return: Renders the error page with the appropriate error code
     """
-    LoggingUtils.exception(error)
+    logging.exception(Exception)
     error_code = 500
 
     if isinstance(error, HTTPException):
@@ -93,6 +95,14 @@ def check_user_in():
         if user:
             session["user_id"] = user.user_id
 
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="{asctime} {levelname:<8} {message}",
+    style="{",
+    filename=f"{ LOGS_PATH }{ datetime.now().strftime('%Y-%m-%d') }.log",  # f"{ LOGS_PATH }exceptions-{ datetime.now().strftime('%Y-%m-%d') }.log", rotation="1 week"
+    filemode="w"
+)
 
 if __name__ == "__main__":
     app.register_blueprint(site, url_prefix="/site")

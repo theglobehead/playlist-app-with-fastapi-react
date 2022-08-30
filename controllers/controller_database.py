@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from typing import List
 
 from models.playlist import Playlist
@@ -7,7 +8,6 @@ from models.song import Song
 from models.token import Token
 from models.user import User
 from utils.common_utils import CommonUtils
-from utils.logging_utils import LoggingUtils
 
 
 class ControllerDatabase:
@@ -45,7 +45,7 @@ class ControllerDatabase:
                             )
                             result.append(new_playlist)
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -82,7 +82,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -105,7 +105,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -132,7 +132,7 @@ class ControllerDatabase:
                     if playlist_id:
                         result = playlist_id[0]
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -155,7 +155,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -180,7 +180,7 @@ class ControllerDatabase:
 
                     song_id = cur.fetchone()[0]
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return ControllerDatabase.get_song(song_id)
 
@@ -211,7 +211,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -235,7 +235,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -261,7 +261,7 @@ class ControllerDatabase:
                     token_id = cur.fetchone()[0]
             result = ControllerDatabase.get_token(token_id)
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -284,7 +284,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -309,7 +309,7 @@ class ControllerDatabase:
                     )
                 result = True
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -347,7 +347,7 @@ class ControllerDatabase:
                             )
                             result.append(new_song)
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -394,7 +394,7 @@ class ControllerDatabase:
                             )
                             result.append(new_song)
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
         return result
 
     @staticmethod
@@ -420,7 +420,7 @@ class ControllerDatabase:
                     if song_id:
                         result = song_id[0]
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -438,7 +438,7 @@ class ControllerDatabase:
                     cur.execute("SELECT user_id FROM USERS WHERE user_name = %(name)s LIMIT 1", {"name": name})
                     result = bool(cur.fetchone())
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
         return result
 
     @staticmethod
@@ -472,7 +472,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -504,7 +504,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -537,7 +537,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -572,7 +572,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -607,7 +607,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -631,7 +631,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -669,7 +669,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -680,6 +680,7 @@ class ControllerDatabase:
         :param user_uuid: the uuid of the user
         :return: a User model
         """
+        result = None
 
         try:
             with CommonUtils.connection() as conn:
@@ -704,7 +705,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -728,7 +729,7 @@ class ControllerDatabase:
             if fetch_result:
                 result = result[0]
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result
 
@@ -752,6 +753,6 @@ class ControllerDatabase:
             if fetch_result:
                 result = result[0]
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
 
         return result

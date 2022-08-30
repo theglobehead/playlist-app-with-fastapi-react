@@ -5,7 +5,7 @@ from typing import Callable
 
 from flask import session, redirect, url_for, Response, render_template
 
-from utils.logging_utils import LoggingUtils
+
 
 
 def login_required(f: Callable) -> Callable:

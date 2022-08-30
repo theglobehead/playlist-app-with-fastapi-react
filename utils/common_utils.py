@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2.extensions import connection
 from os import environ
 
-from utils.logging_utils import LoggingUtils
+
 
 
 class CommonUtils:
@@ -17,5 +17,5 @@ class CommonUtils:
                 password=environ["DB_PASSWORD"],
             )
         except Exception as e:
-            LoggingUtils.exception(e)
+            logging.exception(e)
         return conn

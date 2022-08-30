@@ -1,5 +1,4 @@
 import os
-
 from werkzeug.datastructures import FileStorage
 
 from controllers.constants import SONG_PATH, SONG_AUDIO_FILE_TYPE, SONG_PICTURE_PATH, SONG_IMAGE_FILE_TYPE
