@@ -849,6 +849,8 @@ class ControllerDatabase:
                                 artist_id=artist_id,
                                 artist_uuid=str(artist_uuid),
                                 artist_name=artist_name,
+                                child_artists_names=ControllerDatabase.get_artist_subartist_names(
+                                    Artist(artist_id=artist_id)),
                                 modified=modified,
                                 created=created,
                                 is_deleted=is_deleted,
@@ -880,6 +882,7 @@ class ControllerDatabase:
                 artist_id=artist_id,
                 artist_uuid=str(artist_uuid),
                 artist_name=artist_name,
+                child_artists_names=ControllerDatabase.get_artist_subartist_names(Artist(artist_id=artist_id)),
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
@@ -913,6 +916,7 @@ class ControllerDatabase:
                             artist_id=artist_id,
                             artist_uuid=str(artist_uuid),
                             artist_name=artist_name,
+                            child_artists_names=ControllerDatabase.get_artist_subartist_names(Artist(artist_id=artist_id)),
                             modified=modified,
                             created=created,
                             is_deleted=is_deleted,
@@ -944,9 +948,6 @@ class ControllerDatabase:
 
                     artist_id = cur.fetchone()[0]
 
-                    print(artist_id)
-                    print(parent_artist.artist_id)
-
                     if parent_artist:
                         cur.execute(
                             "INSERT INTO subartists_in_artists "
@@ -960,5 +961,32 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             print(e) # logging placeholdere)
+
+        return result
+
+    @staticmethod
+    def get_artist_subartist_names(artist: Artist) -> list[str]:
+        """
+        Used for getting the subartists of a certain artist
+        :param artist: the artist whose subartists need to be fetched
+        :return: a list of artist names
+        """
+        result = []
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT DISTINCT artists.artist_name "
+                        "FROM artists "
+                        "INNER JOIN subartists_in_artists AS sia "
+                        "ON sia.parent_artist_id = %(artist_id)s "
+                        "AND sia.is_deleted = false "
+                        "AND artists.is_deleted = false",
+                        {"artist_id": artist.artist_id})
+
+                    if cur.rowcount:
+                        result = [artist[0] for artist in cur.fetchall()]
+        except Exception as e:
+            print(e)  # logging placeholdere)
 
         return result
