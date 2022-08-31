@@ -39,6 +39,10 @@
         width: 100%;
         margin-top: 5px;
 
+        &.input-invalid, &.input-invalid:focus{
+            border-bottom-color: #D80F4F;
+        }
+
         &:focus{
             outline: none !important;
             border-bottom: #00DFDF 2px solid;

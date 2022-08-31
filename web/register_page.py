@@ -31,7 +31,7 @@ def register():
                 result = redirect(url_for("login.login"))
             except Exception as e:
                 flask.flash(gettext("error_msg.something_went_wrong"))
-                logging.exception(str(e))
+                print(e) # logging placeholderstr(e))
 
     return result
 

@@ -11,8 +11,11 @@ from models.song import Song
 @dataclass
 class Artist:
     songs: List[Song] = field(default_factory=list)
+    child_artists_names: List[str] = field(default_factory=list)
+    parent_artist_name: str = ""
 
     artist_id: int = 0
+    artist_uuid: str = ""
     artist_name: str = ""
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()

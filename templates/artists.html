@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block extrahead %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='scss/discover_page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/artists.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='scss/forms.css') }}">
+    <script src="{{ url_for("static", filename="js/artists.js") }}"></script>
 {% endblock %}
 
 {% block title %}{{ _("strings.discover_page") }}{% endblock %}
@@ -16,10 +17,10 @@
         >
             {{ _('strings.create_artist') }} +
         </button>
-        <div class="song-grid">
+        <div class="artist-grid">
             {% for artist in artists %}
-                <div class="song-box shadow pointer-on-hover">
-                    <p>{{ song.artist_name }}</p>
+                <div class="artist-box shadow pointer-on-hover">
+                    <p>{{ artist.artist_name }}</p>
                 </div>
             {% endfor %}
         </div>
@@ -28,8 +29,9 @@
     <div class="modal-wrapper modal-closed" id="create_artist_modal">
         <form
             class="rounded-form form-toggleable shadow"
-            action="{{ url_for("discover.add_song") }}"
+            action="{{ url_for("artists.create_artist") }}"
             method="post"
+            onsubmit="return !checkArtistExists({{ url_for("artists.check_if_artist_exists") }}, $('#parent_artist_name'))"
             style="
                display: flex;
                flex-direction: column;
@@ -56,11 +58,22 @@
             <h3 style="text-align: center;">{{ _('strings.create_artist') }}:</h3>
             <div style="width: 80%;">
                 <p style="margin-top: 15px;">{{ _('strings.artist_name') }}:</p>
-                <input name="artist_name" autocomplete="off">
+                <input
+                    name="artist_name"
+                    maxlength="350"
+                    required
+                >
                 <p style="margin-top: 15px;">{{ _('strings.parent_artist_name') }}:</p>
-                    <input name="parent_artist_name">
+                <input
+                    name="parent_artist_name"
+                    id="parent_artist_name"
+                    maxlength="350"
+                    onkeyup="checkArtistExists('{{ url_for("artists.check_if_artist_exists") }}', $(this), $('#create_artist_btn'))"
+                    autocomplete="off"
+                >
             </div>
             <button
+                id="create_artist_btn"
                 style="margin-top: 15px; border-radius: 20% 20% 0 0;"
                 class="btn-scifi"
                 type="submit"

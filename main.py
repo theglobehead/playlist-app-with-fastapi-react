@@ -69,7 +69,7 @@ def error_page(error):
     :param error: The Exception that caused the error
     :return: Renders the error page with the appropriate error code
     """
-    logging.exception(Exception)
+    print(e) # logging placeholderException)
     error_code = 500
 
     if isinstance(error, HTTPException):
@@ -97,13 +97,12 @@ def check_user_in():
             session["user_id"] = user.user_id
 
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="{asctime} {levelname:<8} {message}",
-    style="{",
-    filename=f"{ LOGS_PATH }{ datetime.now().strftime('%Y-%m-%d') }.log",  # f"{ LOGS_PATH }exceptions-{ datetime.now().strftime('%Y-%m-%d') }.log", rotation="1 week"
-    filemode="w"
-)
+#logging.basicConfig(
+#    level=logging.DEBUG,
+#    style="$",
+#    filename=f"{ LOGS_PATH }{ datetime.now().strftime('%Y-%m-%d') }.log",  # f"{ LOGS_PATH }exceptions-{ datetime.now().strftime('%Y-%m-%d') }.log", rotation="1 week"
+#    filemode="w"
+#)
 
 if __name__ == "__main__":
     app.register_blueprint(site, url_prefix="/site")
