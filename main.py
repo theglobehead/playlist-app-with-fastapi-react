@@ -69,7 +69,7 @@ def error_page(error):
     :param error: The Exception that caused the error
     :return: Renders the error page with the appropriate error code
     """
-    print(e) # logging placeholderException)
+    print(error) # logging placeholderException)
     error_code = 500
 
     if isinstance(error, HTTPException):

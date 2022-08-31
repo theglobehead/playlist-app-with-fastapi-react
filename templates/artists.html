@@ -19,7 +19,10 @@
         </button>
         <div class="artist-grid">
             {% for artist in artists %}
-                <div class="artist-box shadow pointer-on-hover">
+                <div
+                    class="artist-box shadow pointer-on-hover"
+                    onclick="openModal('{{ artist.artist_uuid }}_info_modal')"
+                >
                     <p>{{ artist.artist_name }}</p>
                 </div>
             {% endfor %}
@@ -80,4 +83,31 @@
             >{{ _('strings.create') }}</button>
         </form>
     </div>
+
+    {% for artist in artists %}
+        <div class="modal-wrapper modal-closed" id="{{ artist.artist_uuid }}_info_modal">
+            <form class="rounded-form form-toggleable shadow" style="
+               display: flex;
+               flex-direction: column;
+               justify-content: flex-start;
+               align-items: center;
+               height: fit-content;
+               width: 20%;
+               padding: 20px;
+           ">
+                <a
+                    class="toggle-x"
+                    onclick="closeModal('{{ artist.artist_uuid }}_info_modal')"
+                >x</a>
+                <div style="width: 80%;">
+                    <h3 style="text-align: center;">{{ artist.artist_name }}:</h3>
+                    <p style="margin-top: 15px;">
+                        {{ _('strings.child_artists') }}:
+                        {{ artist.child_artists_names|join(", ") if artist.child_artists_names }}
+                        {{ _('strings.no_child_artists') if not artist.child_artists_names }}
+                    </p>
+                </div>
+            </form>
+        </div>
+    {% endfor %}
 {% endblock %}

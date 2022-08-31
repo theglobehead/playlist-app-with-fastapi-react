@@ -12,7 +12,6 @@ from models.song import Song
 class Artist:
     songs: List[Song] = field(default_factory=list)
     child_artists_names: List[str] = field(default_factory=list)
-    parent_artist_name: str = ""
 
     artist_id: int = 0
     artist_uuid: str = ""

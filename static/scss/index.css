@@ -34,6 +34,15 @@ a {
   justify-content: center;
   align-items: center;
 }
+.modal-wrapper .modal {
+  width: 20%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  background-color: #898989;
+}
 .modal-wrapper.modal-closed {
   display: none;
 }
