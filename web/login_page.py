@@ -20,7 +20,9 @@ def login():
     """
     result = render_template("login_page.html")
 
-    if request.method == "POST":
+    if "user_id" in session:
+        result = redirect("/")
+    elif request.method == "POST":
         form = request.form
         name = form.get("username").strip()
         password = form.get("password").strip()

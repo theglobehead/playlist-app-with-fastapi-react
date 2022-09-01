@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-12 11:27+0300\n"
+"POT-Creation-Date: 2022-08-31 12:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
-#: templates/components/side_panel.html:20 templates/discover_page.html:7
+#: templates/artists.html:8 templates/components/side_panel.html:20
+#: templates/discover_page.html:7
 msgid "strings.discover_page"
+msgstr ""
+
+#: templates/artists.html:18 templates/artists.html:61
+msgid "strings.create_artist"
+msgstr ""
+
+#: templates/artists.html:63
+msgid "strings.artist_name"
+msgstr ""
+
+#: templates/artists.html:69
+msgid "strings.parent_artist_name"
+msgstr ""
+
+#: templates/artists.html:83 templates/your_playlists.html:62
+msgid "strings.create"
+msgstr ""
+
+#: templates/artists.html:105
+msgid "strings.child_artists"
+msgstr ""
+
+#: templates/artists.html:107
+msgid "strings.no_child_artists"
 msgstr ""
 
 #: templates/discover_page.html:12 templates/discover_page.html:57
@@ -86,14 +111,18 @@ msgid "strings.password"
 msgstr ""
 
 #: templates/login_page.html:28
+msgid "strings.remember_me"
+msgstr ""
+
+#: templates/login_page.html:31
 msgid "strings.log_in"
 msgstr ""
 
-#: templates/login_page.html:30
+#: templates/login_page.html:33
 msgid "strings.no_account"
 msgstr ""
 
-#: templates/login_page.html:30
+#: templates/login_page.html:33
 msgid "strings.register_here"
 msgstr ""
 
@@ -101,7 +130,7 @@ msgstr ""
 msgid "strings.playlists_page"
 msgstr ""
 
-#: templates/playlist.html:18 templates/your_playlists.html:19
+#: templates/playlist.html:18 templates/your_playlists.html:29
 msgid "strings.songs"
 msgstr ""
 
@@ -137,31 +166,31 @@ msgstr ""
 msgid "strings.create_new"
 msgstr ""
 
-#: templates/your_playlists.html:22
+#: templates/your_playlists.html:37
 msgid "strings.open"
 msgstr ""
 
-#: templates/your_playlists.html:36
+#: templates/your_playlists.html:57
 msgid "strings.new_playlist"
 msgstr ""
 
-#: templates/your_playlists.html:38
+#: templates/your_playlists.html:59
 msgid "strings.name_playlist"
-msgstr ""
-
-#: templates/your_playlists.html:41
-msgid "strings.create"
 msgstr ""
 
 #: templates/components/side_panel.html:19
 msgid "strings.settings"
 msgstr ""
 
-#: templates/components/side_panel.html:23
+#: templates/components/side_panel.html:21
+msgid "strings.artists_page"
+msgstr ""
+
+#: templates/components/side_panel.html:24
 msgid "strings.log_out"
 msgstr ""
 
-#: web/login_page.py:32
+#: web/login_page.py:39
 msgid "error_msg.incorrect_login_details"
 msgstr ""
 
