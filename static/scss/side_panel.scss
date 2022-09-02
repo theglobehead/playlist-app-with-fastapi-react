@@ -1,3 +1,5 @@
+@import "_defs.scss";
+
 .side_panel{
     position: fixed;
     top: 0;
@@ -5,8 +7,8 @@
     max-height: 100vh;
     height: 100vh;
     width: 20vw;
-    background-color: #898989;
-    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+    background-color: $gray-background;
+    box-shadow: 2px 2px 4px 3px $shadow;
     display: flex;
     flex-direction: column;
     align-items: center;

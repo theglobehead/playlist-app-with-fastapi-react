@@ -1,3 +1,5 @@
+@import "_defs.scss";
+
 .login-main{
     height: 100vh;
 
@@ -7,7 +9,7 @@
 }
 
 .rounded-form{
-    background-color: #898989;
+    background-color: $gray-background;
     padding: 15px 15px 0 15px;
     min-width: 23vw;
     min-height: 23vw;
@@ -40,12 +42,12 @@
         margin-top: 5px;
 
         &.input-invalid, &.input-invalid:focus{
-            border-bottom-color: #D80F4F;
+            border-bottom-color: $scifi-red;
         }
 
         &:focus{
             outline: none !important;
-            border-bottom: #00DFDF 2px solid;
+            border-bottom: $scifi-blue 2px solid;
         }
     }
 

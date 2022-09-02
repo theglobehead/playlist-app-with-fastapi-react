@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["side_panel.scss"],"names":[],"mappings":"AAAA;EACI;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA","file":"side_panel.css"}
+{"version":3,"sourceRoot":"","sources":["side_panel.scss","_defs.scss"],"names":[],"mappings":"AAEA;EACI;EACA;EACA;EACA;EACA;EACA;EACA,kBCTc;EDUd;EACA;EACA;EACA;EACA","file":"side_panel.css"}

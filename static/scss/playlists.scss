@@ -1,3 +1,5 @@
+@import "_defs.scss";
+
 .playlist-box{
     border-radius: 15px;
     padding: 20px 0 20px 20px;
@@ -15,7 +17,7 @@
 
     width: 100%;
     padding: 2vh 10px 10px 10px;
-    border-bottom: 3px solid #00DFDF;
+    border-bottom: 3px solid $scifi-blue;
 
     font-size: 1.3rem;
 

@@ -1,7 +1,9 @@
+@import "_defs.scss";
+
 body{
     margin: 0;
     padding: 0;
-    background-color: #898989;
+    background-color: $gray-background;
 
     color: white;
     font-family: 'Helvetica';
@@ -14,11 +16,11 @@ p{
 }
 
 a{
-    color: #00DFDF;
+    color: $scifi-blue;
 }
 
 .shadow{
-    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 2px 4px 3px $shadow;
 }
 
 .pointer-on-hover:hover{
@@ -45,7 +47,7 @@ a{
         flex-direction: column;
         align-items: center;
         padding-top: 15px;
-        background-color: #898989;
+        background-color: $gray-background;
     }
 
     &.modal-closed{
@@ -54,5 +56,5 @@ a{
 }
 
 select option{
-    color: black;
+    color: $black;
 }

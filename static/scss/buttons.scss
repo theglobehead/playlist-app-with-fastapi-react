@@ -1,7 +1,9 @@
+@import "_defs.scss";
+
 .btn{
     width: fit-content;
     padding-inline: 10px;
-    border: 1px solid #9b9b9b;
+    border: 1px solid $light-gray;
     border-radius: 10px;
 }
 
@@ -16,8 +18,8 @@
     text-decoration: none;
 
   &:hover{
-      box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
-      color: #00DFDF;
+      box-shadow: 2px 2px 4px 3px $shadow;
+      color: $scifi-blue;
   }
 }
 
@@ -33,24 +35,24 @@
     display: block;
 
     &:hover{
-        box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+        box-shadow: 2px 2px 4px 3px $shadow;
         cursor: pointer;
-        color: #00DFDF;
+        color: $scifi-blue;
     }
 }
 
 .btn-scifi {
-    color: #00DFDF;
+    color: $scifi-blue;
     text-decoration: none;
     border-width: 2px 2px 0px 2px;
     border-style: solid;
-    border-color: #00DFDF;
+    border-color: $scifi-blue;
     background: none;
     padding: 15px;
 
     &.btn-scifi-danger{
-        color: #FF224A;
-        border-color: #FF224A;
+        color: $scifi-red;
+        border-color: $scifi-red;
 
         &:hover{
             background: rgba(255, 34, 74, 0.1);
@@ -85,11 +87,11 @@
         text-decoration: none;
 
         border-radius: 90%;
-        box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+        box-shadow: 2px 2px 4px 3px $shadow;
 
         &:hover {
             cursor: pointer;
-            color: #00DFDF;
+            color: $scifi-blue;
         }
     }
 }
