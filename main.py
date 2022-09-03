@@ -4,6 +4,7 @@ from uuid import uuid4
 import psycopg2.extras
 from flask import Flask, redirect, session, url_for, request, render_template
 from flask_babel import Babel
+from loguru import logger
 from requests import Session
 from werkzeug.exceptions import HTTPException
 
@@ -69,7 +70,7 @@ def error_page(error):
     :param error: The Exception that caused the error
     :return: Renders the error page with the appropriate error code
     """
-    print(error) # logging placeholderException)
+    logger.exception(error)
     error_code = 500
 
     if isinstance(error, HTTPException):
@@ -97,14 +98,8 @@ def check_user_in():
             session["user_id"] = user.user_id
 
 
-#logging.basicConfig(
-#    level=logging.DEBUG,
-#    style="$",
-#    filename=f"{ LOGS_PATH }{ datetime.now().strftime('%Y-%m-%d') }.log",  # f"{ LOGS_PATH }exceptions-{ datetime.now().strftime('%Y-%m-%d') }.log", rotation="1 week"
-#    filemode="w"
-#)
-
 if __name__ == "__main__":
+    logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="500 MB")
     app.register_blueprint(site, url_prefix="/site")
     app.register_blueprint(login_view, url_prefix="/login")
     app.register_blueprint(register_view, url_prefix="/register")
