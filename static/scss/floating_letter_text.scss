@@ -1,0 +1,37 @@
+@import "_defs.scss";
+
+$hover-height: 4px;
+
+.floatingLetterText{
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: start;
+
+  cursor: context-menu;
+}
+
+.floatingLetterWord{
+  display: inline-flex;
+}
+
+.floatingLetter{
+  height: fit-content;
+  padding-top: $hover-height;
+  transition: .3s;
+
+  &:hover{
+    padding-bottom: $hover-height;
+    padding-top: 0;
+
+    &:before{
+      content: attr(text);
+      position: absolute;
+      margin: 4px 0 0 4px;
+
+      z-index: -1;
+
+      color: $shadow;
+    }
+  }
+}

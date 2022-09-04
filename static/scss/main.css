@@ -22,7 +22,7 @@
 .btn {
   width: fit-content;
   padding-inline: 10px;
-  border: 1px solid #9b9b9b;
+  border: 1px solid #9b9b9a;
   border-radius: 10px;
 }
 
@@ -133,8 +133,10 @@
 .login-main {
   height: 100vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  column-gap: 10%;
   align-items: center;
+  padding-inline: 8%;
 }
 
 .rounded-form {
@@ -168,7 +170,7 @@
   margin-top: 5px;
 }
 .rounded-form input.input-invalid, .rounded-form input.input-invalid:focus, .rounded-form select.input-invalid, .rounded-form select.input-invalid:focus {
-  border-bottom-color: #D80F4F;
+  border-bottom-color: #FF224A;
 }
 .rounded-form input:focus, .rounded-form select:focus {
   outline: none !important;
@@ -327,4 +329,33 @@ select option {
   justify-content: space-between;
 }
 
-/*# sourceMappingURL=_main.css.map */
+.floatingLetterText {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: start;
+  cursor: context-menu;
+}
+
+.floatingLetterWord {
+  display: inline-flex;
+}
+
+.floatingLetter {
+  height: fit-content;
+  padding-top: 4px;
+  transition: 0.3s;
+}
+.floatingLetter:hover {
+  padding-bottom: 4px;
+  padding-top: 0;
+}
+.floatingLetter:hover:before {
+  content: attr(text);
+  position: absolute;
+  margin: 4px 0 0 4px;
+  z-index: -1;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/*# sourceMappingURL=main.css.map */

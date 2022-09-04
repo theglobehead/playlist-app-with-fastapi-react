@@ -1,0 +1,26 @@
+{% macro floating_letter_text(
+        text,
+        font_size="1rem",
+        font_weight="500",
+        has_shadow=True
+    )
+%}
+    <div
+        class="floatingLetterText"
+        style="
+            font-size: {{ font_size }};
+            column-gap: calc({{ font_size }} * 0.3);
+            font-weight: {{ font_weight }};
+        "
+    >
+        {% for word in text.split(" ") %}
+            <div class="floatingLetterWord">
+                {% for letter in word %}
+                    <div class="floatingLetter" text="{{ letter if has_shadow }}">
+                        {{ letter }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}

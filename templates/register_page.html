@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "./components/macros.html" import floating_letter_text with context %}
 
 {% block extrahead %}
 {% endblock %}
@@ -7,9 +8,7 @@
 
 {% block content %}
     <div class="login-main">
-        <div class="welcome-text">
-            <h1>{{ _('strings.login_page') }}</h1>
-        </div>
+        {{ floating_letter_text(_('strings.home_page_heading'), font_size="5rem", font_weight="600") }}
         <div>
             <form class="rounded-form shadow" action="{{ url_for("register.register") }}" method="post">
                  <h3 style="text-align: center">{{ _('strings.register') }}:</h3>

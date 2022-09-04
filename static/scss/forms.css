@@ -1,8 +1,10 @@
 .login-main {
   height: 100vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  column-gap: 10%;
   align-items: center;
+  padding-inline: 8%;
 }
 
 .rounded-form {
