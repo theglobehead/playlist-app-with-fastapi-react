@@ -104,6 +104,11 @@
                         {{ artist.child_artists_names|join(", ") if artist.child_artists_names }}
                         {{ _('strings.no_child_artists') if not artist.child_artists_names }}
                     </p>
+                    <p style="margin-top: 15px;">
+                        {{ _('strings.parent_artists') }}:
+                        {{ artist.parent_artists_names|join(", ") if artist.parent_artists_names }}
+                        {{ _('strings.no_parent_artists') if not artist.parent_artists_names }}
+                    </p>
                 </div>
             </form>
         </div>

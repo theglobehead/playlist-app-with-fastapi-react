@@ -1,8 +1,7 @@
 import psycopg2
+from loguru import logger
 from psycopg2.extensions import connection
 from os import environ
-
-
 
 
 class CommonUtils:
@@ -17,5 +16,5 @@ class CommonUtils:
                 password=environ["DB_PASSWORD"],
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
         return conn

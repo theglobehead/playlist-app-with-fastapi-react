@@ -11,6 +11,7 @@ from models.song import Song
 @dataclass
 class Artist:
     songs: List[Song] = field(default_factory=list)
+    parent_artists_names: List[str] = field(default_factory=list)
     child_artists_names: List[str] = field(default_factory=list)
 
     artist_id: int = 0

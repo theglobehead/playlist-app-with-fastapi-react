@@ -3,6 +3,8 @@ from __future__ import annotations
 import logging
 from typing import List
 
+from loguru import logger
+
 from models.artist import Artist
 from models.playlist import Playlist
 from models.song import Song
@@ -46,7 +48,7 @@ class ControllerDatabase:
                             )
                             result.append(new_playlist)
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -83,7 +85,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -106,7 +108,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -133,7 +135,7 @@ class ControllerDatabase:
                     if playlist_id:
                         result = playlist_id[0]
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -156,7 +158,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -181,7 +183,7 @@ class ControllerDatabase:
 
                     song_id = cur.fetchone()[0]
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return ControllerDatabase.get_song(song_id)
 
@@ -212,7 +214,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -236,7 +238,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -262,7 +264,7 @@ class ControllerDatabase:
                     token_id = cur.fetchone()[0]
             result = ControllerDatabase.get_token(token_id)
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -285,7 +287,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -310,7 +312,7 @@ class ControllerDatabase:
                     )
                 result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -348,7 +350,7 @@ class ControllerDatabase:
                             )
                             result.append(new_song)
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -395,7 +397,7 @@ class ControllerDatabase:
                             )
                             result.append(new_song)
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
         return result
 
     @staticmethod
@@ -421,7 +423,7 @@ class ControllerDatabase:
                     if song_id:
                         result = song_id[0]
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -439,7 +441,7 @@ class ControllerDatabase:
                     cur.execute("SELECT user_id FROM USERS WHERE user_name = %(name)s LIMIT 1", {"name": name})
                     result = bool(cur.fetchone())
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
         return result
 
     @staticmethod
@@ -473,7 +475,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -505,7 +507,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -538,7 +540,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -573,7 +575,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -608,7 +610,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -632,7 +634,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -670,7 +672,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -706,7 +708,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -730,7 +732,7 @@ class ControllerDatabase:
             if fetch_result:
                 result = result[0]
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -754,7 +756,7 @@ class ControllerDatabase:
             if fetch_result:
                 result = result[0]
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -781,7 +783,7 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -809,12 +811,12 @@ class ControllerDatabase:
                     )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
     @staticmethod
-    def get_artists(page_size: int = -1, page_offset: int = 0) -> List[Song]:
+    def get_artists(page_size: int = -1, page_offset: int = 0) -> List[Artist]:
         """
         Used for getting all song in a certain range
         :param page_size: the amount of songs to get
@@ -851,13 +853,16 @@ class ControllerDatabase:
                                 artist_name=artist_name,
                                 child_artists_names=ControllerDatabase.get_artist_subartist_names(
                                     Artist(artist_id=artist_id)),
+                                parent_artists_names=ControllerDatabase.get_artist_parent_artist_names(
+                                    Artist(artist_id=artist_id)
+                                ),
                                 modified=modified,
                                 created=created,
                                 is_deleted=is_deleted,
                             )
                             result.append(new_artist)
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
         return result
 
     @staticmethod
@@ -883,12 +888,15 @@ class ControllerDatabase:
                 artist_uuid=str(artist_uuid),
                 artist_name=artist_name,
                 child_artists_names=ControllerDatabase.get_artist_subartist_names(Artist(artist_id=artist_id)),
+                parent_artists_names=ControllerDatabase.get_artist_parent_artist_names(
+                    Artist(artist_id=artist_id)
+                ),
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
             )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -916,13 +924,18 @@ class ControllerDatabase:
                             artist_id=artist_id,
                             artist_uuid=str(artist_uuid),
                             artist_name=artist_name,
-                            child_artists_names=ControllerDatabase.get_artist_subartist_names(Artist(artist_id=artist_id)),
+                            child_artists_names=ControllerDatabase.get_artist_subartist_names(
+                                Artist(artist_id=artist_id)
+                            ),
+                            parent_artists_names=ControllerDatabase.get_artist_parent_artist_names(
+                                Artist(artist_id=artist_id)
+                            ),
                             modified=modified,
                             created=created,
                             is_deleted=is_deleted,
                         )
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -960,7 +973,7 @@ class ControllerDatabase:
                         )
                     result = True
         except Exception as e:
-            print(e) # logging placeholdere)
+            logger.exception(e)
 
         return result
 
@@ -976,17 +989,47 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT DISTINCT artists.artist_name "
+                        "SELECT artists.artist_name "
                         "FROM artists "
-                        "INNER JOIN subartists_in_artists AS sia "
-                        "ON sia.parent_artist_id = %(artist_id)s "
+                        "INNER JOIN subartists_in_artists as sia "
+                        "ON sia.child_artist_id = artists.artist_id "
+                        "WHERE sia.parent_artist_id = %(artist_id)s "
                         "AND sia.is_deleted = false "
-                        "AND artists.is_deleted = false",
+                        "AND artists.is_deleted = false ",
+                        {"artist_id": artist.artist_id}
+                    )
+
+                    if cur.rowcount:
+                        result = [artist[0] for artist in cur.fetchall()]
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_artist_parent_artist_names(artist: Artist) -> list[str]:
+        """
+        Used for getting the parent-artist of a certain artist
+        :param artist: the artist whose parent-artists need to be fetched
+        :return: a list of artist names
+        """
+        result = []
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT artists.artist_name "
+                        "FROM artists "
+                        "INNER JOIN subartists_in_artists as sia "
+                        "ON sia.parent_artist_id = artists.artist_id "
+                        "WHERE sia.child_artist_id = %(artist_id)s "
+                        "AND sia.is_deleted = false "
+                        "AND artists.is_deleted = false ",
                         {"artist_id": artist.artist_id})
 
                     if cur.rowcount:
                         result = [artist[0] for artist in cur.fetchall()]
         except Exception as e:
-            print(e)  # logging placeholdere)
+            logger.exception(e)
 
         return result
