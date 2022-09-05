@@ -87,6 +87,14 @@ classDiagram
         is_deleted: bool
     }
 
+    class subartists_in_artists{
+        subartists_in_artists_id: int
+        parent_artist__id: int
+        child_artist__id: int
+        created: timestamp
+        is_deleted: bool
+    }
+
     class tokens{
         token_id: int
         token_uuid: uuid
@@ -107,6 +115,9 @@ classDiagram
 
     songs_in_playlists o-- songs
     songs_in_playlists o-- playlists
+
+    subartists_in_artists o-- artists
+    subartists_in_artists o-- artists
 
     playlists --* users
     songs --* artists
@@ -161,6 +172,8 @@ classDiagram
     class Artist{
         songs: ~Song~
         tags: ~Tags~
+        parent_artist_names: ~str~        
+        child_artist_names: ~str~        
 
         artist_id: int
         artist_uuid: str
