@@ -198,11 +198,11 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
+                        "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id "
                         "FROM songs "
                         "WHERE song_id = %(song_id)s LIMIT 1",
                         {"song_id": song_id})
-                    song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
+                    song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id = cur.fetchone()
 
             result = Song(
                 song_id=song_id,
@@ -212,6 +212,7 @@ class ControllerDatabase:
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
+                artist_id=artist_id
             )
         except Exception as e:
             logger.exception(e)
@@ -329,7 +330,7 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
+                        "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted, artist_id "
                         "FROM songs "
                         "INNER JOIN songs_in_playlists sip on songs.song_id = sip.song_id AND sip.playlist_id = %(playlist_id)s "
                         "WHERE songs.is_deleted = false and sip.is_deleted = false",
@@ -338,7 +339,7 @@ class ControllerDatabase:
                     playlists = cur.fetchall()
 
                     if playlists:
-                        for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
+                        for song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id in playlists:
                             new_song = Song(
                                 song_id=song_id,
                                 song_uuid=str(song_uuid),
@@ -347,6 +348,7 @@ class ControllerDatabase:
                                 modified=modified,
                                 created=created,
                                 is_deleted=is_deleted,
+                                artist_id=artist_id
                             )
                             result.append(new_song)
         except Exception as e:
@@ -372,7 +374,7 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted "
+                        "SELECT songs.song_id, song_uuid, song_name, album, modified, songs.created, songs.is_deleted, artist_id "
                         "FROM songs "
                         "WHERE songs.is_deleted = false "
                         f"{page_size_str}"
@@ -385,7 +387,7 @@ class ControllerDatabase:
                     playlists = cur.fetchall()
 
                     if playlists:
-                        for song_id, song_uuid, song_name, album, modified, created, is_deleted in playlists:
+                        for song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id in playlists:
                             new_song = Song(
                                 song_id=song_id,
                                 song_uuid=str(song_uuid),
@@ -394,6 +396,7 @@ class ControllerDatabase:
                                 modified=modified,
                                 created=created,
                                 is_deleted=is_deleted,
+                                artist_id=artist_id
                             )
                             result.append(new_song)
         except Exception as e:
@@ -491,11 +494,11 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted "
+                        "SELECT song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id "
                         "FROM songs "
                         "WHERE song_id = %(song_id)s LIMIT 1",
                         {"song_id": song_id})
-                    song_id, song_uuid, song_name, album, modified, created, is_deleted = cur.fetchone()
+                    song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id = cur.fetchone()
 
             result = Song(
                 song_id=song_id,
@@ -505,6 +508,7 @@ class ControllerDatabase:
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
+                artist_id=artist_id
             )
         except Exception as e:
             logger.exception(e)

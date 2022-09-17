@@ -20,6 +20,7 @@ class Song:
     file_type: str = ".mp3"
     artist = str = ""
     album: str = ""
+    artist_id: int = 0
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False

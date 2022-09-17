@@ -13,6 +13,7 @@
                 <div class="song-box shadow pointer-on-hover" onclick="openModal('add_song_modal'); $('#song_uuid_input').val('{{ song.song_uuid }}')">
                     <img src="{{ url_for("site.get_song_pic", song_uuid=song.song_uuid) }}" class="shadow">
                     <p>{{ song.song_name }}</p>
+                    <p>{{ song_artists[song.artist_id].artist_name }}</p>
                 </div>
             {% endfor %}
         </div>

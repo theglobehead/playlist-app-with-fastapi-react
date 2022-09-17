@@ -17,7 +17,19 @@ def discover():
 
     page_size = 10
     songs = ControllerDatabase.get_songs(page_size)
-    return render_template("discover_page.html", user=user, songs=songs, user_playlists=user.playlists)
+
+    song_artists = {}
+    for song in songs:
+        if song.artist_id not in song_artists:
+            song_artists[song.artist_id] = ControllerDatabase.get_artist(song.artist_id)
+
+    return render_template(
+        "discover_page.html",
+        user=user,
+        songs=songs,
+        user_playlists=user.playlists,
+        song_artists=song_artists
+    )
 
 
 @discover_view.route("/add-song", methods=['POST'])
