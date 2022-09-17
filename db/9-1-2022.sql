@@ -252,14 +252,14 @@ ALTER SEQUENCE public.songs_in_playlists_id_seq OWNED BY public.songs_in_playlis
 CREATE TABLE public.subartists_in_artists (
     id integer NOT NULL,
     parent_artist_id integer,
-    child_artist_id integer,
+    artist_id integer,
     created timestamp without time zone DEFAULT now(),
     modified timestamp without time zone DEFAULT now(),
     is_deleted boolean DEFAULT false
 );
 
 
-ALTER TABLE public.subartists_in_artists OWNER TO postgres;
+ALTER TABLE public.artists_in_artists OWNER TO postgres;
 
 --
 -- TOC entry 249 (class 1259 OID 115086)
@@ -283,7 +283,7 @@ ALTER TABLE public.subartists_in_artists_id_seq OWNER TO postgres;
 -- Name: subartists_in_artists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.subartists_in_artists_id_seq OWNED BY public.subartists_in_artists.id;
+ALTER SEQUENCE public.subartists_in_artists_id_seq OWNED BY public.artists_in_artists.id;
 
 
 --
@@ -573,7 +573,7 @@ ALTER TABLE ONLY public.songs_in_playlists ALTER COLUMN id SET DEFAULT nextval('
 -- Name: subartists_in_artists id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.subartists_in_artists ALTER COLUMN id SET DEFAULT nextval('public.subartists_in_artists_id_seq'::regclass);
+ALTER TABLE ONLY public.artists_in_artists ALTER COLUMN id SET DEFAULT nextval('public.subartists_in_artists_id_seq'::regclass);
 
 
 --
@@ -800,7 +800,7 @@ COPY public.songs_in_playlists (id, created, is_deleted, song_id, playlist_id) F
 -- Data for Name: subartists_in_artists; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.subartists_in_artists (id, parent_artist_id, child_artist_id, created, modified, is_deleted) FROM stdin;
+COPY public.artists_in_artists (id, parent_artist_id, artist_id, created, modified, is_deleted) FROM stdin;
 1	3	15	2022-08-31 10:34:20.616998	2022-08-31 10:34:20.616998	f
 2	3	16	2022-08-31 11:04:53.699936	2022-08-31 11:04:53.699936	f
 \.
@@ -1028,7 +1028,7 @@ ALTER TABLE ONLY public.songs_in_playlists
 -- Name: subartists_in_artists subartists_in_artists_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.subartists_in_artists
+ALTER TABLE ONLY public.artists_in_artists
     ADD CONSTRAINT subartists_in_artists_pk PRIMARY KEY (id);
 
 
@@ -1131,7 +1131,7 @@ CREATE UNIQUE INDEX songs_song_uuid_uindex ON public.songs USING btree (song_uui
 -- Name: subartists_in_artists_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE UNIQUE INDEX subartists_in_artists_id_uindex ON public.subartists_in_artists USING btree (id);
+CREATE UNIQUE INDEX subartists_in_artists_id_uindex ON public.artists_in_artists USING btree (id);
 
 
 --
@@ -1238,8 +1238,8 @@ ALTER TABLE ONLY public.songs_in_playlists
 -- Name: subartists_in_artists subartists_in_artists_child_artists_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.subartists_in_artists
-    ADD CONSTRAINT subartists_in_artists_child_artists_fk FOREIGN KEY (child_artist_id) REFERENCES public.artists(artist_id);
+ALTER TABLE ONLY public.artists_in_artists
+    ADD CONSTRAINT subartists_in_artists_child_artists_fk FOREIGN KEY (artist_id) REFERENCES public.artists(artist_id);
 
 
 --
@@ -1247,7 +1247,7 @@ ALTER TABLE ONLY public.subartists_in_artists
 -- Name: subartists_in_artists subartists_in_artists_parent_artists_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.subartists_in_artists
+ALTER TABLE ONLY public.artists_in_artists
     ADD CONSTRAINT subartists_in_artists_parent_artists_fk FOREIGN KEY (parent_artist_id) REFERENCES public.artists(artist_id);
 
 

@@ -99,15 +99,23 @@
                 >x</a>
                 <div style="width: 80%;">
                     <h3 style="text-align: center;">{{ artist.artist_name }}:</h3>
-                    <p style="margin-top: 15px;">
+                    <div style="margin-top: 15px;">
                         {{ _('strings.child_artists') }}:
-                        {{ artist.child_artists_names|join(", ") if artist.child_artists_names }}
-                        {{ _('strings.no_child_artists') if not artist.child_artists_names }}
-                    </p>
+                        {% if artist.child_artists|length %}
+                            {% for child_artist in artist.child_artists %}
+                                {{ child_artist.artist_name }}{{ ", " if not loop.last }}
+                            {% endfor %}
+                        {% else %}
+                            {{ _('strings.no_child_artists') if not artist.child_artists_names }}
+                        {% endif %}
+                    </div>
                     <p style="margin-top: 15px;">
                         {{ _('strings.parent_artists') }}:
-                        {{ artist.parent_artists_names|join(", ") if artist.parent_artists_names }}
-                        {{ _('strings.no_parent_artists') if not artist.parent_artists_names }}
+                        {% for parent_atrist in artists if artist in parent_atrist.child_artists %}
+                            {{ parent_atrist.artist_name }}{{ ", " if not loop.last }}
+                        {% else %}
+                            {{ _('strings.no_parent_artists') }}
+                        {% endfor %}
                     </p>
                 </div>
             </form>

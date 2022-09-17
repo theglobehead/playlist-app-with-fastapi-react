@@ -99,7 +99,7 @@ def check_user_in():
 
 
 if __name__ == "__main__":
-    logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="500 MB")
+    logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
     app.register_blueprint(site, url_prefix="/site")
     app.register_blueprint(login_view, url_prefix="/login")
     app.register_blueprint(register_view, url_prefix="/register")

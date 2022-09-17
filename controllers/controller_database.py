@@ -761,11 +761,11 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def add_subartist(parent_artist_id: int, child_artist_id: int) -> bool:
+    def add_subartist(parent_artist_id: int, artist_id: int) -> bool:
         """
         Used for getting a users' id from the uuid
         :param parent_artist_id: the id of the parent artist
-        :param child_artist_id: the id of the child artist
+        :param artist_id: the id of the child artist
         :return: the users id
         """
         result = False
@@ -773,12 +773,12 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "INSERT INTO subartists_in_artists "
-                        "(parent_artist_id, child_artist_id) "
-                        "VALUES (%(parent_artist_id)s, %(child_artist_id)s) ",
+                        "INSERT INTO artists_in_artists "
+                        "(parent_artist_id, artist_id) "
+                        "VALUES (%(parent_artist_id)s, %(artist_id)s) ",
                         {
                             "parent_artist_id": parent_artist_id,
-                            "child_artist_id": child_artist_id
+                            "artist_id": artist_id
                         }
                     )
                     result = True
@@ -788,11 +788,11 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def remove_subartist(parent_artist_id: int, child_artist_id: int) -> bool:
+    def remove_subartist(parent_artist_id: int, artist_id: int) -> bool:
         """
         Used for getting a users' id from the uuid
         :param parent_artist_id: the id of the parent artist
-        :param child_artist_id: the id of the child artist
+        :param artist_id: the id of the child artist
         :return: the users id
         """
         result = False
@@ -800,13 +800,13 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "UPDATE subartists_in_artists "
+                        "UPDATE artists_in_artists "
                         "set is_deleted = true "
                         "WHERE  parent_artist_id = %(parent_artist_id)s "
-                        "AND child_artist_id = %(child_artist_id)s) ",
+                        "AND artist_id = %(artist_id)s) ",
                         {
                             "parent_artist_id": parent_artist_id,
-                            "child_artist_id": child_artist_id
+                            "artist_id": artist_id
                         }
                     )
                     result = True
@@ -851,15 +851,11 @@ class ControllerDatabase:
                                 artist_id=artist_id,
                                 artist_uuid=str(artist_uuid),
                                 artist_name=artist_name,
-                                child_artists_names=ControllerDatabase.get_artist_subartist_names(
-                                    Artist(artist_id=artist_id)),
-                                parent_artists_names=ControllerDatabase.get_artist_parent_artist_names(
-                                    Artist(artist_id=artist_id)
-                                ),
                                 modified=modified,
                                 created=created,
                                 is_deleted=is_deleted,
                             )
+                            new_artist.child_artists = ControllerDatabase.get_artist_child_artists(artist=new_artist)
                             result.append(new_artist)
         except Exception as e:
             logger.exception(e)
@@ -887,14 +883,11 @@ class ControllerDatabase:
                 artist_id=artist_id,
                 artist_uuid=str(artist_uuid),
                 artist_name=artist_name,
-                child_artists_names=ControllerDatabase.get_artist_subartist_names(Artist(artist_id=artist_id)),
-                parent_artists_names=ControllerDatabase.get_artist_parent_artist_names(
-                    Artist(artist_id=artist_id)
-                ),
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
             )
+            result.child_artists = ControllerDatabase.get_artist_child_artists(artist=result)
         except Exception as e:
             logger.exception(e)
 
@@ -924,16 +917,11 @@ class ControllerDatabase:
                             artist_id=artist_id,
                             artist_uuid=str(artist_uuid),
                             artist_name=artist_name,
-                            child_artists_names=ControllerDatabase.get_artist_subartist_names(
-                                Artist(artist_id=artist_id)
-                            ),
-                            parent_artists_names=ControllerDatabase.get_artist_parent_artist_names(
-                                Artist(artist_id=artist_id)
-                            ),
                             modified=modified,
                             created=created,
                             is_deleted=is_deleted,
                         )
+                        result.child_artists = ControllerDatabase.get_artist_child_artists(artist=result)
         except Exception as e:
             logger.exception(e)
 
@@ -963,11 +951,11 @@ class ControllerDatabase:
 
                     if parent_artist:
                         cur.execute(
-                            "INSERT INTO subartists_in_artists "
-                            "(child_artist_id, parent_artist_id) "
-                            "values (%(child_artist_id)s, %(parent_artist_id)s) ",
+                            "INSERT INTO artists_in_artists "
+                            "(artist_id, parent_artist_id) "
+                            "values (%(artist_id)s, %(parent_artist_id)s) ",
                             {
-                                "child_artist_id": artist_id,
+                                "artist_id": artist_id,
                                 "parent_artist_id": parent_artist.artist_id,
                             }
                         )
@@ -978,57 +966,31 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def get_artist_subartist_names(artist: Artist) -> list[str]:
+    def get_artist_child_artists(artist: Artist) -> list[Artist]:
         """
-        Used for getting the subartists of a certain artist
-        :param artist: the artist whose subartists need to be fetched
-        :return: a list of artist names
+        Used for getting the child artists of a certain artist
+        :param artist: the artist whose child artists need to be fetched
+        :return: a list of artists
         """
         result = []
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT artists.artist_name "
+                        "SELECT artists.artist_id "
                         "FROM artists "
-                        "INNER JOIN subartists_in_artists as sia "
-                        "ON sia.child_artist_id = artists.artist_id "
-                        "WHERE sia.parent_artist_id = %(artist_id)s "
-                        "AND sia.is_deleted = false "
+                        "INNER JOIN artists_in_artists as aia "
+                        "ON aia.artist_id = artists.artist_id "
+                        "WHERE aia.parent_artist_id = %(artist_id)s "
+                        "AND aia.is_deleted = false "
                         "AND artists.is_deleted = false ",
                         {"artist_id": artist.artist_id}
                     )
 
-                    if cur.rowcount:
-                        result = [artist[0] for artist in cur.fetchall()]
-        except Exception as e:
-            logger.exception(e)
+                    for (child_artist_id, ) in cur.fetchall():
+                        new_artist = ControllerDatabase.get_artist(child_artist_id)
+                        result.append(new_artist)
 
-        return result
-
-    @staticmethod
-    def get_artist_parent_artist_names(artist: Artist) -> list[str]:
-        """
-        Used for getting the parent-artist of a certain artist
-        :param artist: the artist whose parent-artists need to be fetched
-        :return: a list of artist names
-        """
-        result = []
-        try:
-            with CommonUtils.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        "SELECT artists.artist_name "
-                        "FROM artists "
-                        "INNER JOIN subartists_in_artists as sia "
-                        "ON sia.parent_artist_id = artists.artist_id "
-                        "WHERE sia.child_artist_id = %(artist_id)s "
-                        "AND sia.is_deleted = false "
-                        "AND artists.is_deleted = false ",
-                        {"artist_id": artist.artist_id})
-
-                    if cur.rowcount:
-                        result = [artist[0] for artist in cur.fetchall()]
         except Exception as e:
             logger.exception(e)
 
