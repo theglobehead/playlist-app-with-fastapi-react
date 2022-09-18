@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Playlists-With-Flask" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/playlists_app_with_fastapi_react" vcs="Git" />
   </component>
 </project>

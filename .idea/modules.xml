@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/playlists with flask.iml" filepath="$PROJECT_DIR$/.idea/playlists with flask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/playlists_app_with_fastapi_react.iml" filepath="$PROJECT_DIR$/.idea/playlists_app_with_fastapi_react.iml" />
     </modules>
   </component>
 </project>
