@@ -758,7 +758,7 @@ class ControllerDatabase:
                     fetch_result = cur.fetchone()
 
             if fetch_result:
-                result = result[0]
+                result = fetch_result[0]
         except Exception as e:
             logger.exception(e)
 
