@@ -89,3 +89,29 @@ class ControllerUser:
 
         return new_token
 
+    @staticmethod
+    def validate_register_form(name: str, pass1: str, pass2: str):
+        """
+        Used for validating a register form.
+        If the form is invalid, it flashes a message.
+        :param name: the username entered
+        :param pass1: the first password entered
+        :param pass2: the second password entered
+        :return: boolean of weather or not the form is valid
+        """
+        result = True
+
+        if not all((pass1, pass2)):
+            result = False
+        elif not name:
+            result = False
+        elif len(name) > 64:
+            result = False
+        elif pass1 != pass2:
+            result = False
+        elif len(pass1) < 8:
+            result = False
+        elif ControllerDatabase.check_if_username_taken(name=name):
+            result = False
+
+        return result
