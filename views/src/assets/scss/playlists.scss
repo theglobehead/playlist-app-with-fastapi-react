@@ -1,0 +1,77 @@
+@import "_defs.scss";
+
+.playlist-box{
+    border-radius: 15px;
+    padding: 20px 0 20px 20px;
+    width: 100%;
+
+    h3{
+        margin: 0 0 15px 0;
+    }
+}
+
+.song-row{
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 2vh 10px 10px 10px;
+    border-bottom: 3px solid $scifi-blue;
+
+    font-size: 1.3rem;
+
+    &.selected{
+        background: rgba(0, 223, 223, 0.1);
+    }
+
+    div{
+        display: inline-flex;
+        align-items: center;
+        column-gap: 20px;
+
+        .song-img{
+            width: 50px;
+            height: 50px;
+        }
+    }
+}
+
+.playlist-rows{
+    width: 100%;
+    tbody .playlist-row-tr{
+        width: 100%;
+
+        > td{
+            width: 100%;
+        }
+
+        .playlist-box{
+            border-collapse: collapse;
+            overflow: hidden;
+
+            > tbody tr{
+                width: 100%;
+                padding-block: 20px;
+                display: block;
+            }
+
+            .image-td{
+                width: fit-content;
+                padding-left: 20px;
+            }
+
+            .info-td{
+                padding-left: 10px;
+                width: 100%;
+            }
+
+        }
+
+        &:not(:last-child){
+            .playlist-box{
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

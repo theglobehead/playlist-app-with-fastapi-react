@@ -1,0 +1,26 @@
+.song-grid {
+  display: inline-flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  row-gap: 20px;
+  width: 100%;
+}
+
+.song-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 7px;
+  padding: 15px;
+  border-radius: 15px;
+}
+.song-box img {
+  height: 300px;
+  width: 300px;
+}
+.song-box p {
+  font-weight: 510;
+}/*# sourceMappingURL=discover_page.css.map */

@@ -1,0 +1,60 @@
+@import "_defs.scss";
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: $gray-background;
+
+    color: white;
+    font-family: 'Helvetica';
+    font-style: normal;
+    font-weight: 500;
+}
+
+p{
+    margin: 0;
+}
+
+a{
+    color: $scifi-blue;
+}
+
+.shadow{
+    box-shadow: 2px 2px 4px 3px $shadow;
+}
+
+.pointer-on-hover:hover{
+    cursor: pointer;
+}
+
+.modal-wrapper{
+    top: 0;
+
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.49);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal{
+        width: 20%;
+        height: fit-content;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 15px;
+        background-color: $gray-background;
+    }
+
+    &.modal-closed{
+        display: none;
+    }
+}
+
+select option{
+    color: $black;
+}

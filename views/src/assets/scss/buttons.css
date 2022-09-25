@@ -1,0 +1,86 @@
+.btn {
+  width: fit-content;
+  padding-inline: 10px;
+  border: 1px solid #9b9b9a;
+  border-radius: 10px;
+}
+
+.btn-leaf {
+  background: none;
+  border: none;
+  border-radius: 15px 0 15px 0;
+  padding: 10px;
+  width: 100%;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-leaf:hover {
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+  color: #00DFDF;
+}
+
+.btn-rounded {
+  background: none;
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+.btn-rounded:hover {
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  color: #00DFDF;
+}
+
+.btn-scifi {
+  color: #00DFDF;
+  text-decoration: none;
+  border-width: 2px 2px 0px 2px;
+  border-style: solid;
+  border-color: #00DFDF;
+  background: none;
+  padding: 15px;
+}
+.btn-scifi.btn-scifi-danger {
+  color: #FF224A;
+  border-color: #FF224A;
+}
+.btn-scifi.btn-scifi-danger:hover {
+  background: rgba(255, 34, 74, 0.1);
+}
+.btn-scifi:hover {
+  background: rgba(0, 223, 223, 0.1);
+  cursor: pointer;
+}
+
+.lang_buttons {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  column-gap: 10px;
+  display: inline-flex;
+}
+.lang_buttons .lang_button {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 90%;
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+}
+.lang_buttons .lang_button:hover {
+  cursor: pointer;
+  color: #00DFDF;
+}
+
+/*# sourceMappingURL=buttons.css.map */
