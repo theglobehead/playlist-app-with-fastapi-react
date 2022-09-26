@@ -1,10 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom/client';
+import "../assets/scss/main.css"
 
-function LoginPage() {
-  return (
-    <div>
-    </div>
-  );
-}
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 
-export default LoginPage;
+root.render(
+  <React.StrictMode>
+  </React.StrictMode>
+);

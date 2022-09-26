@@ -1,0 +1,45 @@
+.side-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-height: 100vh;
+  height: 100vh;
+  width: 20vw;
+  background-color: #898989;
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.side-panel .side-panel-head {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
+}
+.side-panel .side-panel-head .side-panel-img {
+  width: 10vw;
+  height: 10vw;
+  border: #00DFDF 2px solid;
+  border-radius: 90%;
+}
+.side-panel .side-panel-head .side-panel-user-name {
+  margin-top: 15px;
+}
+.side-panel .side-panel-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 10px;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 7vh;
+}
+.side-panel .log-out-btn {
+  margin-bottom: 15px;
+}
+
+/*# sourceMappingURL=side_panel.css.map */
