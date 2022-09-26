@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import "../assets/scss/main.css"
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+function LoginPage() {
+  return (
+    <div style={{marginInline: "auto", width: "200px"}}>
+        Login page placeholder
+    </div>
+  );
+}
 
-root.render(
-  <React.StrictMode>
-  </React.StrictMode>
-);
+export default LoginPage;

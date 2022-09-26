@@ -358,7 +358,7 @@ select option {
   justify-content: space-between;
   row-gap: 10px;
   width: 70%;
-  margin-left: 15%;
+  margin-inline: auto;
   margin-top: 7vh;
 }
 .side-panel .log-out-btn {
