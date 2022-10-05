@@ -1,14 +1,37 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import axios from "axios";
+import {Simulate} from "react-dom/test-utils";
+import input = Simulate.input;
+import Cookies from 'universal-cookie';
+
+
 
 function LoginPage() {
+  const logUserIn = async () => {
+    const formData = new FormData();
+    formData.append("name", usernameRef.current.value)
+    formData.append("password", passwordRef.current.value)
+    formData.append("remember_me", "false")
+
+    axios.post("http://127.0.0.1:8000/login", formData)
+    .then(function (response)
+    {
+      console.log("logged in", response)
+    })
+    .catch(function (error) {
+      console.log("not logged in", error);
+    });
+  }
+
+  let usernameRef = useRef(document.createElement("input"))
+  let passwordRef = useRef(document.createElement("input"))
+
   return (
       <div className={"login-main"}>
         <h1 style={{fontSize: "80px"}}>Welcome to the app!</h1>
         <div>
-          <form
+          <div
               className={"rounded-form shadow"}
-              action={""}
-              method={"post"}
           >
             <h3>Login</h3>
             <div className={"form-body"}>
@@ -17,7 +40,7 @@ function LoginPage() {
                 type={"text"}
                 style={{marginBottom: "10px"}}
                 placeholder={"Username"}
-                id={"username_input"}
+                ref={usernameRef}
                 name={"username"}
                 autoComplete={"off"}
                 required
@@ -26,7 +49,7 @@ function LoginPage() {
               <input
                 type={"password"}
                 placeholder={"Password"}
-                id={"password_input"}
+                ref={passwordRef}
                 name={"password"}
                 autoComplete={"off"}
                 required
@@ -35,10 +58,11 @@ function LoginPage() {
             <button
                 className={"form-bottom-btn btn-scifi"}
                 type={"submit"}
+                onClick={() => logUserIn()}
             >
               Log in
             </button>
-          </form>
+          </div>
           <p style={{marginTop: "13px", textAlign: "center"}}>
             No account? <a href="#">Register here!</a>
           </p>

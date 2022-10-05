@@ -3,7 +3,7 @@ from json import JSONEncoder
 import json
 
 import uvicorn
-from fastapi import FastAPI, Form, status, Response, UploadFile
+from fastapi import FastAPI, Form, status, Response, UploadFile, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
@@ -18,13 +18,9 @@ from models.user import User
 
 app = FastAPI()
 
-origins = [
-    "http://127.0.0.1:8000"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -86,22 +82,22 @@ def remove_song(playlist_uuid: str, song_uuid: str):
     ControllerDatabase.remove_song_from_playlist(playlist_id, song_id)
 
 
-@app.get("/login", status_code=status.HTTP_200_OK)
-def login(name: str, password: str, remember_me: bool, response: Response):
+@app.post("/login", status_code=status.HTTP_200_OK)
+def login(
+        response: Response,
+        name: str = Form(...),
+        password: str = Form(...),
+        remember_me: bool = Form(...)
+):
     user = ControllerUser.log_user_in(name, password, remember_me)
 
-    if user:
-        response.set_cookie(
-            key="user_uuid",
-            value=user.user_uuid,
-        )
-        if user.token.token_uuid:
-            response.set_cookie(
-                key="token",
-                value=user.token.token_uuid,
-            )
-    else:
+    if not user:
         response.status_code = status.HTTP_401_UNAUTHORIZED
+        return
+
+    response.set_cookie(key='user_uuid', value=user.user_uuid, httponly=True, secure=True, samesite='none')
+    response.set_cookie(key='token_uuid', value=user.token.token_uuid, httponly=True, secure=True, samesite='none')
+
 
 
 @app.post("/add_song", status_code=status.HTTP_200_OK)
