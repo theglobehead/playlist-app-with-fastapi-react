@@ -7,6 +7,8 @@ import Cookies from 'universal-cookie';
 
 
 function LoginPage() {
+  const cookies = new Cookies();
+
   const logUserIn = async () => {
     const formData = new FormData();
     formData.append("name", usernameRef.current.value)
@@ -16,10 +18,12 @@ function LoginPage() {
     axios.post("http://127.0.0.1:8000/login", formData)
     .then(function (response)
     {
-      console.log("logged in", response)
+      cookies.set("user_uuid", response.data["user_uuid"])
+      cookies.set("token_uuid", response.data["token_uuid"])
+      window.location.reload();
     })
     .catch(function (error) {
-      console.log("not logged in", error);
+      console.log(error);
     });
   }
 

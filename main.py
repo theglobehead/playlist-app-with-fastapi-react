@@ -95,9 +95,10 @@ def login(
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return
 
-    response.set_cookie(key='user_uuid', value=user.user_uuid, httponly=True, secure=True, samesite='none')
-    response.set_cookie(key='token_uuid', value=user.token.token_uuid, httponly=True, secure=True, samesite='none')
-
+    return {
+        "user_uuid": user.user_uuid,
+        "token_uuid": user.token.token_uuid,
+    }
 
 
 @app.post("/add_song", status_code=status.HTTP_200_OK)

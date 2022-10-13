@@ -40,6 +40,8 @@
 }
 .side-panel .log-out-btn {
   margin-bottom: 15px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=side_panel.css.map */
