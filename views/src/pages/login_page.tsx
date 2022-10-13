@@ -3,11 +3,12 @@ import axios from "axios";
 import {Simulate} from "react-dom/test-utils";
 import input = Simulate.input;
 import Cookies from 'universal-cookie';
-
+import { useTranslation, Trans } from 'react-i18next';
 
 
 function LoginPage() {
   const cookies = new Cookies();
+  const { t } = useTranslation();
 
   const logUserIn = async () => {
     const formData = new FormData();
@@ -37,7 +38,7 @@ function LoginPage() {
           <div
               className={"rounded-form shadow"}
           >
-            <h3>Login</h3>
+            <h3>{t('strings.login')}</h3>
             <div className={"form-body"}>
               <div>Username</div>
               <input
