@@ -1,19 +1,21 @@
-import React, {useRef} from 'react';
+import React, { Component } from 'react';
 import axios from "axios";
-import {Simulate} from "react-dom/test-utils";
+import { Simulate } from "react-dom/test-utils";
 import input = Simulate.input;
 import Cookies from 'universal-cookie';
-import { useTranslation, Trans } from 'react-i18next';
 
+const cookies = new Cookies();
 
-function LoginPage() {
-  const cookies = new Cookies();
-  const { t } = useTranslation();
+type FormState = {
+  name: string,
+  password: string,
+}
 
-  const logUserIn = async () => {
+export class LoginPage extends Component<{}, FormState> {
+  logUserIn() {
     const formData = new FormData();
-    formData.append("name", usernameRef.current.value)
-    formData.append("password", passwordRef.current.value)
+    formData.append("name", this.state.name)
+    formData.append("password", this.state.password)
     formData.append("remember_me", "false")
 
     axios.post("http://127.0.0.1:8000/login", formData)
@@ -24,46 +26,52 @@ function LoginPage() {
       window.location.reload();
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
     });
   }
 
-  let usernameRef = useRef(document.createElement("input"))
-  let passwordRef = useRef(document.createElement("input"))
+  onNameChange(event: any){
+    this.setState({"name": event.target.value })
+  }
 
-  return (
+  onPasswordChange(event: any){
+    this.setState({"password": event.target.value })
+  }
+
+  render() {
+    return (
       <div className={"login-main"}>
         <h1 style={{fontSize: "80px"}}>Welcome to the app!</h1>
         <div>
           <div
               className={"rounded-form shadow"}
           >
-            <h3>{t('strings.login')}</h3>
+            <h3>('strings.login')</h3>
             <div className={"form-body"}>
               <div>Username</div>
               <input
                 type={"text"}
                 style={{marginBottom: "10px"}}
                 placeholder={"Username"}
-                ref={usernameRef}
                 name={"username"}
                 autoComplete={"off"}
+                onChange={ e => this.onNameChange(e) }
                 required
               />
               <div>Password</div>
               <input
                 type={"password"}
                 placeholder={"Password"}
-                ref={passwordRef}
                 name={"password"}
                 autoComplete={"off"}
+                onChange={ e => this.onPasswordChange(e) }
                 required
               />
             </div>
             <button
                 className={"form-bottom-btn btn-scifi"}
                 type={"submit"}
-                onClick={() => logUserIn()}
+                onClick={ () => this.logUserIn() }
             >
               Log in
             </button>
@@ -73,7 +81,6 @@ function LoginPage() {
           </p>
         </div>
       </div>
-  );
+    );
+  }
 }
-
-export default LoginPage;
