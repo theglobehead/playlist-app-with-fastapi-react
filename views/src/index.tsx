@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import './i18n';
 
 import { LoginPage } from "./pages/login_page";
-import YourPlaylist from "./pages/your_playlist";
+import { YourPlaylists } from "./pages/your_playlist";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,12 +16,11 @@ let loggedIn = cookies.get("user_uuid");
 
 root.render(
   <React.StrictMode>
-    <LoginPage></LoginPage>
-      {!loggedIn // &&
-          // <LoginPage></LoginPage>
+      {!loggedIn &&
+          <LoginPage></LoginPage>
       }
-      {loggedIn // &&
-        // <YourPlaylist></YourPlaylist>
+      {loggedIn &&
+         <YourPlaylists></YourPlaylists>
       }
   </React.StrictMode>
 );

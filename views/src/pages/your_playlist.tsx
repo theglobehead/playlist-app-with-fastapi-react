@@ -1,12 +1,12 @@
-import React from 'react';
 import SidePanel from "../components/side_panel";
+import React, { Component } from 'react';
 
-function YourPlaylist() {
-  return (
-    <div>
+export class YourPlaylists extends Component {
+  render() {
+    return (
+      <div>
         <SidePanel></SidePanel>
-    </div>
-  );
+      </div>
+    );
+  }
 }
-
-export default YourPlaylist;
