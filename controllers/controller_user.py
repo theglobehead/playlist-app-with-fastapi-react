@@ -1,17 +1,11 @@
 from __future__ import annotations
 
-import os.path
 from hashlib import sha256
-from io import BytesIO
 import numpy as np
-from flask import send_file, Response
 
 from controllers.controller_database import ControllerDatabase
-from controllers.controller_playlist import ControllerPlaylist
 from models.token import Token
 from models.user import User
-from controllers.constants import PROFILE_PICTURE_PATH, DEFAULT_PROFILE_PICTURE_PATH
-from utils.common_utils import CommonUtils
 
 
 class ControllerUser:
@@ -43,16 +37,16 @@ class ControllerUser:
         return result
 
     @staticmethod
-    def create_user(name: str, password: str):
+    def create_user(name: str, password: str) -> User:
         salt = ControllerUser.generate_salt()
         hashed_password = ControllerUser.hash_password(password, salt)
 
         user = User(
-            name=name,
+            user_name=name,
             password_salt=salt,
-            password=hashed_password,
+            hashed_password=hashed_password,
         )
-
+        
         return ControllerDatabase.insert_user(user)
 
     @staticmethod
@@ -67,10 +61,15 @@ class ControllerUser:
         result = None
 
         username_taken = ControllerDatabase.check_if_username_taken(name)
+        print("username_taken:", username_taken)
 
         if username_taken:
             user = ControllerDatabase.get_user_by_name(name)
+            print("user:", user)
             hashed_password = ControllerUser.hash_password(password, user.password_salt)
+            
+            print("user.hashed_password:", user.hashed_password)
+            print("hashed_password:", hashed_password)
 
             if user.hashed_password == hashed_password:
                 if remember_me:
@@ -112,6 +111,7 @@ class ControllerUser:
         elif len(pass1) < 8:
             result = False
         elif ControllerDatabase.check_if_username_taken(name=name):
+            print("aaaaaaaaaaaaaaaaaaaaaaa")
             result = False
 
         return result

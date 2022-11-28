@@ -1,13 +1,8 @@
-import datetime
-from json import JSONEncoder
-import json
+from loguru import logger
 
 import uvicorn
-from fastapi import FastAPI, Form, status, Response, UploadFile, Request
+from fastapi import FastAPI, Form, status, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
-from werkzeug.datastructures import FileStorage
 
 from controllers.controller_song import ControllerSong
 from controllers.controller_user import ControllerUser
@@ -27,7 +22,7 @@ app.add_middleware(
 )
 
 
-@app.post("/register_user", status_code=status.HTTP_201_CREATED)
+@app.post("/register_user", status_code=status.HTTP_406_NOT_ACCEPTABLE)
 def register_user(
         response: Response,
         name: str = Form(""),
@@ -38,10 +33,15 @@ def register_user(
 
     if is_form_valid:
         try:
-            ControllerUser.create_user(name=name, password=password1)
+            user = ControllerUser.create_user(name=name, password=password1)
             response.status_code = status.HTTP_201_CREATED
+            return {"user_uuid": user.user_uuid}
         except Exception as e:
+            response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             logger.exception(e)
+    else:
+        return {"reason": "form not valid"}
+        
 
 
 @app.get("/get_user_playlists", status_code=status.HTTP_200_OK)
@@ -89,6 +89,7 @@ def login(
         password: str = Form(...),
         remember_me: bool = Form(...)
 ):
+    print("name:", name)
     user = ControllerUser.log_user_in(name, password, remember_me)
 
     if not user:

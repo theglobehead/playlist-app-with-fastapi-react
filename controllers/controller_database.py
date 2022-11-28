@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import List
 
 from loguru import logger
@@ -22,7 +21,7 @@ class ControllerDatabase:
         :return: a list of playlists
         """
         result = []
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -33,7 +32,7 @@ class ControllerDatabase:
                         user.to_dict()
                     )
                     playlists = cur.fetchall()
-
+                    
                     if playlists:
                         for playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted in playlists:
                             playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
@@ -49,9 +48,9 @@ class ControllerDatabase:
                             result.append(new_playlist)
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_playlist_by_uuid(playlist_uuid: str) -> Playlist:
         """
@@ -60,7 +59,7 @@ class ControllerDatabase:
         :return: a playlist model
         """
         result = None
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -71,7 +70,7 @@ class ControllerDatabase:
                         {"playlist_uuid": playlist_uuid}
                     )
                     result = cur.fetchone()
-
+                    
                     if result:
                         playlist_id, playlist_name, playlist_uuid, modified, created, is_deleted = result
                         playlist_songs = ControllerDatabase.get_playlist_songs(Playlist(playlist_id=playlist_id))
@@ -86,9 +85,9 @@ class ControllerDatabase:
                         )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def add_song_to_playlist(playlist_id: int, song_id: int) -> bool:
         """
@@ -109,9 +108,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_playlist_id_by_uuid(playlist_uuid: str) -> int:
         """
@@ -120,7 +119,7 @@ class ControllerDatabase:
         :return: returns the id as an integer
         """
         result = None
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -131,35 +130,40 @@ class ControllerDatabase:
                         {"playlist_uuid": playlist_uuid}
                     )
                     playlist_id = cur.fetchone()
-
+                    
                     if playlist_id:
                         result = playlist_id[0]
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
-    def insert_user(user: User) -> bool:
+    def insert_user(user: User) -> User:
         """
         Used for creating a new user
         :param user: the user to insert
         :return: bool of weather or not the insert was successful
         """
-        result = False
+        result = User()
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         "INSERT INTO USERS "
                         "(user_name, password_hash, password_salt) "
-                        "values (%(user_name)s, %(hashed_password)s, %(password_salt)s) ",
+                        "VALUES (%(user_name)s, %(hashed_password)s, %(password_salt)s) "
+                        "RETURNING user_id ",
                         user.to_dict()
                     )
-                    result = True
+
+                    if cur.rowcount:
+                        (user_id,) = cur.fetchone()
+                        
+            result = ControllerDatabase.get_user(user_id=user_id)
         except Exception as e:
             logger.exception(e)
-
+        
         return result
 
     @staticmethod
@@ -169,7 +173,7 @@ class ControllerDatabase:
         :param song: the song that needs to be inserted
         :return: Song
         """
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -180,13 +184,13 @@ class ControllerDatabase:
                         "RETURNING song_id ",
                         song.to_dict()
                     )
-
+                    
                     song_id = cur.fetchone()[0]
         except Exception as e:
             logger.exception(e)
-
+        
         return ControllerDatabase.get_song(song_id)
-
+    
     @staticmethod
     def get_song(song_id: int) -> Song:
         """
@@ -203,7 +207,7 @@ class ControllerDatabase:
                         "WHERE song_id = %(song_id)s LIMIT 1",
                         {"song_id": song_id})
                     song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id = cur.fetchone()
-
+            
             result = Song(
                 song_id=song_id,
                 song_uuid=str(song_uuid),
@@ -216,9 +220,9 @@ class ControllerDatabase:
             )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def insert_playlist(playlist: Playlist) -> bool:
         """
@@ -226,7 +230,7 @@ class ControllerDatabase:
         :param playlist: the playlist to insert
         :return: bool of weather or not the insertion was successful
         """
-
+        
         result = False
         try:
             with CommonUtils.connection() as conn:
@@ -240,9 +244,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def insert_token(token: Token) -> Token:
         """
@@ -251,7 +255,7 @@ class ControllerDatabase:
         :return: bool of weather or not the insertion was successful
         """
         result = None
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -266,9 +270,9 @@ class ControllerDatabase:
             result = ControllerDatabase.get_token(token_id)
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def delete_playlist(playlist_id: int) -> bool:
         """
@@ -289,9 +293,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def remove_song_from_playlist(playlist_id: int, song_id: int) -> bool:
         """
@@ -301,7 +305,7 @@ class ControllerDatabase:
         :return:
         """
         result = False
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -314,9 +318,9 @@ class ControllerDatabase:
                 result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_playlist_songs(playlist: Playlist) -> List[Song]:
         """
@@ -325,7 +329,7 @@ class ControllerDatabase:
         :return: a list of songs
         """
         result = []
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -337,7 +341,7 @@ class ControllerDatabase:
                         playlist.to_dict()
                     )
                     playlists = cur.fetchall()
-
+                    
                     if playlists:
                         for song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id in playlists:
                             new_song = Song(
@@ -353,9 +357,9 @@ class ControllerDatabase:
                             result.append(new_song)
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_songs(page_size: int = -1, page_offset: int = 0) -> List[Song]:
         """
@@ -365,11 +369,11 @@ class ControllerDatabase:
         :return: a list of songs
         """
         result = []
-
+        
         page_size_str = ""
         if page_size != -1:
             page_size_str = f"LIMIT %(page_size)s "
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -385,7 +389,7 @@ class ControllerDatabase:
                         }
                     )
                     playlists = cur.fetchall()
-
+                    
                     if playlists:
                         for song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id in playlists:
                             new_song = Song(
@@ -402,7 +406,7 @@ class ControllerDatabase:
         except Exception as e:
             logger.exception(e)
         return result
-
+    
     @staticmethod
     def get_song_id_by_uuid(song_uuid: str) -> int:
         """
@@ -411,7 +415,7 @@ class ControllerDatabase:
         :return: the id as an integer
         """
         result = None
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -422,14 +426,14 @@ class ControllerDatabase:
                         {"song_uuid": song_uuid}
                     )
                     song_id = cur.fetchone()
-
+                    
                     if song_id:
                         result = song_id[0]
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def check_if_username_taken(name: str) -> bool:
         """
@@ -446,7 +450,7 @@ class ControllerDatabase:
         except Exception as e:
             logger.exception(e)
         return result
-
+    
     @staticmethod
     def get_user(user_id: int) -> User:
         """
@@ -463,8 +467,10 @@ class ControllerDatabase:
                         "FROM users "
                         "WHERE user_id = %(user_id)s LIMIT 1",
                         {"user_id": user_id})
-                    user_id, user_uuid, user_name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
-
+                    
+                    if cur.rowcount:
+                        user_id, user_uuid, user_name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+            
             result = User(
                 user_id=user_id,
                 user_uuid=str(user_uuid),
@@ -479,9 +485,9 @@ class ControllerDatabase:
             )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_song(song_id: int) -> Song:
         """
@@ -489,7 +495,7 @@ class ControllerDatabase:
         :param song_id: the id of the song
         :return: a User model
         """
-        result =None
+        result = None
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -499,7 +505,7 @@ class ControllerDatabase:
                         "WHERE song_id = %(song_id)s LIMIT 1",
                         {"song_id": song_id})
                     song_id, song_uuid, song_name, album, modified, created, is_deleted, artist_id = cur.fetchone()
-
+            
             result = Song(
                 song_id=song_id,
                 song_uuid=str(song_uuid),
@@ -512,9 +518,9 @@ class ControllerDatabase:
             )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_user_token(user: User) -> Token:
         """
@@ -523,7 +529,7 @@ class ControllerDatabase:
         :return: a User model
         """
         result = Token()
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -534,7 +540,7 @@ class ControllerDatabase:
                         {"user_id": user.user_id})
                     if cur.rowcount:
                         token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
-
+                        
                         result = Token(
                             token_id=token_id,
                             token_uuid=str(token_uuid),
@@ -545,9 +551,9 @@ class ControllerDatabase:
                         )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_token(token_id: int) -> Token:
         """
@@ -556,7 +562,7 @@ class ControllerDatabase:
         :return: a Token model
         """
         result = Token()
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -566,10 +572,10 @@ class ControllerDatabase:
                         "WHERE (token_id = %(token_id)s AND is_deleted = false) LIMIT 1",
                         {"token_id": token_id}
                     )
-
+                    
                     if cur.rowcount:
                         token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
-
+                        
                         result = Token(
                             token_id=token_id,
                             token_uuid=str(token_uuid),
@@ -580,9 +586,9 @@ class ControllerDatabase:
                         )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_token_by_uuid(token_uuid: str) -> Token:
         """
@@ -591,7 +597,7 @@ class ControllerDatabase:
         :return: a Token model
         """
         result = Token()
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -601,10 +607,10 @@ class ControllerDatabase:
                         "WHERE (token_uuid = %(token_uuid)s AND is_deleted = false) LIMIT 1",
                         {"token_uuid": token_uuid}
                     )
-
+                    
                     if cur.rowcount:
                         token_id, token_uuid, user_user_id, created, modified, is_deleted = cur.fetchone()
-
+                        
                         result = Token(
                             token_id=token_id,
                             token_uuid=str(token_uuid),
@@ -615,9 +621,9 @@ class ControllerDatabase:
                         )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def delete_token(token: Token) -> bool:
         """
@@ -626,7 +632,7 @@ class ControllerDatabase:
         :return: bool of weather or not the deletion was successful
         """
         result = False
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -639,9 +645,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_user_by_name(name: str) -> User:
         """
@@ -650,7 +656,7 @@ class ControllerDatabase:
         :return: a User model
         """
         result = None
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -660,9 +666,9 @@ class ControllerDatabase:
                         "WHERE user_name = %(name)s LIMIT 1",
                         {"name": name}
                     )
-
+                    
                     user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
-
+            
             result = User(
                 user_id=user_id,
                 user_uuid=str(user_uuid),
@@ -677,9 +683,9 @@ class ControllerDatabase:
             )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_user_by_uuid(user_uuid: str) -> User:
         """
@@ -688,7 +694,7 @@ class ControllerDatabase:
         :return: a User model
         """
         result = None
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -698,7 +704,7 @@ class ControllerDatabase:
                         "WHERE user_uuid = %(user_uuid)s LIMIT 1",
                         {"user_uuid": user_uuid})
                     user_id, user_uuid, name, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
-
+            
             result = User(
                 user_id=user_id,
                 user_uuid=str(user_uuid),
@@ -713,9 +719,9 @@ class ControllerDatabase:
             )
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_user_id_by_name(name: str) -> int:
         """
@@ -732,14 +738,14 @@ class ControllerDatabase:
                                 "WHERE user_name = %(name)s LIMIT 1",
                                 {"name": name})
                     fetch_result = cur.fetchone()
-
+            
             if fetch_result:
                 result = result[0]
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_user_id_by_uuid(user_uuid: str) -> int:
         """
@@ -756,14 +762,14 @@ class ControllerDatabase:
                                 "WHERE user_uuid = %(user_uuid)s LIMIT 1",
                                 {"user_uuid": user_uuid})
                     fetch_result = cur.fetchone()
-
+            
             if fetch_result:
                 result = fetch_result[0]
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def add_subartist(parent_artist_id: int, artist_id: int) -> bool:
         """
@@ -788,9 +794,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def remove_subartist(parent_artist_id: int, artist_id: int) -> bool:
         """
@@ -816,9 +822,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_artists(page_size: int = -1, page_offset: int = 0) -> List[Artist]:
         """
@@ -828,11 +834,11 @@ class ControllerDatabase:
         :return: a list of songs
         """
         result = []
-
+        
         page_size_str = ""
         if page_size != -1:
             page_size_str = f"LIMIT %(page_size)s "
-
+        
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -848,7 +854,7 @@ class ControllerDatabase:
                         }
                     )
                     artists = cur.fetchall()
-
+                    
                     if artists:
                         for artist_id, artist_uuid, artist_name, created, modified, is_deleted in artists:
                             new_artist = Artist(
@@ -864,7 +870,7 @@ class ControllerDatabase:
         except Exception as e:
             logger.exception(e)
         return result
-
+    
     @staticmethod
     def get_artist(artist_id: int) -> Artist:
         """
@@ -882,7 +888,7 @@ class ControllerDatabase:
                         "WHERE artist_id = %(artist_id)s LIMIT 1",
                         {"artist_id": artist_id})
                     artist_id, artist_uuid, artist_name, modified, created, is_deleted = cur.fetchone()
-
+            
             result = Artist(
                 artist_id=artist_id,
                 artist_uuid=str(artist_uuid),
@@ -894,9 +900,9 @@ class ControllerDatabase:
             result.child_artists = ControllerDatabase.get_artist_child_artists(artist=result)
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_artist_by_name(artist_name: str) -> Artist:
         """
@@ -913,10 +919,10 @@ class ControllerDatabase:
                         "FROM artists "
                         "WHERE artist_name = %(artist_name)s LIMIT 1",
                         {"artist_name": artist_name})
-
+                    
                     if cur.rowcount:
                         artist_id, artist_uuid, artist_name, modified, created, is_deleted = cur.fetchone()
-
+                        
                         result = Artist(
                             artist_id=artist_id,
                             artist_uuid=str(artist_uuid),
@@ -928,9 +934,9 @@ class ControllerDatabase:
                         result.child_artists = ControllerDatabase.get_artist_child_artists(artist=result)
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def insert_artist(artist: Artist, parent_artist: Artist = None) -> bool:
         """
@@ -950,9 +956,9 @@ class ControllerDatabase:
                         "RETURNING artist_id ",
                         artist.to_dict()
                     )
-
+                    
                     artist_id = cur.fetchone()[0]
-
+                    
                     if parent_artist:
                         cur.execute(
                             "INSERT INTO artists_in_artists "
@@ -966,9 +972,9 @@ class ControllerDatabase:
                     result = True
         except Exception as e:
             logger.exception(e)
-
+        
         return result
-
+    
     @staticmethod
     def get_artist_child_artists(artist: Artist) -> list[Artist]:
         """
@@ -990,12 +996,12 @@ class ControllerDatabase:
                         "AND artists.is_deleted = false ",
                         {"artist_id": artist.artist_id}
                     )
-
-                    for (child_artist_id, ) in cur.fetchall():
+                    
+                    for (child_artist_id,) in cur.fetchall():
                         new_artist = ControllerDatabase.get_artist(child_artist_id)
                         result.append(new_artist)
-
+        
         except Exception as e:
             logger.exception(e)
-
+        
         return result
