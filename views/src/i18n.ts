@@ -14,7 +14,17 @@ i18n
     resources: {
       en: {
         translation: {
-          "strings.login": "Login"
+          "strings.login": "Login",
+          "strings.username": "Username",
+          "strings.password": "Password",
+          "strings.no_account": "No account?",
+          "strings.log_in": "Log in",
+          "strings.log_out": "Log out",
+          "strings.register_here": "Register here!",
+          "strings.playlists": "Playlists",
+          "strings.settings": "Settings",
+          "strings.discover": "Discover",
+          "strings.artists" : "Artists",
         }
       }
     }

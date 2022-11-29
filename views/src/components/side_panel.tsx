@@ -1,5 +1,6 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
+import i18n from 'i18next';
 
 function SidePanel() {
     const cookies = new Cookies();
@@ -22,12 +23,12 @@ function SidePanel() {
                 </p>
             </div>
             <div className={"side-panel-buttons"}>
-                <a className={"btn-leaf"} href={"#"}>playlists</a>
-                <a className={"btn-leaf"} href={"#"}>settings</a>
-                <a className={"btn-leaf"} href={"#"}>discover</a>
-                <a className={"btn-leaf"} href={"#"}>artists</a>
+                <a className={"btn-leaf"} href={"#"}>{ i18n.t("strings.playlists") as string }</a>
+                <a className={"btn-leaf"} href={"#"}>{ i18n.t("strings.settings") as string }</a>
+                <a className={"btn-leaf"} href={"#"}>{ i18n.t("strings.discover") as string }</a>
+                <a className={"btn-leaf"} href={"#"}>{ i18n.t("strings.artists") as string }</a>
             </div>
-            <a className={"log-out-btn"} onClick={() => logUserOut()}>Log out</a>
+            <a className={"log-out-btn"} onClick={() => logUserOut()}>{ i18n.t("strings.log_out") as string }</a>
         </div>
     );
 }

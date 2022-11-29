@@ -3,6 +3,7 @@ import axios from "axios";
 import { Simulate } from "react-dom/test-utils";
 import input = Simulate.input;
 import Cookies from 'universal-cookie';
+import i18n from 'i18next';
 
 const cookies = new Cookies();
 
@@ -12,6 +13,7 @@ type FormState = {
 }
 
 export class LoginPage extends Component<{}, FormState> {
+
   logUserIn() {
     const formData = new FormData();
     formData.append("name", this.state.name)
@@ -39,6 +41,7 @@ export class LoginPage extends Component<{}, FormState> {
   }
 
   render() {
+
     return (
       <div className={"login-main"}>
         <h1 style={{fontSize: "80px"}}>Welcome to the app!</h1>
@@ -46,9 +49,9 @@ export class LoginPage extends Component<{}, FormState> {
           <div
               className={"rounded-form shadow"}
           >
-            <h3>('strings.login')</h3>
+            <h3>{ i18n.t("strings.login") as string }</h3>
             <div className={"form-body"}>
-              <div>Username</div>
+              <div>{ i18n.t('strings.username') as string }</div>
               <input
                 type={"text"}
                 style={{marginBottom: "10px"}}
@@ -58,7 +61,7 @@ export class LoginPage extends Component<{}, FormState> {
                 onChange={ e => this.onNameChange(e) }
                 required
               />
-              <div>Password</div>
+              <div>{ i18n.t("strings.password") as string }</div>
               <input
                 type={"password"}
                 placeholder={"Password"}
@@ -73,11 +76,11 @@ export class LoginPage extends Component<{}, FormState> {
                 type={"submit"}
                 onClick={ () => this.logUserIn() }
             >
-              Log in
+              { i18n.t("strings.log_in") as string }
             </button>
           </div>
           <p style={{marginTop: "13px", textAlign: "center"}}>
-            No account? <a href="#">Register here!</a>
+            { i18n.t("strings.no_account") as string } <a href="#">{ i18n.t("strings.register_here") as string }</a>
           </p>
         </div>
       </div>
