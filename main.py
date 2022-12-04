@@ -43,16 +43,16 @@ def register_user(
         return {"reason": "form not valid"}
         
 
-
-@app.get("/get_user_playlists", status_code=status.HTTP_200_OK)
-def get_user_playlists(user_uuid: str):
+@app.post("/get_user_playlists", status_code=status.HTTP_200_OK)
+def get_user_playlists(user_uuid: str = Form(...)):
+    print("user_uuid:", user_uuid)
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
     user = User(user_id=user_id)
     user_playlists = ControllerDatabase.get_user_playlists(user=user)
 
     user_playlists = [user_playlist.to_dict() for user_playlist in user_playlists]
 
-    return user_playlists
+    return {"user_playlists": user_playlists}
 
 
 @app.get("/get_playlist", status_code=status.HTTP_200_OK)
