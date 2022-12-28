@@ -1,6 +1,6 @@
 import React from 'react';
-import Cookies from 'universal-cookie';
 import i18n from 'i18next';
+import Cookies from "universal-cookie";
 
 function SidePanel() {
     const cookies = new Cookies();

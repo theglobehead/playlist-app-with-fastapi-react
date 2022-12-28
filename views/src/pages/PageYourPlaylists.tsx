@@ -1,10 +1,8 @@
-import SidePanel from "../components/side_panel";
+import SidePanel from "../components/SidePanel";
 import React, { Component } from 'react';
 import i18n from 'i18next';
 import axios from "axios";
 import Cookies from 'universal-cookie';
-import {Simulate} from "react-dom/test-utils";
-import playing = Simulate.playing;
 
 const cookies = new Cookies();
 
@@ -20,7 +18,7 @@ type PageState = {
   playlists: any[]
 }
 
-export class YourPlaylists extends Component<{}, PageState> {
+export class PageYourPlaylists extends Component<{}, PageState> {
     openModal(modalName: string){
     }
 

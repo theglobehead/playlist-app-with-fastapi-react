@@ -30,12 +30,11 @@ export class LoginPage extends Component<{}, State> {
     }
   }
 
-
   async logInUser(){
     try{
       const formData = new FormData();
-      formData.append("name", this.state.name)
-      formData.append("password", this.state.password)
+      formData.append("name", this.state.name.trim())
+      formData.append("password", this.state.password.trim())
       formData.append("remember_me", "false")
 
       let response = await axios.post("http://127.0.0.1:8000/login", formData)

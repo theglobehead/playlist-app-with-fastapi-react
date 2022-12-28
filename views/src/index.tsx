@@ -4,8 +4,8 @@ import "./assets/scss/main.css"
 import Cookies from 'universal-cookie';
 import './i18n';
 
-import { LoginPage } from "./pages/login_page";
-import { YourPlaylists } from "./pages/your_playlist";
+import { LoginPage } from "./pages/PageLogIn";
+import { PageYourPlaylists } from "./pages/PageYourPlaylists";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +20,7 @@ root.render(
           <LoginPage></LoginPage>
       }
       {loggedIn &&
-         <YourPlaylists></YourPlaylists>
+         <PageYourPlaylists></PageYourPlaylists>
       }
   </React.StrictMode>
 );
