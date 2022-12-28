@@ -9,16 +9,20 @@ import playing = Simulate.playing;
 const cookies = new Cookies();
 
 type Playlist = {
-    "playlist_uuid": string,
-    "playlist_name": string,
-    "modified": string,
-    "created": string,
-    "is_deleted": boolean,
-  }
+  "playlist_uuid": string,
+  "playlist_name": string,
+  "modified": string,
+  "created": string,
+  "is_deleted": boolean,
+}
 
-export class YourPlaylists extends Component {
+type PageState = {
+  playlists: any[]
+}
+
+export class YourPlaylists extends Component<{}, PageState> {
     openModal(modalName: string){
-
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }
 
     closeModal(modalName: string){
@@ -27,28 +31,13 @@ export class YourPlaylists extends Component {
 
     getUserPlaylists(){
         let result: any[] = []
-
-        const formData = new FormData();
-        formData.append("user_uuid", cookies.get("user_uuid"))
-
-        axios.post("http://127.0.0.1:8000/get_user_playlists", formData)
-        .then(function (response){
-            for(let i in response.data.user_playlists){
-                let playlist = response.data.user_playlists[i]
-                result.push(playlist)
-            }
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
-
-        console.log(typeof result)
-        console.log(result)
-
         return result
     }
 
     render() {
+        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+
+        this.setState({"playlists": this.getUserPlaylists()})
         return (
             <div>
                 <SidePanel></SidePanel>
@@ -63,11 +52,10 @@ export class YourPlaylists extends Component {
                     { /* Using tables for learning */ }
                     <table className={"playlist-rows"}>
                         {
-                            this.getUserPlaylists().map((a) => {
-                               return <li>aaaaaa</li>;
+                            this.getUserPlaylists().map(() => {
+                                return <h1>feiieowgwegre</h1>
                             })
                         }
-
                       {/*
                       {% for playlist in playlists %}
                       <tr className="playlist-row-tr">
