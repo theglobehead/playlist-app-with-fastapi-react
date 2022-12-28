@@ -7,15 +7,21 @@ import i18n from 'i18next';
 
 const cookies = new Cookies();
 
-type FormState = {
+type Props = {
   name: string,
   password: string,
   isMessageVisible: boolean,
 }
 
-export class LoginPage extends Component<{}, FormState> {
+type State = {
+  name: string,
+  password: string,
+  isMessageVisible: boolean,
+}
 
-  constructor(props: any) {
+export class LoginPage extends Component<{}, State> {
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       name: "",
