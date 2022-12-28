@@ -25,6 +25,7 @@ i18n
           "strings.settings": "Settings",
           "strings.discover": "Discover",
           "strings.artists" : "Artists",
+          "strings.incorrect_login_details": "Incorrect login details!"
         }
       }
     }

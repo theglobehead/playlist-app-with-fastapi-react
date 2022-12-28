@@ -22,6 +22,13 @@
 .rounded-form .form-body {
   width: 80%;
 }
+.rounded-form .form-message {
+  margin-top: 15px;
+  color: #ea0122;
+}
+.rounded-form .form-message.hidden {
+  display: none;
+}
 .rounded-form .checkbox-row {
   display: inline-flex;
   align-items: center;

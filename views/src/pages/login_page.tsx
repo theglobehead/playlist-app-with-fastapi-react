@@ -10,30 +10,20 @@ const cookies = new Cookies();
 type FormState = {
   name: string,
   password: string,
+  isMessageVisible: boolean,
 }
 
 export class LoginPage extends Component<{}, FormState> {
 
-  /*
-
-  logUserIn() {
-    const formData = new FormData();
-    formData.append("name", this.state.name)
-    formData.append("password", this.state.password)
-    formData.append("remember_me", "false")
-
-    axios.post("http://127.0.0.1:8000/login", formData)
-    .then(function (response)
-    {
-      cookies.set("user_uuid", response.data["user_uuid"])
-      cookies.set("token_uuid", response.data["token_uuid"])
-      window.location.reload();
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      name: "",
+      password: "",
+      isMessageVisible: false
+    }
   }
-   */
+
 
   async logInUser(){
     try{
@@ -44,9 +34,13 @@ export class LoginPage extends Component<{}, FormState> {
 
       let response = await axios.post("http://127.0.0.1:8000/login", formData)
 
-      cookies.set("user_uuid", response.data["user_uuid"])
-      cookies.set("token_uuid", response.data["token_uuid"])
-      window.location.reload();
+      if (response.data.message === "success"){
+        cookies.set("user_uuid", response.data["user_uuid"])
+        cookies.set("token_uuid", response.data["token_uuid"])
+        window.location.reload();
+      }else{
+        this.setState({"isMessageVisible": true })
+      }
     }catch (e){
       console.error(e)
     }
@@ -91,6 +85,12 @@ export class LoginPage extends Component<{}, FormState> {
                 required
               />
             </div>
+            <div
+                id={"loginMessage"}
+                className={`form-message ${this.state.isMessageVisible ? "" : "hidden"}`}
+            >
+              { i18n.t("strings.incorrect_login_details") as string }
+            </div>
             <button
                 className={"form-bottom-btn btn-scifi"}
                 type={"submit"}
@@ -100,7 +100,8 @@ export class LoginPage extends Component<{}, FormState> {
             </button>
           </div>
           <p style={{marginTop: "13px", textAlign: "center"}}>
-            { i18n.t("strings.no_account") as string } <a href="#">{ i18n.t("strings.register_here") as string }</a>
+            { i18n.t("strings.no_account") as string }
+            <a href="#">{ i18n.t("strings.register_here") as string }</a>
           </p>
         </div>
       </div>

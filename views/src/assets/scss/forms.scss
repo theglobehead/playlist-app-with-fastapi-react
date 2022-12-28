@@ -28,6 +28,15 @@
         width: 80%;
     }
 
+    .form-message{
+        margin-top: 15px;
+        color: $dark-red;
+
+        &.hidden{
+            display: none;
+        }
+    }
+
     .checkbox-row{
         display: inline-flex;
         align-items: center;

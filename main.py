@@ -84,21 +84,25 @@ def remove_song(playlist_uuid: str, song_uuid: str):
 
 @app.post("/login", status_code=status.HTTP_200_OK)
 def login(
-        response: Response,
         name: str = Form(...),
         password: str = Form(...),
         remember_me: bool = Form(...)
 ):
-    print("name:", name)
+    user_uuid = ""
+    token_uuid = ""
+    message = "incorrect_data"
+    
     user = ControllerUser.log_user_in(name, password, remember_me)
 
-    if not user:
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return
+    if user:
+        user_uuid = user.user_uuid
+        token_uuid = user.token.token_uuid
+        message = "success"
 
     return {
-        "user_uuid": user.user_uuid,
-        "token_uuid": user.token.token_uuid,
+        "user_uuid": user_uuid,
+        "token_uuid":  token_uuid,
+        "message": message,
     }
 
 

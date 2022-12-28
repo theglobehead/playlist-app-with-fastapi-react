@@ -22,8 +22,7 @@
 .song-row div {
   display: inline-flex;
   align-items: center;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
 }
 .song-row div .song-img {
   width: 50px;
@@ -49,8 +48,6 @@
   display: block;
 }
 .playlist-rows tbody .playlist-row-tr .playlist-box .image-td {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
   width: fit-content;
   padding-left: 20px;
 }
@@ -60,4 +57,6 @@
 }
 .playlist-rows tbody .playlist-row-tr:not(:last-child) .playlist-box {
   margin-bottom: 20px;
-}/*# sourceMappingURL=playlists.css.map */
+}
+
+/*# sourceMappingURL=playlists.css.map */
