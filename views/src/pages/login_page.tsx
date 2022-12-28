@@ -14,6 +14,8 @@ type FormState = {
 
 export class LoginPage extends Component<{}, FormState> {
 
+  /*
+
   logUserIn() {
     const formData = new FormData();
     formData.append("name", this.state.name)
@@ -30,6 +32,24 @@ export class LoginPage extends Component<{}, FormState> {
     .catch(function (error) {
       console.error(error);
     });
+  }
+   */
+
+  async logInUser(){
+    try{
+      const formData = new FormData();
+      formData.append("name", this.state.name)
+      formData.append("password", this.state.password)
+      formData.append("remember_me", "false")
+
+      let response = await axios.post("http://127.0.0.1:8000/login", formData)
+
+      cookies.set("user_uuid", response.data["user_uuid"])
+      cookies.set("token_uuid", response.data["token_uuid"])
+      window.location.reload();
+    }catch (e){
+      console.error(e)
+    }
   }
 
   onNameChange(event: any){
@@ -74,7 +94,7 @@ export class LoginPage extends Component<{}, FormState> {
             <button
                 className={"form-bottom-btn btn-scifi"}
                 type={"submit"}
-                onClick={ () => this.logUserIn() }
+                onClick={ () => this.logInUser() }
             >
               { i18n.t("strings.log_in") as string }
             </button>

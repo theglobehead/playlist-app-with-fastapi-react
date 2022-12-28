@@ -22,7 +22,6 @@ type PageState = {
 
 export class YourPlaylists extends Component<{}, PageState> {
     openModal(modalName: string){
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }
 
     closeModal(modalName: string){
@@ -35,8 +34,6 @@ export class YourPlaylists extends Component<{}, PageState> {
     }
 
     render() {
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-
         this.setState({"playlists": this.getUserPlaylists()})
         return (
             <div>
